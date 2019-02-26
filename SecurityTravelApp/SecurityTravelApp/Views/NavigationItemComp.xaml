@@ -4,10 +4,11 @@
              xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
              x:Class="SecurityTravelApp.Views.NavigationItemComp">
     <ContentView.Resources>
-        <OnPlatform x:Key="NotificationColor" x:TypeArguments="Color" Default="#ffffff88"/>
+        <OnPlatform x:Key="NotificationColor" x:TypeArguments="Color" Default="#CCFFFFFF"/>
         <OnPlatform x:Key="ItemTextColor" x:TypeArguments="Color" Default="#666666"/>
         <OnPlatform x:Key="NotificationCornerRadius" x:TypeArguments="CornerRadius" Default="10"/>
-        <OnPlatform x:Key="NumericalNotifSize" x:TypeArguments="x:Double" Default="30"/>
+        <OnPlatform x:Key="NumericalNotifSize" x:TypeArguments="x:Double" Default="25"/>
+        <OnPlatform x:Key="NumericalNotifTextSize" x:TypeArguments="x:Double" Default="13"/>
         <OnPlatform x:Key="BooleanNotifSize" x:TypeArguments="x:Double" Default="5"/>
         <OnPlatform x:Key="IconSize" x:TypeArguments="x:Double" Default="50"/>
         <OnPlatform x:Key="IconFontSize" x:TypeArguments="x:Double" Default="40"/>
@@ -46,7 +47,9 @@
                          HeightRequest="{StaticResource NumericalNotifSize}"
                          />
                         <Label x:Name="NotifNumber"
-                           Text="99"
+                           Text="+99"
+                           FontSize="{StaticResource NumericalNotifTextSize}"
+                           FontAttributes="bold"  
                            VerticalOptions="CenterAndExpand"
                            HorizontalOptions="CenterAndExpand"
                            VerticalTextAlignment="Center"

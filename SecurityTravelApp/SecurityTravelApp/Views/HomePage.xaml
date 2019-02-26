@@ -12,9 +12,11 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
-            <Frame Grid.Row="1"
+            <comp:TapSliderComp Grid.Row="1" Margin="30,0"/>
+            <Frame Grid.Row="2"
                    Margin="10,10"
                    HasShadow="true"
                    CornerRadius="8"

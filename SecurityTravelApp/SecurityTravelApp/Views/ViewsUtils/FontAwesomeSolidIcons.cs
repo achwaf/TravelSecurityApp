@@ -36,5 +36,7 @@ namespace SecurityTravelApp.Views.ViewsUtils
         public static readonly string ChevronRight = "\uf054";
         public static readonly string ChevronLeft = "\uf053";
         public static readonly string Initialize = "\uf019";
+        public static readonly string Call = "\uf095";
+
     }
 }

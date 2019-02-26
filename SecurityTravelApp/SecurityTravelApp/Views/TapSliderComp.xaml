@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
+             x:Class="SecurityTravelApp.Views.TapSliderComp">
+    <ContentView.Resources>
+        <OnPlatform x:Key="ThumbCornerRadius" x:TypeArguments="CornerRadius" Default="45"/>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <AbsoluteLayout x:Name="TapSlider" VerticalOptions="Center"
+                        HeightRequest="150">
+
+            <BoxView Color="OrangeRed" CornerRadius="{StaticResource ThumbCornerRadius}" Opacity=".6"
+                     AbsoluteLayout.LayoutFlags="WidthProportional, YProportional"    AbsoluteLayout.LayoutBounds="0,.5,1,90"/>
+
+            <BoxView Color="White" CornerRadius="{StaticResource ThumbCornerRadius}" Opacity=".4" Margin="2"
+                     AbsoluteLayout.LayoutFlags="WidthProportional, YProportional"    AbsoluteLayout.LayoutBounds="0,.5,1,90"/>
+
+            <Label x:Name="CallIcon" 
+                        Text="{x:Static viewUtils:FontAwesomeSolidIcons.Call}"
+                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        TextColor="OrangeRed"
+                        Opacity=".6"
+                        FontSize="30"
+                        VerticalTextAlignment="Center"
+                        HorizontalTextAlignment="Center"
+                        AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1,0.5,90,90"
+                       />
+
+            <Grid AbsoluteLayout.LayoutFlags="YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0,.5,1,90">
+                <Grid x:Name="DelayBar" HorizontalOptions="Start" WidthRequest="0" ColumnSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <BoxView Color="#ff8a70" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="4" HorizontalOptions="FillAndExpand"
+                             Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                    <Label x:Name="MessageLaunch" Grid.Column="0" Text="Appel dans "
+                        TextColor="#ffe5e5"
+                        FontSize="30"
+                        Margin="10,0"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        LineBreakMode="TailTruncation"/>
+
+                    <!--<BoxView Color="#ff8a70" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="4" WidthRequest="90" HeightRequest="90" HorizontalOptions="Start"/>-->
+
+                    <Label Grid.Column="1" x:Name="TimerLabel"
+                        TextColor="#ffe5e5"
+                        FontSize="30"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start"
+                        Margin="5,0,120,0"
+                        HeightRequest="90"/>
+
+
+                </Grid>
+            </Grid>
+
+            <Grid x:Name="Thumb" AbsoluteLayout.LayoutFlags="YProportional" AbsoluteLayout.LayoutBounds="0,.5,90,90">
+                <BoxView Color="#a30000" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="4" />
+                <BoxView Color="#fff4f4" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="9"/>
+                <BoxView Color="#bf0000" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="12" />
+                <Label Text="SOS"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        FontSize="26"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"/>
+            </Grid>
+
+
+
+        </AbsoluteLayout>
+    </ContentView.Content>
+</ContentView>
