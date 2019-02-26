@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:comp="clr-namespace:SecurityTravelApp.Views.Popups"
+             xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
+             x:Class="SecurityTravelApp.Views.LoginPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <OnPlatform x:Key="GridColumSize" x:TypeArguments="GridLength" Default="100" />
+            <OnPlatform x:Key="OverAllColor" x:TypeArguments="Color" Default="#fafbf3"/>
+            <OnPlatform x:Key="HighLightColor" x:TypeArguments="Color" Default="#4a7e65"/>
+            <OnPlatform x:Key="EntryColor" x:TypeArguments="Color" Default="#ffffff" />
+            <OnPlatform x:Key="LabelWidth" x:TypeArguments="x:Double" Default="120"/>
+            <OnPlatform x:Key="IconWidth" x:TypeArguments="x:Double" Default="30"/>
+            <OnPlatform x:Key="ButtonHeight" x:TypeArguments="x:Double" Default="40"/>
+            <OnPlatform x:Key="WarningMsgFontSize" x:TypeArguments="x:Double" Default="13"/>
+            <OnPlatform x:Key="WarningMsgColor" x:TypeArguments="Color" Default="#ED4C3D"/>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="FillAndExpand"
+                Padding="0"
+                Margin="40,0">
+            <StackLayout
+                Padding="2"
+                BackgroundColor="{StaticResource HighLightColor}">
+                <StackLayout
+                Padding="20"
+                Spacing="20"
+                BackgroundColor="{StaticResource OverAllColor}">
+                    <StackLayout
+                Orientation="Horizontal">
+                        <Label Text="Matricule"
+                       HorizontalTextAlignment="Start"
+                       VerticalOptions="Center"
+                       WidthRequest="{StaticResource LabelWidth}"/>
+                        <Entry x:Name="UserIdEntry"
+                    VerticalOptions="Center"
+                    BackgroundColor="{StaticResource EntryColor}"
+                    HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                    <StackLayout
+                Orientation="Horizontal">
+                        <Label Text="Mot de passe"
+                       HorizontalTextAlignment="Start"
+                       VerticalOptions="Center"
+                       WidthRequest="{StaticResource LabelWidth}"/>
+                        <Entry x:Name="PassEntry"
+                    VerticalOptions="Center"
+                    IsPassword="True"
+                    BackgroundColor="{StaticResource EntryColor}"
+                    HorizontalOptions="FillAndExpand"/>
+                    </StackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="WarningMsg"
+                           Grid.Column="0"
+                           IsVisible="false"
+                           FontSize="{StaticResource WarningMsgFontSize}"
+                           TextColor="{StaticResource WarningMsgColor}"
+                           Text="Ce texte est reservé aux messages d'alerte suite à des identifiants non valides"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Start"
+                           VerticalOptions="FillAndExpand"
+                           HorizontalOptions="FillAndExpand"
+                           Margin="10,0"/>
+                        <StackLayout x:Name="Button"
+                         Grid.Column="1"
+                         Spacing="10"
+                         Orientation="Horizontal"
+                         HorizontalOptions="End"
+                         VerticalOptions="Start"
+                         HeightRequest="{StaticResource ButtonHeight}">
+                            <Label x:Name="ConfirmerIcon" 
+                       Text="{x:Static viewUtils:FontAwesomeSolidIcons.Check}"
+                       Margin="10,0,0,0"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center"
+                       VerticalOptions="Fill"
+                       HorizontalOptions="End"
+                       FontFamily="{StaticResource FontAwesomeSolid}"
+                       TextColor="{StaticResource HighLightColor}"/>
+                            <Label Text="Se Connecter"
+                       Margin="0,0,10,0"
+                       VerticalTextAlignment="Center"
+                       HorizontalOptions="End"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Start"
+                       VerticalOptions="Fill"
+                       TextColor="{StaticResource HighLightColor}"/>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </StackLayout>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

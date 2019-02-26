@@ -6,6 +6,28 @@
         <ResourceDictionary>
             <!--Global Styles-->
             <Color x:Key="NavigationPrimary">#2196F3</Color>
+
+            <Color x:Key="TestColorRED">Red</Color>
+            <Color x:Key="TestColorGREEN">Green</Color>
+            <Color x:Key="TestColorBLUE">Blue</Color>
+            <Color x:Key="TestColorWHITE">White</Color>
+            <Color x:Key="TestColorBLACK">Black</Color>
+
+            <OnPlatform x:TypeArguments="x:String" x:Key="FontAwesomeRegular" >
+                <OnPlatform.Platforms>
+                    <On Platform="Android" Value="fa-regular-400.ttf#Font Awesome 5 Free" />
+                    <On Platform="UWP" Value="/Assets/fa-regular-400.ttf#Font Awesome 5 Free" />
+                    <On Platform="iOS" Value="fa-regular-400" />
+                </OnPlatform.Platforms>
+            </OnPlatform>
+            <OnPlatform x:TypeArguments="x:String" x:Key="FontAwesomeSolid">
+                <OnPlatform.Platforms>
+                    <On Platform="Android" Value="fa-solid-900.ttf#Font Awesome 5 Free Solid" />
+                    <On Platform="UWP" Value="/Assets/fa-solid-900.ttf#Font Awesome 5 Free Solid" />
+                    <On Platform="iOS" Value="fa-solid-900" />
+                </OnPlatform.Platforms>
+            </OnPlatform>
+
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
                 <Setter Property="BarTextColor" Value="White" />

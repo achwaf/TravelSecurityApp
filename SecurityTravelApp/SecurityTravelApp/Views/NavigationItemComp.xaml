@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
+             x:Class="SecurityTravelApp.Views.NavigationItemComp">
+    <ContentView.Resources>
+        <OnPlatform x:Key="NotificationColor" x:TypeArguments="Color" Default="#ffffff88"/>
+        <OnPlatform x:Key="ItemTextColor" x:TypeArguments="Color" Default="#666666"/>
+        <OnPlatform x:Key="NotificationCornerRadius" x:TypeArguments="CornerRadius" Default="10"/>
+        <OnPlatform x:Key="NumericalNotifSize" x:TypeArguments="x:Double" Default="30"/>
+        <OnPlatform x:Key="BooleanNotifSize" x:TypeArguments="x:Double" Default="5"/>
+        <OnPlatform x:Key="IconSize" x:TypeArguments="x:Double" Default="50"/>
+        <OnPlatform x:Key="IconFontSize" x:TypeArguments="x:Double" Default="40"/>
+        <OnPlatform x:Key="TextItemMargin" x:TypeArguments="Thickness" Default="0,2,0,2"/>
+        <OnPlatform x:Key="TextItemSize" x:TypeArguments="x:Double" Default="12"/>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <StackLayout VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand"
+                   Spacing="0">
+            <Grid>
+                <Grid       HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                    <Label x:Name="Icon" 
+                           Text="{Binding icon}"
+                           Grid.Column="0"
+                           FontFamily="{StaticResource FontAwesomeSolid}"
+                           TextColor="{StaticResource TestColorRED}"
+                           FontSize="{StaticResource IconFontSize}"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           WidthRequest="{StaticResource IconSize}"
+                           HeightRequest="{StaticResource IconSize}"
+                           Margin="5,5,5,2"
+                       />
+                    <Grid x:Name="NumercialNotif"
+                      HorizontalOptions="End"
+                      VerticalOptions="Start"
+                      Margin="0,5,0,0"
+                      IsVisible="true">
+                        <BoxView CornerRadius="{StaticResource NotificationCornerRadius}"
+                         Color="{StaticResource NotificationColor}"
+                         WidthRequest="{StaticResource NumericalNotifSize}"
+                         HeightRequest="{StaticResource NumericalNotifSize}"
+                         />
+                        <Label x:Name="NotifNumber"
+                           Text="99"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center"/>
+                    </Grid>
+                    <Grid x:Name="BooleanNotif"
+                      IsVisible="false">
+                        <BoxView CornerRadius="{StaticResource NotificationCornerRadius}"
+                         Color="{StaticResource NotificationColor}"
+                         WidthRequest="{StaticResource BooleanNotifSize}"
+                         HeightRequest="{StaticResource BooleanNotifSize}"
+                         />
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Label HorizontalOptions="Center"
+                   VerticalOptions="End"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   FontAttributes="Bold"
+                   Text="{Binding text}"
+                   FontSize="{StaticResource TextItemSize}"
+                   TextColor="{StaticResource ItemTextColor}"
+                   Margin="{StaticResource TextItemMargin}"/>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

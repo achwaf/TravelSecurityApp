@@ -2,19 +2,28 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using SecurityTravelApp.Views;
+using SecurityTravelApp.Services;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace SecurityTravelApp
 {
     public partial class App : Application
     {
+        private ServiceFactory serviceFactory;
+        private AppManagementService appMngSrv;
 
         public App()
         {
             InitializeComponent();
+            serviceFactory = new ServiceFactory();
+
+            // instantiating services
+            appMngSrv = (AppManagementService)serviceFactory.getService(ServiceType.AppManagement);
+
+            // settings services dependencies 
 
 
-            MainPage = new MainPage();
+            MainPage = new HomePage(serviceFactory);
         }
 
         protected override void OnStart()
