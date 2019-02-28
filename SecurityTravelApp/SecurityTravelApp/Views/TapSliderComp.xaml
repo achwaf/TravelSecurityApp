@@ -5,21 +5,45 @@
              x:Class="SecurityTravelApp.Views.TapSliderComp">
     <ContentView.Resources>
         <OnPlatform x:Key="ThumbCornerRadius" x:TypeArguments="CornerRadius" Default="45"/>
+        <OnPlatform x:Key="DelayBarCornerRadius" x:TypeArguments="CornerRadius" Default="38"/>
     </ContentView.Resources>
     <ContentView.Content>
         <AbsoluteLayout x:Name="TapSlider" VerticalOptions="Center"
                         HeightRequest="150">
 
-            <BoxView Color="OrangeRed" CornerRadius="{StaticResource ThumbCornerRadius}" Opacity=".6"
-                     AbsoluteLayout.LayoutFlags="WidthProportional, YProportional"    AbsoluteLayout.LayoutBounds="0,.5,1,90"/>
+            <BoxView x:Name="GrayLine" Color="LightGray" AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional" Opacity=".4"   AbsoluteLayout.LayoutBounds=".5,.5,.9,2" />
 
-            <BoxView Color="White" CornerRadius="{StaticResource ThumbCornerRadius}" Opacity=".4" Margin="2"
-                     AbsoluteLayout.LayoutFlags="WidthProportional, YProportional"    AbsoluteLayout.LayoutBounds="0,.5,1,90"/>
+            <BoxView Color="White" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="10"
+                     AbsoluteLayout.LayoutFlags="PositionProportional"    AbsoluteLayout.LayoutBounds="1,.5,90,90"/>
 
-            <Label x:Name="CallIcon" 
+            <BoxView Color="#d7d7d7" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="16"
+                     AbsoluteLayout.LayoutFlags="PositionProportional"    AbsoluteLayout.LayoutBounds="1,.5,90,90"/>
+
+            <BoxView Color="White" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="18" Opacity=".9"
+                     AbsoluteLayout.LayoutFlags="PositionProportional"    AbsoluteLayout.LayoutBounds="1,.5,90,90"/>
+
+            <Label x:Name="CallIconDisabled" 
                         Text="{x:Static viewUtils:FontAwesomeSolidIcons.Call}"
                         FontFamily="{StaticResource FontAwesomeSolid}"
-                        TextColor="OrangeRed"
+                        TextColor="#d7d7d7"
+                        Opacity=".6"
+                        FontSize="30"
+                        VerticalTextAlignment="Center"
+                        HorizontalTextAlignment="Center"
+                        AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1,0.5,90,90"
+                       />
+
+            <Grid  x:Name="SliderBackground" AbsoluteLayout.LayoutFlags="YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0,.5,1,90">
+                <BoxView x:Name="SliderBorder" IsVisible="False" Color="#17aa29" CornerRadius="{StaticResource ThumbCornerRadius}"
+                    VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
+                <BoxView x:Name="SliderFiller" IsVisible="False" Color="White" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="2"
+                    VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            </Grid>
+
+            <Label x:Name="CallIcon" IsVisible="False"
+                        Text="{x:Static viewUtils:FontAwesomeSolidIcons.Call}"
+                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        TextColor="#17aa29"
                         Opacity=".6"
                         FontSize="30"
                         VerticalTextAlignment="Center"
@@ -28,18 +52,18 @@
                        />
 
             <Grid AbsoluteLayout.LayoutFlags="YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0,.5,1,90">
-                <Grid x:Name="DelayBar" HorizontalOptions="Start" WidthRequest="0" ColumnSpacing="0">
+                <Grid x:Name="DelayBar" HorizontalOptions="Start" WidthRequest="0" ColumnSpacing="0" Padding="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <BoxView Color="#ff8a70" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="4" HorizontalOptions="FillAndExpand"
+                    <BoxView Color="#a9f3b3" CornerRadius="{StaticResource DelayBarCornerRadius}" Margin="14" HorizontalOptions="FillAndExpand"
                              Grid.Column="0" Grid.ColumnSpan="2"/>
 
-                    <Label x:Name="MessageLaunch" Grid.Column="0" Text="Appel dans "
-                        TextColor="#ffe5e5"
-                        FontSize="30"
-                        Margin="10,0"
+                    <Label x:Name="MessageLaunch" Grid.Column="0" IsVisible="False" Opacity="0"
+                        TextColor="#127e20"
+                        FontSize="Medium"
+                        Margin="10,0,0,0"
                         HorizontalTextAlignment="Center"
                         VerticalTextAlignment="Center"
                         VerticalOptions="Center"
@@ -48,22 +72,22 @@
 
                     <!--<BoxView Color="#ff8a70" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="4" WidthRequest="90" HeightRequest="90" HorizontalOptions="Start"/>-->
 
-                    <Label Grid.Column="1" x:Name="TimerLabel"
-                        TextColor="#ffe5e5"
-                        FontSize="30"
+                    <Label Grid.Column="1" x:Name="TimerLabel" IsVisible="False" Opacity="0"
+                        TextColor="#127e20"
+                        FontSize="Medium"
                         HorizontalTextAlignment="Center"
                         VerticalTextAlignment="Center"
                         VerticalOptions="Center"
                         HorizontalOptions="Start"
-                        Margin="5,0,120,0"
+                        Margin="5,0,100,0"
                         HeightRequest="90"/>
 
 
                 </Grid>
             </Grid>
 
-            <Grid x:Name="Thumb" AbsoluteLayout.LayoutFlags="YProportional" AbsoluteLayout.LayoutBounds="0,.5,90,90">
-                <BoxView Color="#a30000" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="4" />
+            <Grid x:Name="Thumb" IsVisible="True" AbsoluteLayout.LayoutFlags="YProportional" AbsoluteLayout.LayoutBounds="0,.5,90,90" Scale="1.3">
+                <BoxView Color="#bf0000" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="4" />
                 <BoxView Color="#fff4f4" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="9"/>
                 <BoxView Color="#bf0000" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="12" />
                 <Label Text="SOS"

@@ -13,6 +13,9 @@
             <Color x:Key="TestColorWHITE">White</Color>
             <Color x:Key="TestColorBLACK">Black</Color>
 
+
+            <OnPlatform x:Key="UpFrontViewMargin" x:TypeArguments="Thickness" Default="30,10" />
+
             <OnPlatform x:TypeArguments="x:String" x:Key="FontAwesomeRegular" >
                 <OnPlatform.Platforms>
                     <On Platform="Android" Value="fa-regular-400.ttf#Font Awesome 5 Free" />

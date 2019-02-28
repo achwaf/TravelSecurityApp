@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:comp="clr-namespace:SecurityTravelApp.Views"
+             xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
+             xmlns:suave="clr-namespace:SuaveControls.MaterialForms;assembly=SuaveControls.MaterialForms"
+             x:Class="SecurityTravelApp.Views.MessagesPage">
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <Grid AbsoluteLayout.LayoutFlags="All"
+                AbsoluteLayout.LayoutBounds=".5,.5,1,1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+            </Grid>
+            <StackLayout x:Name="StackLayoutUpFront"  VerticalOptions="End" 
+                         AbsoluteLayout.LayoutFlags="YProportional , SizeProportional"
+                         AbsoluteLayout.LayoutBounds="0,1,1,1"
+                         Margin="{StaticResource UpFrontViewMargin}">
+                <Grid VerticalOptions="EndAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="300"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <!--the predefined messages part-->
+                    <ScrollView Grid.Row="0">
+                        <StackLayout>
+                            <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightSalmon" />
+                            <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightSalmon" />
+                            <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightSalmon" />
+                            <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightSalmon" />
+                            <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightSalmon" />
+                            <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightSalmon" />
+                            <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightSalmon" />
+                            <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightSalmon" />
+                            <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightSalmon" />
+                            <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightSalmon" />
+                            <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightSalmon" />
+                            <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightSalmon" />
+                        </StackLayout>
+                    </ScrollView>
+                    <!--the entry text part-->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <!--<Editor Grid.Column="0" 
+                            VerticalOptions="Fill" 
+                            HorizontalOptions="Fill"/>-->
+                        <viewUtils:BorderlessEditor x:Name="BE" Grid.Column="0" 
+                            VerticalOptions="Fill" 
+                            HorizontalOptions="Fill"/>
+                        <StackLayout  Grid.Column="1"
+                            Orientation="Vertical" VerticalOptions="Fill">
+                            <BoxView HeightRequest="50" WidthRequest="50" Color="red" VerticalOptions="End"/>
+                            <BoxView HeightRequest="50" WidthRequest="50" Color="Green" VerticalOptions="End"/>
+                        </StackLayout>
+                    </Grid>
+                </Grid>
+                <Frame
+                    VerticalOptions="End"
+                    HorizontalOptions="Fill"
+                    HasShadow="true"
+                    CornerRadius="8"
+                    BackgroundColor="#11111155"
+                    Padding="0">
+                    <comp:NavigationBarComp x:Name="NavigationBar" />
+                </Frame>
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

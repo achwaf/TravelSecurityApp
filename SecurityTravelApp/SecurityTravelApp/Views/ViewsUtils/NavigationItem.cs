@@ -15,12 +15,14 @@ namespace SecurityTravelApp.Views.ViewsUtils
         private NavigationItemState _state;
         private Boolean _carriesNotif;
         private int _numberOfNotif;
+        private NavigationItemNotifType _notifType;
 
 
 
         public String text { get; set; }
         public String font { get; set; }
         public String icon { get; set; }
+        public NavigationItemNotifType notifType { get; set; }
         public NavigationItemState state
         {
             get { return _state; }
@@ -62,8 +64,14 @@ namespace SecurityTravelApp.Views.ViewsUtils
 
     public enum NavigationItemState
     {
-        Active,
-        Inactive
+        Current,
+        Shaded
+    }
+
+    public enum NavigationItemNotifType
+    {
+        Dot,
+        Numerical
     }
 
     public class NavigationItemFont

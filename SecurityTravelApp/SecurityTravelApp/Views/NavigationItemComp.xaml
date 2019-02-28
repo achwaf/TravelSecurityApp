@@ -2,18 +2,20 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
+             xmlns:local="clr-namespace:SecurityTravelApp.Views.ValueConverters"
              x:Class="SecurityTravelApp.Views.NavigationItemComp">
     <ContentView.Resources>
         <OnPlatform x:Key="NotificationColor" x:TypeArguments="Color" Default="#CCFFFFFF"/>
         <OnPlatform x:Key="ItemTextColor" x:TypeArguments="Color" Default="#666666"/>
         <OnPlatform x:Key="NotificationCornerRadius" x:TypeArguments="CornerRadius" Default="10"/>
-        <OnPlatform x:Key="NumericalNotifSize" x:TypeArguments="x:Double" Default="25"/>
+        <OnPlatform x:Key="NumericalNotifSize" x:TypeArguments="x:Double" Default="22"/>
         <OnPlatform x:Key="NumericalNotifTextSize" x:TypeArguments="x:Double" Default="13"/>
-        <OnPlatform x:Key="BooleanNotifSize" x:TypeArguments="x:Double" Default="5"/>
+        <OnPlatform x:Key="DotNotifSize" x:TypeArguments="x:Double" Default="5"/>
         <OnPlatform x:Key="IconSize" x:TypeArguments="x:Double" Default="50"/>
-        <OnPlatform x:Key="IconFontSize" x:TypeArguments="x:Double" Default="40"/>
-        <OnPlatform x:Key="TextItemMargin" x:TypeArguments="Thickness" Default="0,2,0,2"/>
+        <OnPlatform x:Key="IconFontSize" x:TypeArguments="x:Double" Default="30"/>
+        <OnPlatform x:Key="TextItemMargin" x:TypeArguments="Thickness" Default="0,0,0,2"/>
         <OnPlatform x:Key="TextItemSize" x:TypeArguments="x:Double" Default="12"/>
+
     </ContentView.Resources>
     <ContentView.Content>
         <StackLayout VerticalOptions="CenterAndExpand"
@@ -39,7 +41,7 @@
                     <Grid x:Name="NumercialNotif"
                       HorizontalOptions="End"
                       VerticalOptions="Start"
-                      Margin="0,5,0,0"
+                      Margin="0,5,5,0"
                       IsVisible="true">
                         <BoxView CornerRadius="{StaticResource NotificationCornerRadius}"
                          Color="{StaticResource NotificationColor}"
@@ -47,7 +49,7 @@
                          HeightRequest="{StaticResource NumericalNotifSize}"
                          />
                         <Label x:Name="NotifNumber"
-                           Text="+99"
+                           Text="{Binding numberOfNotif}"
                            FontSize="{StaticResource NumericalNotifTextSize}"
                            FontAttributes="bold"  
                            VerticalOptions="CenterAndExpand"
@@ -55,12 +57,15 @@
                            VerticalTextAlignment="Center"
                            HorizontalTextAlignment="Center"/>
                     </Grid>
-                    <Grid x:Name="BooleanNotif"
-                      IsVisible="false">
-                        <BoxView CornerRadius="{StaticResource NotificationCornerRadius}"
+                    <Grid x:Name="DotNotif"
+                      HorizontalOptions="End"
+                      VerticalOptions="Start"
+                      Margin="0,10,15,0"
+                      IsVisible="{Binding notifType,Converter=NavigationItemTypeNotifToBool}">
+                        <BoxView 
                          Color="{StaticResource NotificationColor}"
-                         WidthRequest="{StaticResource BooleanNotifSize}"
-                         HeightRequest="{StaticResource BooleanNotifSize}"
+                         WidthRequest="{StaticResource DotNotifSize}"
+                         HeightRequest="{StaticResource DotNotifSize}"
                          />
                     </Grid>
                 </Grid>

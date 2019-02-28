@@ -9,21 +9,30 @@
 
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="100"/>
-            </Grid.RowDefinitions>
-            <comp:TapSliderComp Grid.Row="1" Margin="30,0"/>
-            <Frame Grid.Row="2"
-                   Margin="10,10"
-                   HasShadow="true"
-                   CornerRadius="8"
-                   BackgroundColor="#11111155"
-                   Padding="0">
-                <comp:NavigationBarComp x:Name="NavigationBar" />
-            </Frame>
-        </Grid>
+        <AbsoluteLayout >
+            <Grid BackgroundColor="White" AbsoluteLayout.LayoutFlags="All"
+                AbsoluteLayout.LayoutBounds=".5,.5,1,1"                  
+                Margin="{StaticResource UpFrontViewMargin}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <comp:TapSliderComp x:Name="SosSlider" Grid.Row="1" Margin="50,0"/>
+            </Grid>
+            <StackLayout x:Name="StackLayoutUpFront"  VerticalOptions="End" AbsoluteLayout.LayoutFlags="YProportional , SizeProportional"
+                    AbsoluteLayout.LayoutBounds="0,1,1,1">
+                <Frame
+                    VerticalOptions="End"
+                    HorizontalOptions="Fill"
+                    HasShadow="true"
+                    CornerRadius="8"
+                    BackgroundColor="#11111155"
+                    Padding="0">
+                    <comp:NavigationBarComp x:Name="NavigationBar" />
+                </Frame>
+            </StackLayout>
+        </AbsoluteLayout>
+
     </ContentPage.Content>
 </ContentPage>
+    

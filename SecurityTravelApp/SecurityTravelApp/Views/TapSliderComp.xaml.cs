@@ -1,10 +1,14 @@
-﻿using System;
+﻿using SecurityTravelApp.DependencyServices;
+using SecurityTravelApp.Services;
+using SecurityTravelApp.Utils;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,7 +18,7 @@ namespace SecurityTravelApp.Views
     public partial class TapSliderComp : ContentView
     {
         private const double _fadeEffect = 0.5;
-        private const uint _animLength = 180;
+        private const int _animLength = 140;
         private Animation back_animation_tumb;
         private Animation back_animation_delaybar;
         private Stopwatch stopwatch = new Stopwatch();
@@ -26,7 +30,7 @@ namespace SecurityTravelApp.Views
         private Boolean timerLaunched = false;
         private Boolean actionLaunched = false;
         private Timer timer;
-
+        private AppManagementService appMngSrv;
 
         public event EventHandler SlideCompleted;
 
@@ -34,7 +38,6 @@ namespace SecurityTravelApp.Views
         {
             InitializeComponent();
             _panGesture.PanUpdated += OnPanGestureUpdated;
-            //SizeChanged += OnSizeChanged;
 
             _gestureListener = new ContentView { BackgroundColor = Color.White, Opacity = 0.05 };
             _gestureListener.GestureRecognizers.Add(_panGesture);
@@ -42,9 +45,16 @@ namespace SecurityTravelApp.Views
             AbsoluteLayout.SetLayoutBounds(_gestureListener, new Rectangle(0, 0, 1, 1));
             TapSlider.Children.Add(_gestureListener);
             timer = new Timer();
-            timer.Elapsed += new ElapsedEventHandler(OnTimeEvent);
+            timer.Elapsed += new ElapsedEventHandler(OnTimeEventAsync);
             timer.Interval = 1000;
         }
+
+
+        public void initializeConfig(ServiceFactory pSrvFactory)
+        {
+            appMngSrv = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);
+        }
+
 
         async void OnPanGestureUpdated(object sender, PanUpdatedEventArgs e)
         {
@@ -52,6 +62,16 @@ namespace SecurityTravelApp.Views
             switch (e.StatusType)
             {
                 case GestureStatus.Started:
+                    actionLaunched = false;
+                    SliderFiller.IsVisible = true;
+                    SliderBorder.IsVisible = true;
+                    CallIcon.IsVisible = true;
+                    SliderBorder.FadeTo(1, _animLength);
+                    CallIcon.FadeTo(1, _animLength);
+                    Thumb.ScaleTo(1, _animLength);
+                    secondsToWait = secondsToWaitConst;
+                    TimerLabel.Text = secondsToWait.ToString();
+                    MessageLaunch.Text = I18n.GetText(AppTextID.APPEL_DANS);
                     break;
 
                 case GestureStatus.Running:
@@ -64,7 +84,7 @@ namespace SecurityTravelApp.Views
                     DelayBar.WidthRequest = x + Thumb.Width;
 
                     // if the thumb has reached the target launch the timer to count duration
-                    if (Thumb.TranslationX >= Width - Thumb.Width - 10) // 10 pour marge de precision
+                    if (Thumb.TranslationX >= Width - Thumb.Width - 20) // 20 pour marge de precision
                     {
                         thumbOnTarget = true;
                         if (timerLaunched)
@@ -78,15 +98,17 @@ namespace SecurityTravelApp.Views
                             timer.Start();
 
                             // show the message 
-                            TimerLabel.IsVisible = true;
-                            MessageLaunch.FadeTo(1, _animLength);
-                            TimerLabel.FadeTo(1, _animLength);
+                            showMessage();
                         }
                     }
                     else
                     {
                         // the thumb moved from target
                         thumbOnTarget = false;
+
+                        // hide the message
+                        hideMessage();
+
                         if (timerLaunched)
                         {
                             if (actionLaunched)
@@ -96,6 +118,7 @@ namespace SecurityTravelApp.Views
                             else
                             {
                                 secondsToWait = secondsToWaitConst;
+                                TimerLabel.Text = secondsToWait.ToString();
                             }
                             timer.Stop();
                             timerLaunched = false;
@@ -110,10 +133,14 @@ namespace SecurityTravelApp.Views
 
                 case GestureStatus.Completed:
 
+                    if (timerLaunched)
+                    {
+                        timer.Stop();
+                        timerLaunched = false;
+                    }
+
                     // hide the message
-                    MessageLaunch.FadeTo(0, _animLength);
-                    await TimerLabel.FadeTo(0, _animLength);
-                    TimerLabel.IsVisible = false;
+                    hideMessage();
 
                     var posX = Thumb.TranslationX;
                     back_animation_tumb = new Animation(d => Thumb.TranslationX = d, posX, 0, Easing.CubicIn);
@@ -121,11 +148,15 @@ namespace SecurityTravelApp.Views
                     // Reset translation applied during the pan
                     back_animation_delaybar.Commit(Thumb, "DelayBarBack", 16, _animLength);
                     back_animation_tumb.Commit(Thumb, "ThumbBack", 16, _animLength);
-                    //await Task.WhenAll(new Task[]{
-                    ////TrackBar.FadeTo(1, _animLength),
-                    //Thumb.TranslateTo(0, 0, _animLength * 2, Easing.CubicIn),
 
-                    //});
+
+                    Thumb.ScaleTo(1.3, _animLength);
+                    var taskAnimationSliderBorder = SliderBorder.FadeTo(0, _animLength / 2);
+                    var taskAnimationCallIcon = CallIcon.FadeTo(0, _animLength / 2);
+                    await Task.WhenAll(taskAnimationSliderBorder, taskAnimationCallIcon);
+                    SliderFiller.IsVisible = false;
+                    SliderBorder.IsVisible = false;
+                    CallIcon.IsVisible = false;
 
                     if (posX >= (Width - Thumb.Width - 10/* keep some margin for error*/))
                         SlideCompleted?.Invoke(this, EventArgs.Empty);
@@ -133,19 +164,60 @@ namespace SecurityTravelApp.Views
             }
         }
 
-        private void OnTimeEvent(object source, ElapsedEventArgs e)
+        private async void hideMessage()
         {
-            if (secondsToWait < 0)
+            if (TimerLabel.IsVisible || MessageLaunch.IsVisible)
             {
-                // do action
-                actionLaunched = true;
+                var taskAnimationLabel = TimerLabel.FadeTo(0, _animLength / 2);
+                var taskAnimationMessage = MessageLaunch.FadeTo(0, _animLength / 2);
+                await Task.WhenAll(taskAnimationLabel, taskAnimationMessage);
+                TimerLabel.IsVisible = false;
+                MessageLaunch.IsVisible = false;
             }
-            Device.BeginInvokeOnMainThread(() =>
+        }
+
+        private async void showMessage()
+        {
+            TimerLabel.IsVisible = true;
+            MessageLaunch.IsVisible = true;
+            TimerLabel.Opacity = 0;
+            MessageLaunch.Opacity = 0;
+            await Task.Delay(800);
+            TimerLabel.FadeTo(1, _animLength / 2);
+            MessageLaunch.FadeTo(1, _animLength / 2);
+        }
+
+        private async void OnTimeEventAsync(object source, ElapsedEventArgs e)
+        {
+            if (secondsToWait <= 0)
             {
-                // UI interaction goes here
-                TimerLabel.Text = secondsToWait--.ToString();
-            });
-            
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    // UI interaction goes here
+                    TimerLabel.Text = "";
+                    MessageLaunch.Text = I18n.GetText(AppTextID.SOS_EN_COURS);
+                });
+
+                // do action
+                if (!actionLaunched)
+                {
+                    actionLaunched = true;
+                    if (await appMngSrv.checkForPhonePermission())
+                    {
+                        DependencyService.Get<IPhoneCall>().makePhoneCall("+21200000000");
+                    }
+                    timer.Stop();
+                }
+            }
+            else
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    // UI interaction goes here
+                    TimerLabel.Text = secondsToWait--.ToString();
+                });
+            }
+
         }
 
 

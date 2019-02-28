@@ -12,12 +12,11 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HomePage : ContentPage
+    public partial class MessagesPage : ContentPage
     {
-        public HomePage(ServiceFactory pSrvFactory)
+        public MessagesPage(ServiceFactory pSrvFactory)
         {
             InitializeComponent();
-            SosSlider.initializeConfig(pSrvFactory);
             NavigationBar.initializeContent(new NavigationBarVM(pSrvFactory));
         }
     }

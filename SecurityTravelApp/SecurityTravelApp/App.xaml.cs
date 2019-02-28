@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using SecurityTravelApp.Views;
 using SecurityTravelApp.Services;
+using SecurityTravelApp.Utils;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace SecurityTravelApp
@@ -20,10 +21,12 @@ namespace SecurityTravelApp
             // instantiating services
             appMngSrv = (AppManagementService)serviceFactory.getService(ServiceType.AppManagement);
 
-            // settings services dependencies 
+            // setting services dependencies 
 
+            // Selecting App language
+            I18n.SelectLang(AppLanguage.EN);
 
-            MainPage = new HomePage(serviceFactory);
+            MainPage = new MessagesPage(serviceFactory);
         }
 
         protected override void OnStart()
