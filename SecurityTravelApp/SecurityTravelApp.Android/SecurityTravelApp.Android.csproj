@@ -47,7 +47,9 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=84e04ff9cfb79065, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -69,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BorderlessEditorRenderer.cs" />
+    <Compile Include="KeyboardCheck_Droid.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="PhoneCall_Droid.cs" />
     <Compile Include="Resources\Resource.designer.cs" />

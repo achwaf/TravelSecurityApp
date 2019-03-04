@@ -47,8 +47,8 @@ namespace SecurityTravelApp.Views
             timer = new Timer();
             timer.Elapsed += new ElapsedEventHandler(OnTimeEventAsync);
             timer.Interval = 1000;
-        }
 
+        }
 
         public void initializeConfig(ServiceFactory pSrvFactory)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SecurityTravelApp.Views.ViewsUtils
 {
@@ -16,9 +17,11 @@ namespace SecurityTravelApp.Views.ViewsUtils
         private Boolean _carriesNotif;
         private int _numberOfNotif;
         private NavigationItemNotifType _notifType;
+        private NavigationItemTarget _target;
 
 
 
+        public NavigationItemTarget target { get; set; }
         public String text { get; set; }
         public String font { get; set; }
         public String icon { get; set; }
@@ -66,6 +69,14 @@ namespace SecurityTravelApp.Views.ViewsUtils
     {
         Current,
         Shaded
+    }
+
+    public enum NavigationItemTarget
+    {
+        Home,
+        Messages,
+        Warnings,
+        Docs
     }
 
     public enum NavigationItemNotifType

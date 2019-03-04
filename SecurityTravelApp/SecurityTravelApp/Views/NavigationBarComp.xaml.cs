@@ -15,15 +15,17 @@ namespace SecurityTravelApp.Views
     public partial class NavigationBarComp : ContentView
     {
         private NavigationBarVM viewModel;
+        private ServiceFactory srvFactory;
 
         public NavigationBarComp()
         {
             InitializeComponent();
         }
 
-        public void initializeContent(NavigationBarVM pViewModel)
+        public void initializeContent(ServiceFactory pSrvFactory)
         {
-            viewModel = pViewModel;
+            srvFactory = pSrvFactory;
+            viewModel = new NavigationBarVM(pSrvFactory);
             BindingContext = viewModel;
             populateLayout();
         }
@@ -34,7 +36,7 @@ namespace SecurityTravelApp.Views
             foreach (var item in viewModel.navigationItems)
             {
                 // create the component
-                var comp = new NavigationItemComp(item);
+                var comp = new NavigationItemComp(srvFactory,item);
 
                 // add it
                 HorizontalLayout.Children.Add(comp);

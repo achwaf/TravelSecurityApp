@@ -14,7 +14,7 @@
             <Color x:Key="TestColorBLACK">Black</Color>
 
 
-            <OnPlatform x:Key="UpFrontViewMargin" x:TypeArguments="Thickness" Default="30,10" />
+            <OnPlatform x:Key="UpFrontViewMargin" x:TypeArguments="Thickness" Default="20,10" />
 
             <OnPlatform x:TypeArguments="x:String" x:Key="FontAwesomeRegular" >
                 <OnPlatform.Platforms>

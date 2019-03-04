@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace SecurityTravelApp.Services
 {
@@ -57,15 +58,14 @@ namespace SecurityTravelApp.Services
 
         private void fillWithTestData()
         {
-            navigationItems.Add(createNavigationItemTest(1, "More", FontAwesomeSolidIcons.PageMenuVertical, false));
-            navigationItems.Add(createNavigationItemTest(2, "Home", FontAwesomeSolidIcons.Branch, true, NavigationItemNotifType.Dot));
-            navigationItems.Add(createNavigationItemTest(3, "Warnings", FontAwesomeSolidIcons.Device,true,NavigationItemNotifType.Numerical,NavigationItemState.Current,5));
-            navigationItems.Add(createNavigationItemTest(4, "Messages", FontAwesomeSolidIcons.Check, false));
-            navigationItems.Add(createNavigationItemTest(5, "Intelligence", FontAwesomeSolidIcons.Crop, true, NavigationItemNotifType.Numerical,NavigationItemState.Shaded,2));
+            navigationItems.Add(createNavigationItemTest(2, "Home", NavigationItemTarget.Home, FontAwesomeSolidIcons.Branch, true, NavigationItemNotifType.Dot));
+            navigationItems.Add(createNavigationItemTest(4, "Messages", NavigationItemTarget.Messages, FontAwesomeSolidIcons.Check, false));
+            navigationItems.Add(createNavigationItemTest(3, "Warnings", NavigationItemTarget.Warnings, FontAwesomeSolidIcons.Device, true, NavigationItemNotifType.Numerical, NavigationItemState.Current, 5));
+            navigationItems.Add(createNavigationItemTest(5, "Docs", NavigationItemTarget.Docs, FontAwesomeSolidIcons.Crop, true, NavigationItemNotifType.Numerical, NavigationItemState.Shaded, 2));
         }
 
 
-        private NavigationItem createNavigationItemTest(int pId, String pText, String pSolidIcon, Boolean pCarriesNotif = true, NavigationItemNotifType pType = NavigationItemNotifType.Numerical, NavigationItemState pState = NavigationItemState.Shaded, int pNumberNotif = 99)
+        private NavigationItem createNavigationItemTest(int pId, String pText, NavigationItemTarget pTarget, String pSolidIcon, Boolean pCarriesNotif = true, NavigationItemNotifType pType = NavigationItemNotifType.Numerical, NavigationItemState pState = NavigationItemState.Shaded, int pNumberNotif = 99)
         {
             return new NavigationItem
             {
@@ -76,7 +76,9 @@ namespace SecurityTravelApp.Services
                 carriesNotif = pCarriesNotif,
                 state = pState,
                 numberOfNotif = pNumberNotif,
-                notifType = pType
+                notifType = pType,
+                target = pTarget
+
 
             };
         }

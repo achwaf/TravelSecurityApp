@@ -1,4 +1,5 @@
-﻿using SecurityTravelApp.Services;
+﻿using SecurityTravelApp.DependencyServices;
+using SecurityTravelApp.Services;
 using SecurityTravelApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,41 @@ namespace SecurityTravelApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MessagesPage : ContentPage
     {
+        IKeyboardCheck keyboardService;
+
         public MessagesPage(ServiceFactory pSrvFactory)
         {
             InitializeComponent();
-            NavigationBar.initializeContent(new NavigationBarVM(pSrvFactory));
+            NavigationBar.initializeContent(pSrvFactory);
+
+
+            //keyboardService = Xamarin.Forms.DependencyService.Get<IKeyboardCheck>();
+
+        }
+
+        private void KeyboardService_KeyboardIsHidden(object sender, EventArgs e)
+        {
+            ThePage.Padding = new Thickness(0);
+        }
+
+        private void KeyboardService_KeyboardIsShown(object sender, EventArgs e)
+        {
+            ThePage.Padding = new Thickness(0, 0, 0, 200);
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            //keyboardService.KeyboardIsShown += KeyboardService_KeyboardIsShown;
+            //keyboardService.KeyboardIsHidden += KeyboardService_KeyboardIsHidden;
+
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            //keyboardService.KeyboardIsShown -= KeyboardService_KeyboardIsShown;
+            //keyboardService.KeyboardIsHidden -= KeyboardService_KeyboardIsHidden;
         }
     }
 }

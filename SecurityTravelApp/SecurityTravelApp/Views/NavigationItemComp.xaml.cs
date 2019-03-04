@@ -1,4 +1,6 @@
-﻿using SecurityTravelApp.Views.ViewsUtils;
+﻿using SecurityTravelApp.Services;
+using SecurityTravelApp.Utils;
+using SecurityTravelApp.Views.ViewsUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +19,22 @@ namespace SecurityTravelApp.Views
         public String text { get; set; }
         public Boolean textVisible { get; set; }
 
-        public NavigationItemComp(NavigationItem pItem)
+        public NavigationItemComp(ServiceFactory pSrvFactory, NavigationItem pItem)
         {
+            AppManagementService appService = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);
             InitializeComponent();
             BindingContext = pItem;
+
+            // add tap gesture recognizer 
+            var tapGestureRecognizerContainer = new TapGestureRecognizer();
+            tapGestureRecognizerContainer.Tapped += async (s, e) =>
+            {
+                Page page = (Page)Activator.CreateInstance(Utilities.TypeOfNavigationTarget(pItem.target), pSrvFactory);
+                await Navigation.PushAsync(page, false);
+                Navigation.RemovePage(Navigation.NavigationStack.ElementAt(Navigation.NavigationStack.Count - 2));
+
+            };
+            ItemContainer.GestureRecognizers.Add(tapGestureRecognizerContainer);
 
             updateView(pItem);
         }

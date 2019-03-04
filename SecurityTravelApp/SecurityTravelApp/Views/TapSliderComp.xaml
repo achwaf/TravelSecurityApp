@@ -4,8 +4,11 @@
              xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
              x:Class="SecurityTravelApp.Views.TapSliderComp">
     <ContentView.Resources>
-        <OnPlatform x:Key="ThumbCornerRadius" x:TypeArguments="CornerRadius" Default="45"/>
-        <OnPlatform x:Key="DelayBarCornerRadius" x:TypeArguments="CornerRadius" Default="38"/>
+        <OnPlatform x:Key="ThumbCornerRadius" x:TypeArguments="CornerRadius" Default="30"/>
+        <OnPlatform x:Key="DelayBarCornerRadius" x:TypeArguments="CornerRadius" Default="20"/>
+        <OnPlatform x:Key="AbsoluteLayoutLeftSide" x:TypeArguments="Rectangle" Default="1,.5,60,60"/>
+        <OnPlatform x:Key="AbsoluteLayoutRightSide" x:TypeArguments="Rectangle" Default="0,.5,60,60"/>
+        <OnPlatform x:Key="AbsoluteLayoutBackground" x:TypeArguments="Rectangle" Default="0,.5,1,60"/>
     </ContentView.Resources>
     <ContentView.Content>
         <AbsoluteLayout x:Name="TapSlider" VerticalOptions="Center"
@@ -13,27 +16,27 @@
 
             <BoxView x:Name="GrayLine" Color="LightGray" AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional" Opacity=".4"   AbsoluteLayout.LayoutBounds=".5,.5,.9,2" />
 
-            <BoxView Color="White" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="10"
-                     AbsoluteLayout.LayoutFlags="PositionProportional"    AbsoluteLayout.LayoutBounds="1,.5,90,90"/>
+            <BoxView Color="White" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="8"
+                     AbsoluteLayout.LayoutFlags="PositionProportional"    AbsoluteLayout.LayoutBounds="{StaticResource AbsoluteLayoutLeftSide}"/>
 
-            <BoxView Color="#d7d7d7" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="16"
-                     AbsoluteLayout.LayoutFlags="PositionProportional"    AbsoluteLayout.LayoutBounds="1,.5,90,90"/>
+            <BoxView Color="#d7d7d7" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="12"
+                     AbsoluteLayout.LayoutFlags="PositionProportional"    AbsoluteLayout.LayoutBounds="{StaticResource AbsoluteLayoutLeftSide}"/>
 
-            <BoxView Color="White" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="18" Opacity=".9"
-                     AbsoluteLayout.LayoutFlags="PositionProportional"    AbsoluteLayout.LayoutBounds="1,.5,90,90"/>
+            <BoxView Color="White" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="14" Opacity=".9"
+                     AbsoluteLayout.LayoutFlags="PositionProportional"    AbsoluteLayout.LayoutBounds="{StaticResource AbsoluteLayoutLeftSide}"/>
 
             <Label x:Name="CallIconDisabled" 
                         Text="{x:Static viewUtils:FontAwesomeSolidIcons.Call}"
                         FontFamily="{StaticResource FontAwesomeSolid}"
                         TextColor="#d7d7d7"
                         Opacity=".6"
-                        FontSize="30"
+                        FontSize="20"
                         VerticalTextAlignment="Center"
                         HorizontalTextAlignment="Center"
-                        AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1,0.5,90,90"
+                        AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="{StaticResource AbsoluteLayoutLeftSide}"
                        />
 
-            <Grid  x:Name="SliderBackground" AbsoluteLayout.LayoutFlags="YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0,.5,1,90">
+            <Grid  x:Name="SliderBackground" AbsoluteLayout.LayoutFlags="YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="{StaticResource AbsoluteLayoutBackground}">
                 <BoxView x:Name="SliderBorder" IsVisible="False" Color="#17aa29" CornerRadius="{StaticResource ThumbCornerRadius}"
                     VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
                 <BoxView x:Name="SliderFiller" IsVisible="False" Color="White" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="2"
@@ -45,19 +48,19 @@
                         FontFamily="{StaticResource FontAwesomeSolid}"
                         TextColor="#17aa29"
                         Opacity=".6"
-                        FontSize="30"
+                        FontSize="20"
                         VerticalTextAlignment="Center"
                         HorizontalTextAlignment="Center"
-                        AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1,0.5,90,90"
+                        AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="{StaticResource AbsoluteLayoutLeftSide}"
                        />
 
-            <Grid AbsoluteLayout.LayoutFlags="YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="0,.5,1,90">
+            <Grid AbsoluteLayout.LayoutFlags="YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="{StaticResource AbsoluteLayoutBackground}">
                 <Grid x:Name="DelayBar" HorizontalOptions="Start" WidthRequest="0" ColumnSpacing="0" Padding="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <BoxView Color="#a9f3b3" CornerRadius="{StaticResource DelayBarCornerRadius}" Margin="14" HorizontalOptions="FillAndExpand"
+                    <BoxView Color="#a9f3b3" CornerRadius="{StaticResource DelayBarCornerRadius}" Margin="10" HorizontalOptions="FillAndExpand"
                              Grid.Column="0" Grid.ColumnSpan="2"/>
 
                     <Label x:Name="MessageLaunch" Grid.Column="0" IsVisible="False" Opacity="0"
@@ -80,20 +83,20 @@
                         VerticalOptions="Center"
                         HorizontalOptions="Start"
                         Margin="5,0,100,0"
-                        HeightRequest="90"/>
+                        HeightRequest="50"/>
 
 
                 </Grid>
             </Grid>
 
-            <Grid x:Name="Thumb" IsVisible="True" AbsoluteLayout.LayoutFlags="YProportional" AbsoluteLayout.LayoutBounds="0,.5,90,90" Scale="1.3">
-                <BoxView Color="#bf0000" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="4" />
-                <BoxView Color="#fff4f4" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="9"/>
-                <BoxView Color="#bf0000" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="12" />
+            <Grid x:Name="Thumb" IsVisible="True" AbsoluteLayout.LayoutFlags="YProportional" AbsoluteLayout.LayoutBounds="{StaticResource AbsoluteLayoutRightSide}" Scale="1.3">
+                <BoxView Color="#bf0000" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="3" />
+                <BoxView Color="#fff4f4" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="6"/>
+                <BoxView Color="#bf0000" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="8" />
                 <Label Text="SOS"
                         FontAttributes="Bold"
                         TextColor="White"
-                        FontSize="26"
+                        FontSize="16"
                         HorizontalTextAlignment="Center"
                         VerticalTextAlignment="Center"/>
             </Grid>

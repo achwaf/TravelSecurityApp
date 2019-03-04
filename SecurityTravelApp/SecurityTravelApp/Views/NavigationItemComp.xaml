@@ -13,12 +13,12 @@
         <OnPlatform x:Key="DotNotifSize" x:TypeArguments="x:Double" Default="5"/>
         <OnPlatform x:Key="IconSize" x:TypeArguments="x:Double" Default="50"/>
         <OnPlatform x:Key="IconFontSize" x:TypeArguments="x:Double" Default="30"/>
-        <OnPlatform x:Key="TextItemMargin" x:TypeArguments="Thickness" Default="0,0,0,2"/>
-        <OnPlatform x:Key="TextItemSize" x:TypeArguments="x:Double" Default="12"/>
+        <OnPlatform x:Key="TextItemMargin" x:TypeArguments="Thickness" Default="0,-5,0,2"/>
+        <OnPlatform x:Key="TextItemSize" x:TypeArguments="x:Double" Default="10"/>
 
     </ContentView.Resources>
     <ContentView.Content>
-        <StackLayout VerticalOptions="CenterAndExpand"
+        <StackLayout x:Name="ItemContainer" VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand"
                    Spacing="0">
             <Grid>
@@ -36,7 +36,7 @@
                            HorizontalOptions="Center"
                            WidthRequest="{StaticResource IconSize}"
                            HeightRequest="{StaticResource IconSize}"
-                           Margin="5,5,5,2"
+                           Margin="5,5,5,0"
                        />
                     <Grid x:Name="NumercialNotif"
                       HorizontalOptions="End"
@@ -63,6 +63,7 @@
                       Margin="0,10,15,0"
                       IsVisible="{Binding notifType,Converter=NavigationItemTypeNotifToBool}">
                         <BoxView 
+                         CornerRadius="{StaticResource NotificationCornerRadius}"
                          Color="{StaticResource NotificationColor}"
                          WidthRequest="{StaticResource DotNotifSize}"
                          HeightRequest="{StaticResource DotNotifSize}"

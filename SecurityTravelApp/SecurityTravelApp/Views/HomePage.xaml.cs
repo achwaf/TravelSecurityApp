@@ -18,7 +18,7 @@ namespace SecurityTravelApp.Views
         {
             InitializeComponent();
             SosSlider.initializeConfig(pSrvFactory);
-            NavigationBar.initializeContent(new NavigationBarVM(pSrvFactory));
+            NavigationBar.initializeContent(pSrvFactory);
         }
     }
 }

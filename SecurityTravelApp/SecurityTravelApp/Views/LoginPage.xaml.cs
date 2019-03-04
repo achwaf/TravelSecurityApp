@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SecurityTravelApp.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,12 @@ using Xamarin.Forms.Xaml;
 
 namespace SecurityTravelApp.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class LoginPage : ContentPage
-	{
-		public LoginPage ()
-		{
-			InitializeComponent ();
-		}
-	}
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class LoginPage : ContentPage
+    {
+        public LoginPage(ServiceFactory pServFactory)
+        {
+            InitializeComponent();
+        }
+    }
 }

@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:comp="clr-namespace:SecurityTravelApp.Views"
              xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
-             x:Class="SecurityTravelApp.Views.HomePage">
+             x:Class="SecurityTravelApp.Views.HomePage"
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
 
 
@@ -19,14 +20,16 @@
                 </Grid.RowDefinitions>
                 <comp:TapSliderComp x:Name="SosSlider" Grid.Row="1" Margin="50,0"/>
             </Grid>
+
             <StackLayout x:Name="StackLayoutUpFront"  VerticalOptions="End" AbsoluteLayout.LayoutFlags="YProportional , SizeProportional"
+                    Margin="{StaticResource UpFrontViewMargin}"
                     AbsoluteLayout.LayoutBounds="0,1,1,1">
                 <Frame
                     VerticalOptions="End"
                     HorizontalOptions="Fill"
                     HasShadow="true"
-                    CornerRadius="8"
-                    BackgroundColor="#11111155"
+                    CornerRadius="20"
+                    BackgroundColor="#BBcfcfcf"
                     Padding="0">
                     <comp:NavigationBarComp x:Name="NavigationBar" />
                 </Frame>
