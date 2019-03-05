@@ -58,10 +58,10 @@ namespace SecurityTravelApp.Services
 
         private void fillWithTestData()
         {
-            navigationItems.Add(createNavigationItemTest(2, "Home", NavigationItemTarget.Home, FontAwesomeSolidIcons.Branch, true, NavigationItemNotifType.Dot));
-            navigationItems.Add(createNavigationItemTest(4, "Messages", NavigationItemTarget.Messages, FontAwesomeSolidIcons.Check, false));
-            navigationItems.Add(createNavigationItemTest(3, "Warnings", NavigationItemTarget.Warnings, FontAwesomeSolidIcons.Device, true, NavigationItemNotifType.Numerical, NavigationItemState.Current, 5));
-            navigationItems.Add(createNavigationItemTest(5, "Docs", NavigationItemTarget.Docs, FontAwesomeSolidIcons.Crop, true, NavigationItemNotifType.Numerical, NavigationItemState.Shaded, 2));
+            navigationItems.Add(createNavigationItemTest(2, "Home", NavigationItemTarget.Home, LineAwesomeIcons.Home, true, NavigationItemNotifType.Dot));
+            navigationItems.Add(createNavigationItemTest(4, "Messages", NavigationItemTarget.Messages, LineAwesomeIcons.Messages, false));
+            navigationItems.Add(createNavigationItemTest(3, "Warnings", NavigationItemTarget.Warnings, LineAwesomeIcons.Warnings, true, NavigationItemNotifType.Numerical, NavigationItemState.Current, 5));
+            navigationItems.Add(createNavigationItemTest(5, "Docs", NavigationItemTarget.Docs, LineAwesomeIcons.Docs, true, NavigationItemNotifType.Numerical, NavigationItemState.Shaded, 2));
         }
 
 

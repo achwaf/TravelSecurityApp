@@ -15,7 +15,7 @@ namespace SecurityTravelApp.Utils
             {
                 case NavigationItemTarget.Home: return typeof(HomePage);
                 case NavigationItemTarget.Messages: return typeof(MessagesPage);
-                default: return null;
+                default: return typeof(LoginPage);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using SecurityTravelApp.Services;
 using SecurityTravelApp.ViewModels;
+using SecurityTravelApp.Views.ViewsUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,32 +18,40 @@ namespace SecurityTravelApp.Views
         private NavigationBarVM viewModel;
         private ServiceFactory srvFactory;
 
+
         public NavigationBarComp()
         {
             InitializeComponent();
         }
 
-        public void initializeContent(ServiceFactory pSrvFactory)
+        public void initializeContent(ServiceFactory pSrvFactory, AfterNavigationParams pParams)
         {
             srvFactory = pSrvFactory;
             viewModel = new NavigationBarVM(pSrvFactory);
             BindingContext = viewModel;
-            populateLayout();
+            populateLayout(pParams);
         }
 
-        private void populateLayout()
+        private void populateLayout(AfterNavigationParams pParams)
         {
             // add NavigationItemComps to the layout
+            var i = 0;
             foreach (var item in viewModel.navigationItems)
             {
                 // create the component
-                var comp = new NavigationItemComp(srvFactory,item);
+                Boolean highlight = false;
+                if (pParams != null)
+                {
+                    highlight = item.target == pParams.navigationTarget;
+                }
+                var comp = new NavigationItemComp(srvFactory, item, highlight);
 
                 // add it
+                Grid.SetColumn(comp, i++);
                 HorizontalLayout.Children.Add(comp);
-
             }
         }
+
     }
 
 }

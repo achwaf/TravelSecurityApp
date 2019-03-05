@@ -12,12 +12,20 @@
         </ResourceDictionary>
     </ContentView.Resources>
     <ContentView.Content>
-        <FlexLayout x:Name="HorizontalLayout"
+        <Frame
+            HeightRequest="60"
+            Padding="0"
+            CornerRadius="20"
+            HasShadow="true"
+            BackgroundColor="WhiteSmoke"
+            OutlineColor="WhiteSmoke">
+            <FlexLayout x:Name="HorizontalLayout"
                     Direction="Row"
                     AlignItems="Stretch"
                     JustifyContent="SpaceEvenly"
                     Margin="{StaticResource NavigationBarMargin}"
                     VerticalOptions="End"/>
+        </Frame>
 
 
     </ContentView.Content>

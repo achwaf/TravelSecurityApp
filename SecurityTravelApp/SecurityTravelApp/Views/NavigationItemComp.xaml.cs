@@ -19,7 +19,7 @@ namespace SecurityTravelApp.Views
         public String text { get; set; }
         public Boolean textVisible { get; set; }
 
-        public NavigationItemComp(ServiceFactory pSrvFactory, NavigationItem pItem)
+        public NavigationItemComp(ServiceFactory pSrvFactory, NavigationItem pItem, Boolean HighlightFadeOut)
         {
             AppManagementService appService = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);
             InitializeComponent();
@@ -27,14 +27,32 @@ namespace SecurityTravelApp.Views
 
             // add tap gesture recognizer 
             var tapGestureRecognizerContainer = new TapGestureRecognizer();
+
+            // setting the handler
             tapGestureRecognizerContainer.Tapped += async (s, e) =>
             {
-                Page page = (Page)Activator.CreateInstance(Utilities.TypeOfNavigationTarget(pItem.target), pSrvFactory);
-                await Navigation.PushAsync(page, false);
-                Navigation.RemovePage(Navigation.NavigationStack.ElementAt(Navigation.NavigationStack.Count - 2));
+                Page lastPage = Navigation.NavigationStack.Last();
+                Type typeCurrentPage = Utilities.TypeOfNavigationTarget(pItem.target);
+
+                // effects on NavigationItem : highlighting
+                showHighlight();
+                if (lastPage.GetType() != typeCurrentPage)
+                {
+                    var paramAfterNav = new AfterNavigationParams() { navigationTarget = pItem.target };
+                    Page page = (Page)Activator.CreateInstance(typeCurrentPage, pSrvFactory, paramAfterNav);
+                    await Navigation.PushAsync(page, false);
+                    Navigation.RemovePage(Navigation.NavigationStack.ElementAt(Navigation.NavigationStack.Count - 2));
+                    HighlightMask.IsVisible = false;
+                }
+                showAndFadeOutHighlight();
 
             };
             ItemContainer.GestureRecognizers.Add(tapGestureRecognizerContainer);
+
+            if (HighlightFadeOut)
+            {
+                showAndFadeOutHighlight();
+            }
 
             updateView(pItem);
         }
@@ -54,5 +72,25 @@ namespace SecurityTravelApp.Views
             }
 
         }
+
+        private void showHighlight()
+        {
+            HighlightMask.Opacity = 0;
+            HighlightMask.IsVisible = true;
+            HighlightMask.FadeTo(.4, 100, Easing.CubicIn);
+
+        }
+
+
+
+        private async void showAndFadeOutHighlight()
+        {
+            HighlightMask.Opacity = .4;
+            HighlightMask.IsVisible = true;
+            await HighlightMask.FadeTo(0, 1000, Easing.CubicIn);
+            HighlightMask.IsVisible = false;
+
+        }
+
     }
 }

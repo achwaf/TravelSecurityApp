@@ -1,6 +1,7 @@
 ﻿using SecurityTravelApp.DependencyServices;
 using SecurityTravelApp.Services;
 using SecurityTravelApp.ViewModels;
+using SecurityTravelApp.Views.ViewsUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,11 @@ namespace SecurityTravelApp.Views
     {
         IKeyboardCheck keyboardService;
 
-        public MessagesPage(ServiceFactory pSrvFactory)
+        public MessagesPage(ServiceFactory pSrvFactory, AfterNavigationParams pParam)
         {
             InitializeComponent();
-            NavigationBar.initializeContent(pSrvFactory);
+            NavigationBar.initializeContent(pSrvFactory, pParam);
 
-
-            //keyboardService = Xamarin.Forms.DependencyService.Get<IKeyboardCheck>();
 
         }
 

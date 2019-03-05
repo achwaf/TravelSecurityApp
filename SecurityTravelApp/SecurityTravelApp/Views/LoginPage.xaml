@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:comp="clr-namespace:SecurityTravelApp.Views.Popups"
+             xmlns:comp="clr-namespace:SecurityTravelApp.Views"
              xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
              x:Class="SecurityTravelApp.Views.LoginPage"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="white">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -21,47 +22,48 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="FillAndExpand"
+        <AbsoluteLayout>
+            <Grid AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional" 
+                AbsoluteLayout.LayoutBounds=".5,.5,.9,200"
+                  VerticalOptions="Center"
                 Padding="0"
                 Margin="40,0">
-            <StackLayout
+                <StackLayout
                 Padding="2"
                 BackgroundColor="{StaticResource HighLightColor}">
-                <StackLayout
+                    <StackLayout
                 Padding="20"
                 Spacing="20"
                 BackgroundColor="{StaticResource OverAllColor}">
-                    <StackLayout
+                        <StackLayout
                 Orientation="Horizontal">
-                        <Label Text="Matricule"
+                            <Label Text="Matricule"
                        HorizontalTextAlignment="Start"
                        VerticalOptions="Center"
                        WidthRequest="{StaticResource LabelWidth}"/>
-                        <Entry x:Name="UserIdEntry"
+                            <Entry x:Name="UserIdEntry"
                     VerticalOptions="Center"
                     BackgroundColor="{StaticResource EntryColor}"
                     HorizontalOptions="FillAndExpand"/>
-                    </StackLayout>
-                    <StackLayout
+                        </StackLayout>
+                        <StackLayout
                 Orientation="Horizontal">
-                        <Label Text="Mot de passe"
+                            <Label Text="Mot de passe"
                        HorizontalTextAlignment="Start"
                        VerticalOptions="Center"
                        WidthRequest="{StaticResource LabelWidth}"/>
-                        <Entry x:Name="PassEntry"
+                            <Entry x:Name="PassEntry"
                     VerticalOptions="Center"
                     IsPassword="True"
                     BackgroundColor="{StaticResource EntryColor}"
                     HorizontalOptions="FillAndExpand"/>
-                    </StackLayout>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label x:Name="WarningMsg"
+                        </StackLayout>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label x:Name="WarningMsg"
                            Grid.Column="0"
                            IsVisible="false"
                            FontSize="{StaticResource WarningMsgFontSize}"
@@ -72,14 +74,14 @@
                            VerticalOptions="FillAndExpand"
                            HorizontalOptions="FillAndExpand"
                            Margin="10,0"/>
-                        <StackLayout x:Name="Button"
+                            <StackLayout x:Name="Button"
                          Grid.Column="1"
                          Spacing="10"
                          Orientation="Horizontal"
                          HorizontalOptions="End"
                          VerticalOptions="Start"
                          HeightRequest="{StaticResource ButtonHeight}">
-                            <Label x:Name="ConfirmerIcon" 
+                                <Label x:Name="ConfirmerIcon" 
                        Text="{x:Static viewUtils:FontAwesomeSolidIcons.Check}"
                        Margin="10,0,0,0"
                        VerticalTextAlignment="Center"
@@ -88,7 +90,7 @@
                        HorizontalOptions="End"
                        FontFamily="{StaticResource FontAwesomeSolid}"
                        TextColor="{StaticResource HighLightColor}"/>
-                            <Label Text="Se Connecter"
+                                <Label Text="Se Connecter"
                        Margin="0,0,10,0"
                        VerticalTextAlignment="Center"
                        HorizontalOptions="End"
@@ -96,11 +98,19 @@
                        HorizontalTextAlignment="Start"
                        VerticalOptions="Fill"
                        TextColor="{StaticResource HighLightColor}"/>
-                        </StackLayout>
-                    </Grid>
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
                 </StackLayout>
-            </StackLayout>
 
-        </Grid>
+            </Grid>
+            <StackLayout x:Name="StackLayoutUpFront"  VerticalOptions="End" AbsoluteLayout.LayoutFlags="All"
+                    Margin="{StaticResource UpFrontViewMargin}"
+                    AbsoluteLayout.LayoutBounds=".5,1,1,1">
+
+                <comp:NavigationBarComp x:Name="NavigationBar" VerticalOptions="End" HorizontalOptions="Fill" />
+
+            </StackLayout>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

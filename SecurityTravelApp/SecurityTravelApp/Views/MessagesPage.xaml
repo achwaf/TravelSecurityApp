@@ -4,7 +4,8 @@
              xmlns:comp="clr-namespace:SecurityTravelApp.Views"
              xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
              x:Class="SecurityTravelApp.Views.MessagesPage"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="white">
     <ContentPage.Resources>
 
         <OnPlatform x:Key="BarCornerRadius" x:TypeArguments="CornerRadius" Default="20" />
@@ -50,15 +51,12 @@
                         <comp:MessageComp />
                         <comp:MessageComp />
                         <comp:MessageComp />
-                        <comp:MessageComp />
-                        <comp:MessageComp />
-                        <comp:MessageComp />
                     </StackLayout>
                 </ScrollView>
             </Grid>
             <StackLayout x:Name="StackLayoutUpFront"  VerticalOptions="End" 
-                         AbsoluteLayout.LayoutFlags="YProportional , SizeProportional"
-                         AbsoluteLayout.LayoutBounds="0,1,1,1"
+                         AbsoluteLayout.LayoutFlags="All"
+                         AbsoluteLayout.LayoutBounds=".5,1,1,1"
                          Margin="{StaticResource UpFrontViewMargin}">
                 <!--writing messages component-->
                 <Grid x:Name="MessagingComp" IsVisible="false"  VerticalOptions="EndAndExpand" RowSpacing="0">
@@ -122,15 +120,7 @@
                         </StackLayout>
                     </Grid>
                 </Grid>
-                <Frame
-                    VerticalOptions="End"
-                    HorizontalOptions="Fill"
-                    HasShadow="true"
-                    CornerRadius="20"
-                    BackgroundColor="#EEcfcfcf"
-                    Padding="0">
-                    <comp:NavigationBarComp x:Name="NavigationBar" />
-                </Frame>
+                <comp:NavigationBarComp x:Name="NavigationBar" VerticalOptions="End" HorizontalOptions="Fill"/>
             </StackLayout>
         </AbsoluteLayout>
     </ContentPage.Content>

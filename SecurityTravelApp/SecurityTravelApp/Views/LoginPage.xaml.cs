@@ -1,4 +1,5 @@
 ﻿using SecurityTravelApp.Services;
+using SecurityTravelApp.Views.ViewsUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,10 @@ namespace SecurityTravelApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        public LoginPage(ServiceFactory pServFactory)
+        public LoginPage(ServiceFactory pSrvFactory, AfterNavigationParams pParam)
         {
             InitializeComponent();
+            NavigationBar.initializeContent(pSrvFactory, pParam);
         }
     }
 }

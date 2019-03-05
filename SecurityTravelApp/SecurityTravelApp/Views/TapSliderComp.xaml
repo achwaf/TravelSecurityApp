@@ -14,23 +14,33 @@
         <AbsoluteLayout x:Name="TapSlider" VerticalOptions="Center"
                         HeightRequest="150">
 
-            <BoxView x:Name="GrayLine" Color="LightGray" AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional" Opacity=".4"   AbsoluteLayout.LayoutBounds=".5,.5,.9,2" />
+            <!--<BoxView x:Name="GrayLine" Color="#d7d7d7" AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional" Opacity=".7"   AbsoluteLayout.LayoutBounds=".5,.5,.9,2" />-->
+
+
+            <Label x:Name="DirectionOfSlide" 
+                        Text="{x:Static viewUtils:LineAwesomeIcons.ChevronRightMultiple}"
+                        FontFamily="{StaticResource LineAwesome}"
+                        TextColor="#d7d7d7"
+                        Opacity=".4"
+                        FontSize="25"
+                        VerticalTextAlignment="Center"
+                        LineBreakMode="NoWrap"
+                        HorizontalTextAlignment="Start"
+                        Margin="70,0,60,0"
+                        AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1"
+                       />
 
             <BoxView Color="White" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="8"
                      AbsoluteLayout.LayoutFlags="PositionProportional"    AbsoluteLayout.LayoutBounds="{StaticResource AbsoluteLayoutLeftSide}"/>
 
-            <BoxView Color="#d7d7d7" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="12"
-                     AbsoluteLayout.LayoutFlags="PositionProportional"    AbsoluteLayout.LayoutBounds="{StaticResource AbsoluteLayoutLeftSide}"/>
-
-            <BoxView Color="White" CornerRadius="{StaticResource ThumbCornerRadius}" Margin="14" Opacity=".9"
-                     AbsoluteLayout.LayoutFlags="PositionProportional"    AbsoluteLayout.LayoutBounds="{StaticResource AbsoluteLayoutLeftSide}"/>
+            
 
             <Label x:Name="CallIconDisabled" 
-                        Text="{x:Static viewUtils:FontAwesomeSolidIcons.Call}"
-                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        Text="{x:Static viewUtils:LineAwesomeIcons.Phone}"
+                        FontFamily="{StaticResource LineAwesome}"
                         TextColor="#d7d7d7"
-                        Opacity=".6"
-                        FontSize="20"
+                        Opacity=".7"
+                        FontSize="40"
                         VerticalTextAlignment="Center"
                         HorizontalTextAlignment="Center"
                         AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="{StaticResource AbsoluteLayoutLeftSide}"
@@ -44,11 +54,11 @@
             </Grid>
 
             <Label x:Name="CallIcon" IsVisible="False"
-                        Text="{x:Static viewUtils:FontAwesomeSolidIcons.Call}"
-                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        Text="{x:Static viewUtils:LineAwesomeIcons.Phone}"
+                        FontFamily="{StaticResource LineAwesome}"
                         TextColor="#17aa29"
                         Opacity=".6"
-                        FontSize="20"
+                        FontSize="40"
                         VerticalTextAlignment="Center"
                         HorizontalTextAlignment="Center"
                         AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="{StaticResource AbsoluteLayoutLeftSide}"

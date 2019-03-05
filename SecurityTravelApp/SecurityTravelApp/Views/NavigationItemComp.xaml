@@ -13,21 +13,33 @@
         <OnPlatform x:Key="DotNotifSize" x:TypeArguments="x:Double" Default="5"/>
         <OnPlatform x:Key="IconSize" x:TypeArguments="x:Double" Default="50"/>
         <OnPlatform x:Key="IconFontSize" x:TypeArguments="x:Double" Default="30"/>
-        <OnPlatform x:Key="TextItemMargin" x:TypeArguments="Thickness" Default="0,-5,0,2"/>
+        <OnPlatform x:Key="TextItemMargin" x:TypeArguments="Thickness" Default="0,-5,0,5"/>
+        <OnPlatform x:Key="TextItemHeight" x:TypeArguments="x:Double" Default="30"/>
         <OnPlatform x:Key="TextItemSize" x:TypeArguments="x:Double" Default="10"/>
 
     </ContentView.Resources>
     <ContentView.Content>
-        <StackLayout x:Name="ItemContainer" VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand"
-                   Spacing="0">
-            <Grid>
-                <Grid       HorizontalOptions="Center"
+        <Grid x:Name="ItemContainer" VerticalOptions="Center"
+                   HorizontalOptions="Fill" >
+            <AbsoluteLayout Grid.Column="0">
+                <BoxView x:Name="HighlightMask"
+                         AbsoluteLayout.LayoutFlags="PositionProportional"
+                         AbsoluteLayout.LayoutBounds=".5,.5,150,150"
+                         IsVisible="false"
+                         Color="LightBlue"
+                         Opacity=".4"
+                         CornerRadius="100"/>
+            </AbsoluteLayout>
+            <Grid ColumnSpacing="0" RowSpacing="0"     HorizontalOptions="Center"
                             VerticalOptions="Center">
-                    <Label x:Name="Icon" 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label x:Name="Icon" 
                            Text="{Binding icon}"
                            Grid.Column="0"
-                           FontFamily="{StaticResource FontAwesomeSolid}"
+                           FontFamily="{StaticResource LineAwesome}"
                            TextColor="{StaticResource TestColorRED}"
                            FontSize="{StaticResource IconFontSize}"
                            VerticalTextAlignment="Center"
@@ -38,17 +50,17 @@
                            HeightRequest="{StaticResource IconSize}"
                            Margin="5,5,5,0"
                        />
-                    <Grid x:Name="NumercialNotif"
+                <Grid x:Name="NumercialNotif"
                       HorizontalOptions="End"
                       VerticalOptions="Start"
                       Margin="0,5,5,0"
                       IsVisible="true">
-                        <BoxView CornerRadius="{StaticResource NotificationCornerRadius}"
+                    <BoxView CornerRadius="{StaticResource NotificationCornerRadius}"
                          Color="{StaticResource NotificationColor}"
                          WidthRequest="{StaticResource NumericalNotifSize}"
                          HeightRequest="{StaticResource NumericalNotifSize}"
                          />
-                        <Label x:Name="NotifNumber"
+                    <Label x:Name="NotifNumber"
                            Text="{Binding numberOfNotif}"
                            FontSize="{StaticResource NumericalNotifTextSize}"
                            FontAttributes="bold"  
@@ -56,30 +68,31 @@
                            HorizontalOptions="CenterAndExpand"
                            VerticalTextAlignment="Center"
                            HorizontalTextAlignment="Center"/>
-                    </Grid>
-                    <Grid x:Name="DotNotif"
+                </Grid>
+                <Grid x:Name="DotNotif"
                       HorizontalOptions="End"
                       VerticalOptions="Start"
                       Margin="0,10,15,0"
                       IsVisible="{Binding notifType,Converter=NavigationItemTypeNotifToBool}">
-                        <BoxView 
+                    <BoxView 
                          CornerRadius="{StaticResource NotificationCornerRadius}"
                          Color="{StaticResource NotificationColor}"
                          WidthRequest="{StaticResource DotNotifSize}"
                          HeightRequest="{StaticResource DotNotifSize}"
                          />
-                    </Grid>
                 </Grid>
-            </Grid>
-            <Label HorizontalOptions="Center"
+                <Label Grid.Row="1"
+                   HorizontalOptions="Center"
                    VerticalOptions="End"
                    HorizontalTextAlignment="Center"
-                   VerticalTextAlignment="Center"
+                   VerticalTextAlignment="End"
                    FontAttributes="Bold"
                    Text="{Binding text}"
+                   HeightRequest="{StaticResource TextItemHeight}"
                    FontSize="{StaticResource TextItemSize}"
                    TextColor="{StaticResource ItemTextColor}"
                    Margin="{StaticResource TextItemMargin}"/>
-        </StackLayout>
+            </Grid>
+        </Grid>
     </ContentView.Content>
 </ContentView>

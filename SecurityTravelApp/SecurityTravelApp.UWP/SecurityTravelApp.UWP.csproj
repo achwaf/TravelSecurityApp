@@ -168,6 +168,9 @@
   <ItemGroup>
     <Content Include="Assets\fa-regular-400.ttf" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\line-awesome.ttf" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

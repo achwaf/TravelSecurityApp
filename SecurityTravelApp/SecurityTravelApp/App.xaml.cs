@@ -26,7 +26,7 @@ namespace SecurityTravelApp
             // Selecting App language
             I18n.SelectLang(AppLanguage.EN);
 
-            MainPage = new NavigationPage(new HomePage(serviceFactory));
+            MainPage = new NavigationPage(new HomePage(serviceFactory, null));
         }
 
         protected override void OnStart()

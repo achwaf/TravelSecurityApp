@@ -16,5 +16,6 @@ namespace SecurityTravelApp.Views.ViewsUtils
         public static readonly string ConfirmReading = "\uf044";
         public static readonly string DeleteReading = "\uf2ed";
         public static readonly string Bell = "\uf0f3";
+        public static readonly string Home = "\uf015";
     }
 }
