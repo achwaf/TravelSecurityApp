@@ -26,6 +26,7 @@ namespace SecurityTravelApp.UWP
                 Control.Padding = new Windows.UI.Xaml.Thickness(0);
             }
         }
+
     }
 
 

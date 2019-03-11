@@ -1,4 +1,5 @@
-﻿using SecurityTravelApp.DependencyServices;
+﻿using Plugin.Permissions.Abstractions;
+using SecurityTravelApp.DependencyServices;
 using SecurityTravelApp.Services;
 using SecurityTravelApp.Utils;
 using System;
@@ -31,6 +32,7 @@ namespace SecurityTravelApp.Views
         private Boolean actionLaunched = false;
         private Timer timer;
         private AppManagementService appMngSrv;
+        private CallService callSrv;
 
         public event EventHandler SlideCompleted;
 
@@ -38,8 +40,8 @@ namespace SecurityTravelApp.Views
         {
             InitializeComponent();
             _panGesture.PanUpdated += OnPanGestureUpdated;
-
-            _gestureListener = new ContentView { BackgroundColor = Color.White, Opacity = 0.05 };
+            CornerRadius cornerRadius = Utilities.getOnPlatformValue<CornerRadius>(this.Resources["ThumbCornerRadius"]);
+            _gestureListener = new BoxView { BackgroundColor = Color.White, Opacity = 0.005, CornerRadius = cornerRadius };
             _gestureListener.GestureRecognizers.Add(_panGesture);
             AbsoluteLayout.SetLayoutFlags(_gestureListener, AbsoluteLayoutFlags.SizeProportional);
             AbsoluteLayout.SetLayoutBounds(_gestureListener, new Rectangle(0, 0, 1, 1));
@@ -53,6 +55,7 @@ namespace SecurityTravelApp.Views
         public void initializeConfig(ServiceFactory pSrvFactory)
         {
             appMngSrv = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);
+            callSrv = (CallService)pSrvFactory.getService(ServiceType.Call);
         }
 
 
@@ -63,12 +66,10 @@ namespace SecurityTravelApp.Views
             {
                 case GestureStatus.Started:
                     actionLaunched = false;
-                    SliderFiller.IsVisible = true;
-                    SliderBorder.IsVisible = true;
                     CallIcon.IsVisible = true;
                     SliderBorder.FadeTo(1, _animLength);
                     CallIcon.FadeTo(1, _animLength);
-                    Thumb.ScaleTo(1, _animLength);
+                    CallIconDisabled.FadeTo(0, _animLength / 2);
                     secondsToWait = secondsToWaitConst;
                     TimerLabel.Text = secondsToWait.ToString();
                     MessageLaunch.Text = I18n.GetText(AppTextID.APPEL_DANS);
@@ -77,8 +78,8 @@ namespace SecurityTravelApp.Views
                 case GestureStatus.Running:
                     // Translate and ensure we don't pan beyond the wrapped user interface element bounds.
                     var x = Math.Max(0, e.TotalX);
-                    if (x > (Width - Thumb.Width))
-                        x = (Width - Thumb.Width);
+                    if (x > (Width - Thumb.Width - Thumb.Margin.Right - Thumb.Margin.Left))
+                        x = (Width - Thumb.Width - Thumb.Margin.Right - Thumb.Margin.Left);
 
                     Thumb.TranslationX = x;
                     DelayBar.WidthRequest = x + Thumb.Width;
@@ -150,12 +151,10 @@ namespace SecurityTravelApp.Views
                     back_animation_tumb.Commit(Thumb, "ThumbBack", 16, _animLength);
 
 
-                    Thumb.ScaleTo(1.3, _animLength);
-                    var taskAnimationSliderBorder = SliderBorder.FadeTo(0, _animLength / 2);
+                    var taskAnimationSliderBorder = SliderBorder.FadeTo(.3, _animLength / 2);
                     var taskAnimationCallIcon = CallIcon.FadeTo(0, _animLength / 2);
-                    await Task.WhenAll(taskAnimationSliderBorder, taskAnimationCallIcon);
-                    SliderFiller.IsVisible = false;
-                    SliderBorder.IsVisible = false;
+                    var taskAnimationCallIconDisabled = CallIconDisabled.FadeTo(1, _animLength / 2);
+                    await Task.WhenAll(taskAnimationSliderBorder, taskAnimationCallIcon, taskAnimationCallIconDisabled);
                     CallIcon.IsVisible = false;
 
                     if (posX >= (Width - Thumb.Width - 10/* keep some margin for error*/))
@@ -183,8 +182,8 @@ namespace SecurityTravelApp.Views
             TimerLabel.Opacity = 0;
             MessageLaunch.Opacity = 0;
             await Task.Delay(800);
-            TimerLabel.FadeTo(1, _animLength / 2);
-            MessageLaunch.FadeTo(1, _animLength / 2);
+            TimerLabel.FadeTo(.5, _animLength / 2);
+            MessageLaunch.FadeTo(.5, _animLength / 2);
         }
 
         private async void OnTimeEventAsync(object source, ElapsedEventArgs e)
@@ -202,9 +201,9 @@ namespace SecurityTravelApp.Views
                 if (!actionLaunched)
                 {
                     actionLaunched = true;
-                    if (await appMngSrv.checkForPhonePermission())
+                    if (await appMngSrv.checkForPermission(Permission.Phone))
                     {
-                        DependencyService.Get<IPhoneCall>().makePhoneCall("+21200000000");
+                        callSrv.callNumber("+212600000000");
                     }
                     timer.Stop();
                 }

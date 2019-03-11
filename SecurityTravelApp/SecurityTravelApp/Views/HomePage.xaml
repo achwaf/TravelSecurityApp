@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:comp="clr-namespace:SecurityTravelApp.Views"
              xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
+             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              x:Class="SecurityTravelApp.Views.HomePage"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="white">
@@ -13,22 +14,128 @@
     <ContentPage.Content>
         <AbsoluteLayout >
             <Grid BackgroundColor="White" AbsoluteLayout.LayoutFlags="All"
-                AbsoluteLayout.LayoutBounds=".5,.5,1,1"                  
-                Margin="{StaticResource UpFrontViewMargin}">
+                AbsoluteLayout.LayoutBounds=".5,.5,1,1"
+                Margin="0"
+                ColumnSpacing="0" RowSpacing="10">
                 <Grid.RowDefinitions>
+                    <!--Header-->
+                    <RowDefinition Height="Auto"/>
+                    <!--Geoposition-->
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <!--Hotline-->
+                    <RowDefinition Height="Auto"/>
+                    <!--SOS-->
+                    <RowDefinition Height="Auto"/>
+                    <!--Spacer for Navigation bar-->
+                    <RowDefinition Height="80"/>
                 </Grid.RowDefinitions>
-                <comp:TapSliderComp x:Name="SosSlider" Grid.Row="1" Margin="20,0"/>
-            </Grid>
+                <Grid Margin="{StaticResource UpFrontViewMargin}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <StackLayout Orientation="Horizontal">
+                        <Image Source="OCPLogo.png" HorizontalOptions="Center" VerticalOptions="Center"
+                               Aspect="AspectFit"/>
+                        <Label Text="Welcome to GCC" TextColor="LightGray" HorizontalOptions="Center" VerticalOptions="Center"
+                               FontSize="15"/>
+                    </StackLayout>
+                    <StackLayout Grid.Row="1" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center">
+                        <Label Text="Travel" TextColor="DarkGray"
+                               FontSize="25"/>
+                        <Label Text="SECURITY" TextColor="DarkGray"
+                               FontAttributes="Bold" FontSize="25"/>
+                    </StackLayout>
+                </Grid>
+                <Grid Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="#F3F7F7">
+                    <Image Source="WorldMap.png" Opacity=".25"
+                           VerticalOptions="Fill"
+                           HorizontalOptions="Fill" Aspect="AspectFit"/>
+                    <AbsoluteLayout Margin="10"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start">
+                        <BoxView Color="White" Opacity=".6" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds=".5,.5,90,90"
+                           CornerRadius="90"
+                           Margin="0,0,0,0"/>
+                        <Image Source="Headquarter.png" Opacity=".8" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds=".5,.5,60,60"/>
+                    </AbsoluteLayout>
+                    <Grid Margin="10" VerticalOptions="End" HorizontalOptions="End">
+                        <BoxView Color="White" Opacity=".6" WidthRequest="60" HeightRequest="60"
+                                 VerticalOptions="End" HorizontalOptions="Center"
+                                 CornerRadius="90"
+                                 Margin="0,0,0,0"/>
+                        <ffimageloadingsvg:SvgCachedImage x:Name="MapMarker" Source="resource://SecurityTravelApp.Assets.MapMarker.svg" 
+                                                          VerticalOptions="End" HorizontalOptions="End"
+                                                          WidthRequest="120" HeightRequest="120"
+                                                          Margin="0,0,0,25"/>
+                    </Grid>
 
-            <StackLayout x:Name="StackLayoutUpFront"  VerticalOptions="End" AbsoluteLayout.LayoutFlags="YProportional , SizeProportional"
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Frame x:Name="HotlineButton" VerticalOptions="Center" HorizontalOptions="End" 
+                           Padding="0" Margin="30,0,30,0"
+                           CornerRadius="35"
+                           HeightRequest="70">
+                        <Grid BackgroundColor="#6C91C2" ColumnSpacing="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <BoxView Color="White" Grid.Column="0" Grid.ColumnSpan="2"
+                                     VerticalOptions="Fill" HorizontalOptions="Fill" CornerRadius="35" Margin="2"/>
+                            <BoxView Color="#6C91C2" Grid.Column="0" Grid.ColumnSpan="2"
+                                     VerticalOptions="Fill" HorizontalOptions="Fill" CornerRadius="25" Margin="10"/>
+                            <Label Text="Hotline" Grid.Column="0"
+                                TextColor="White"
+                                FontSize="20"
+                                Margin="30,0,-10,0"
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center"/>
+                            <Label x:Name="CallIcon" Grid.Column="1"
+                                Text="{x:Static viewUtils:LineAwesomeIcons.Phone}"
+                                FontFamily="{StaticResource LineAwesome}"
+                                TextColor="White"
+                                FontSize="35"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" />
+                        </Grid>
+                    </Frame>
+                    <Frame VerticalOptions="Center" HorizontalOptions="Start" Padding="0" Margin="-40,0,0,0" CornerRadius="25"
+                           HasShadow="True" OutlineColor="WhiteSmoke" BackgroundColor="WhiteSmoke"
+                           WidthRequest="100" HeightRequest="50">
+                        <Grid>
+                            <BoxView Color="White" WidthRequest="50" HeightRequest="50" Margin="2" CornerRadius="24"
+                                     VerticalOptions="Center" HorizontalOptions="End" Opacity=".1"/>
+                            <Label Text="{x:Static viewUtils:LineAwesomeIcons.EllipsisVertical}"
+                                FontFamily="{StaticResource LineAwesome}"
+                                TextColor="Gray"
+                                FontSize="35"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"
+                                Margin="0,0,2,0"
+                                WidthRequest="50"/>
+                        </Grid>
+
+                    </Frame>
+                </Grid>
+                <Grid Grid.Row="3" VerticalOptions="Fill" HorizontalOptions="Fill">
+                    <comp:TapSliderComp x:Name="SosSlider" Margin="30,0,30,0" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                </Grid>
+            </Grid>
+            <!--Dim Mask-->
+            <BoxView x:Name="DimMask" IsVisible="false" Opacity="{StaticResource DimMaskOpacity}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" Color="Black"/>
+            <Grid x:Name="StackLayoutUpFront"  VerticalOptions="End" AbsoluteLayout.LayoutFlags="YProportional , SizeProportional"
                     Margin="{StaticResource UpFrontViewMargin}"
                     AbsoluteLayout.LayoutBounds="0,1,1,1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <comp:NavigationBarComp x:Name="NavigationBar" Grid.Row="1" VerticalOptions="End" HorizontalOptions="Fill" />
 
-                <comp:NavigationBarComp x:Name="NavigationBar" VerticalOptions="End" HorizontalOptions="Fill" />
-
-            </StackLayout>
+            </Grid>
         </AbsoluteLayout>
 
     </ContentPage.Content>

@@ -6,9 +6,7 @@ namespace SecurityTravelApp.Models
 {
     public class UserLocation
     {
-        public long latitude;
-        public long longitude;
-        public long altitude;
+        public Geoposition geoposition;
         public DateTime dateCheckin;
 
         public Boolean isSent;

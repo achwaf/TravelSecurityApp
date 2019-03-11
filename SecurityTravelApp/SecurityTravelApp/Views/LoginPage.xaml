@@ -104,13 +104,19 @@
                 </StackLayout>
 
             </Grid>
-            <StackLayout x:Name="StackLayoutUpFront"  VerticalOptions="End" AbsoluteLayout.LayoutFlags="All"
+            <!--Dim Mask-->
+            <BoxView x:Name="DimMask" IsVisible="false" Opacity="{StaticResource DimMaskOpacity}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" Color="Black"/>
+            <Grid x:Name="StackLayoutUpFront"  VerticalOptions="End" AbsoluteLayout.LayoutFlags="All"
                     Margin="{StaticResource UpFrontViewMargin}"
                     AbsoluteLayout.LayoutBounds=".5,1,1,1">
 
-                <comp:NavigationBarComp x:Name="NavigationBar" VerticalOptions="End" HorizontalOptions="Fill" />
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <comp:NavigationBarComp x:Name="NavigationBar" Grid.Row="1" VerticalOptions="End" HorizontalOptions="Fill" />
 
-            </StackLayout>
+            </Grid>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

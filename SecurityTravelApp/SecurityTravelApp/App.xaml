@@ -15,6 +15,7 @@
 
 
             <OnPlatform x:Key="UpFrontViewMargin" x:TypeArguments="Thickness" Default="10" />
+            <OnPlatform x:Key="DimMaskOpacity" x:TypeArguments="x:Double" Default=".5" />
 
             <OnPlatform x:TypeArguments="x:String" x:Key="FontAwesomeRegular" >
                 <OnPlatform.Platforms>

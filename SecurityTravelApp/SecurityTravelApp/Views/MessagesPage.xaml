@@ -9,7 +9,7 @@
     <ContentPage.Resources>
 
         <OnPlatform x:Key="BarCornerRadius" x:TypeArguments="CornerRadius" Default="20" />
-        <OnPlatform x:Key="EntryOuterColor" x:TypeArguments="Color" Default="#1e6895" />
+        <OnPlatform x:Key="EntryOuterColor" x:TypeArguments="Color" Default="#374446" />
 
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -19,22 +19,45 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
+                    <!--<RowDefinition Height="80"/>-->
                 </Grid.RowDefinitions>
                 <StackLayout Grid.Row="0" Orientation="Horizontal" 
-                             HorizontalOptions="Fill" Margin="10">
+                             HorizontalOptions="Fill" Margin="10" Spacing="15">
                     <Label HorizontalOptions="StartAndExpand"
                            VerticalOptions="Center"
                            HorizontalTextAlignment="Start"
                            VerticalTextAlignment="Center"
                            Text="Messages" FontSize="30" TextColor="DimGray"/>
-                    <BoxView WidthRequest="40" HeightRequest="40" 
-                             CornerRadius="20"
-                             Color="Blue"
-                             HorizontalOptions="End" 
-                             VerticalOptions="Center"/>
+                    <Label x:Name="SearchIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Search}"
+                                FontFamily="{StaticResource LineAwesome}"
+                                TextColor="Blue"
+                                FontSize="35"
+                                Margin="0,2,0,0"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"/>
+                    <Label x:Name="CheckIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Check}"
+                                FontFamily="{StaticResource LineAwesome}"
+                                TextColor="Blue"
+                                FontSize="35"
+                                Margin="0,2,0,0"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"/>
+                    <Label x:Name="AddIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Plus}"
+                                FontFamily="{StaticResource LineAwesome}"
+                                TextColor="Blue"
+                                FontSize="35"
+                                Margin="0,2,0,0"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"/>
                 </StackLayout>
-                <ScrollView  Grid.Row="1">
-                    <StackLayout Orientation="Vertical" HorizontalOptions="Fill"
+                <ScrollView  Grid.Row="1" Margin="{StaticResource UpFrontViewMargin}">
+                    <StackLayout Orientation="Vertical" HorizontalOptions="Fill" Spacing="20"
                                  Margin="0,10">
                         <comp:MessageComp />
                         <comp:MessageComp />
@@ -54,33 +77,25 @@
                     </StackLayout>
                 </ScrollView>
             </Grid>
-            <StackLayout x:Name="StackLayoutUpFront"  VerticalOptions="End" 
-                         AbsoluteLayout.LayoutFlags="All"
-                         AbsoluteLayout.LayoutBounds=".5,1,1,1"
-                         Margin="{StaticResource UpFrontViewMargin}">
+            <!--Dim Mask-->
+            <BoxView x:Name="DimMask" IsVisible="False" Opacity="{StaticResource DimMaskOpacity}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" Color="Black"/>
+            <Grid x:Name="StackLayoutUpFront"  VerticalOptions="End" AbsoluteLayout.LayoutFlags="YProportional , SizeProportional"
+                    Margin="{StaticResource UpFrontViewMargin}"
+                    AbsoluteLayout.LayoutBounds="0,1,1,1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
                 <!--writing messages component-->
-                <Grid x:Name="MessagingComp" IsVisible="false"  VerticalOptions="EndAndExpand" RowSpacing="0">
+                <Grid x:Name="MessagingComp" IsVisible="False"  VerticalOptions="End" HorizontalOptions="Fill" RowSpacing="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="250"/>
+                        <RowDefinition Height="300" />
                     </Grid.RowDefinitions>
                     <!--the predefined messages part-->
-
                     <Frame Grid.Row="1" HasShadow="False" CornerRadius="20" Padding="0,20,0,0" Margin="0,-20,0,0">
-                        <ScrollView>
-                            <StackLayout>
-                                <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightGray" />
-                                <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightGray" />
-                                <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightGray" />
-                                <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightGray" />
-                                <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightGray" />
-                                <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightGray" />
-                                <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightGray" />
-                                <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightGray" />
-                                <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightGray" />
-                                <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightGray" />
-                                <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightGray" />
-                                <BoxView HorizontalOptions="Fill" HeightRequest="50"  Color="LightGray" />
+                        <ScrollView Padding="0">
+                            <StackLayout x:Name="ListMessages" BackgroundColor="#4A5B5D" Padding="0,5">
                             </StackLayout>
                         </ScrollView>
                     </Frame>
@@ -105,7 +120,7 @@
                         <BoxView Color="White"
                                  VerticalOptions="Fill" 
                                  HorizontalOptions="Fill"
-                                 CornerRadius="20"
+                                 CornerRadius="18"
                                  Margin="5"
                                  />
                         <viewUtils:BorderlessEditor x:Name="messageEditor"
@@ -115,13 +130,32 @@
                                                     Margin="20"/>
                         <StackLayout  Grid.Column="1" Margin="0,5,5,5"
                             Orientation="Vertical" VerticalOptions="Fill">
-                            <BoxView HeightRequest="50" WidthRequest="50" Color="OrangeRed" VerticalOptions="End" CornerRadius="20"/>
-                            <BoxView HeightRequest="50" WidthRequest="50" Color="LightSeaGreen" VerticalOptions="End" CornerRadius="20"/>
+                            <Label x:Name="SendIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Close}"
+                                   FontFamily="{StaticResource LineAwesome}"
+                                   TextColor="OrangeRed"
+                                   FontSize="35"
+                                   WidthRequest="50"
+                                   HeightRequest="50"
+                                   VerticalTextAlignment="Center"
+                                   HorizontalTextAlignment="Center" 
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"/>
+                            <Label x:Name="CloseIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Send}"
+                                   FontFamily="{StaticResource LineAwesome}"
+                                   TextColor="LightSeaGreen"
+                                   FontSize="35"
+                                   WidthRequest="50"
+                                   HeightRequest="50"
+                                   VerticalTextAlignment="Center"
+                                   HorizontalTextAlignment="Center" 
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"/>
                         </StackLayout>
                     </Grid>
                 </Grid>
-                <comp:NavigationBarComp x:Name="NavigationBar" VerticalOptions="End" HorizontalOptions="Fill"/>
-            </StackLayout>
+                <comp:NavigationBarComp x:Name="NavigationBar" Grid.Row="1" VerticalOptions="End" HorizontalOptions="Fill" />
+
+            </Grid>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

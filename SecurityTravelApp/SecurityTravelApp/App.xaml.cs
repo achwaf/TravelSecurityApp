@@ -4,6 +4,7 @@ using Xamarin.Forms.Xaml;
 using SecurityTravelApp.Views;
 using SecurityTravelApp.Services;
 using SecurityTravelApp.Utils;
+using SecurityTravelApp.Views.ViewsUtils;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace SecurityTravelApp
@@ -21,12 +22,18 @@ namespace SecurityTravelApp
             // instantiating services
             appMngSrv = (AppManagementService)serviceFactory.getService(ServiceType.AppManagement);
 
-            // setting services dependencies 
+            // setting services dependencies and configs
+            appMngSrv.config(this);
 
             // Selecting App language
             I18n.SelectLang(AppLanguage.EN);
 
-            MainPage = new NavigationPage(new HomePage(serviceFactory, null));
+            // checking required permissions
+            // todo move the checking after the authentication
+            // or when the home page is displayed
+            //appMngSrv.checkForAllRequiredPermissions();
+
+            appMngSrv.navigateToAndSave( new HomePage(serviceFactory, null),NavigationItemTarget.Home);
         }
 
         protected override void OnStart()

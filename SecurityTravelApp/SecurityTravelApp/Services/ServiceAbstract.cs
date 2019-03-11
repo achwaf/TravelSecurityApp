@@ -3,7 +3,6 @@
     public abstract class ServiceAbstract
     {
         // the abstract class should have a logger
-        // and a name to distinguich its implementations
 
         protected ServiceType type;
 

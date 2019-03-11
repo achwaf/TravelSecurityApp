@@ -12,12 +12,16 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoginPage : ContentPage
+    public partial class LoginPage : ContentPage, UpdatablePage
     {
         public LoginPage(ServiceFactory pSrvFactory, AfterNavigationParams pParam)
         {
             InitializeComponent();
             NavigationBar.initializeContent(pSrvFactory, pParam);
+        }
+
+        public void update()
+        {
         }
     }
 }

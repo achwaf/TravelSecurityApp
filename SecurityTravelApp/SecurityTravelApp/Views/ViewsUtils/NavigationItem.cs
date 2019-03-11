@@ -73,6 +73,7 @@ namespace SecurityTravelApp.Views.ViewsUtils
 
     public enum NavigationItemTarget
     {
+        Login,
         Home,
         Messages,
         Warnings,

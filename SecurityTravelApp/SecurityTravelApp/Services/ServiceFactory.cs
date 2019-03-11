@@ -56,6 +56,12 @@ namespace SecurityTravelApp.Services
                 case ServiceType.AppManagement:
                     vService = new AppManagementService();
                     break;
+                case ServiceType.Call:
+                    vService = new CallService();
+                    break;
+                case ServiceType.Audio:
+                    vService = new AudioService();
+                    break;
             }
 
             return vService;
@@ -70,6 +76,8 @@ namespace SecurityTravelApp.Services
         Location,
         LocalData,
         ServerData,
+        Call,
+        Audio,
         AppManagement
     }
 }

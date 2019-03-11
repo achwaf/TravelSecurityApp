@@ -1,5 +1,6 @@
 ﻿using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
+using SecurityTravelApp.Views;
 using SecurityTravelApp.Views.ViewsUtils;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,43 @@ namespace SecurityTravelApp.Services
 
         private List<NavigationItem> navigationItems;
 
+
+        private Dictionary<NavigationItemTarget, Page> ExistingPages;
+        private Application AppReference;
+
+        public Page CurrentPage;
+
+
         public AppManagementService() : base(TYPE)
         {
+            ExistingPages = new Dictionary<NavigationItemTarget, Page>();
             navigationItems = new List<NavigationItem>();
             fillWithTestData();
+        }
+
+        public void config(Application pAppRef)
+        {
+            AppReference = pAppRef;
+        }
+
+        public Page lookUpPage(NavigationItemTarget pTarget)
+        {
+            if (ExistingPages.ContainsKey(pTarget))
+            {
+                return ExistingPages[pTarget];
+            }
+            else return null;
+
+        }
+
+        public void navigateToAndSave(Page pPage, NavigationItemTarget pTarget)
+        {
+            if (!ExistingPages.ContainsKey(pTarget))
+            {
+                ExistingPages.Add(pTarget, pPage);
+            }
+            CurrentPage = pPage;
+            AppReference.MainPage = CurrentPage;
         }
 
         public List<NavigationItem> getTheNavigationItems()
@@ -27,17 +61,24 @@ namespace SecurityTravelApp.Services
             return navigationItems;
         }
 
-        public async Task<Boolean> checkForPhonePermission()
+        public async Task<Boolean> checkForAllRequiredPermissions()
+        {
+            await checkForPermission(Permission.Phone);
+            await checkForPermission(Permission.Location);
+            return false;
+        }
+
+        public async Task<Boolean> checkForPermission(Permission pPermission)
         {
             try
             {
-                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Phone);
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(pPermission);
                 if (status != PermissionStatus.Granted)
                 {
 
-                    var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Phone);
+                    var results = await CrossPermissions.Current.RequestPermissionsAsync(pPermission);
                     //Best practice to always check that the key exists
-                    if (results.ContainsKey(Permission.Phone)) status = results[Permission.Phone];
+                    if (results.ContainsKey(pPermission)) status = results[pPermission];
 
                     if (status == PermissionStatus.Granted)
                     {

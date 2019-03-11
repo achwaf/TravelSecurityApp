@@ -62,6 +62,9 @@
     <PackageReference Include="Rg.Plugins.Popup">
       <Version>1.1.5.188</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms">
+      <Version>2.4.4.859</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="3.4.0.1008975" />
     <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2.1" />
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2.1" />
@@ -72,6 +75,7 @@
   <ItemGroup>
     <Compile Include="BorderlessEditorRenderer.cs" />
     <Compile Include="KeyboardCheck_Droid.cs" />
+    <Compile Include="LocationHelper_Droid.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="PhoneCall_Droid.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -115,6 +119,18 @@
       <Project>{134A9960-1162-4065-8668-6BF2D5F34F80}</Project>
       <Name>SecurityTravelApp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Headquarter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\WorldMap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\OCPLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\OCPOffice.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

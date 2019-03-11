@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
              x:Class="SecurityTravelApp.Views.MessageComp">
 
     <ContentView.Resources>
@@ -9,19 +10,53 @@
         </ResourceDictionary>
     </ContentView.Resources>
     <ContentView.Content>
-        <Grid>
+        <Grid RowSpacing="0" ColumnSpacing="10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <StackLayout Grid.Column="0" Orientation="Vertical" Spacing="0">
-                <BoxView WidthRequest="30" HeightRequest="20" Color="SandyBrown" HorizontalOptions="End"/>
-                <Label Text="01/03/2019" FontSize="11" HorizontalOptions="End"/>
-                <Label Text="11:50" FontSize="11" HorizontalOptions="End"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Column="0" Grid.RowSpan="2">
+                <Label x:Name="MessageIcon" IsVisible="True"
+                    Text="{x:Static viewUtils:LineAwesomeIcons.Envelope}"
+                                FontFamily="{StaticResource LineAwesome}"
+                                TextColor="SandyBrown"
+                                FontSize="30"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"/>
+                <Grid x:Name="PendingIcon" IsVisible="False">
+                    <Label Text="{x:Static viewUtils:LineAwesomeIcons.Upload}"
+                                FontFamily="{StaticResource LineAwesome}"
+                                TextColor="LightGray"
+                                FontSize="25"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"
+                                Margin="0,0,20,0"/>
+                    <Label Text="{x:Static viewUtils:LineAwesomeIcons.Clock}"
+                                FontFamily="{StaticResource LineAwesome}"
+                                TextColor="LightGray"
+                                FontSize="25"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"
+                                Margin="20,0,0,0"/>
+                </Grid>
+            </Grid>
+            <StackLayout Grid.Column="1" Orientation="Horizontal">
+                <Label Text="01/03/2019" FontSize="12" TextColor="LightGray"/>
+                <Label Text="11:50" FontSize="12"  TextColor="LightGray"/>
             </StackLayout>
-            <Label Grid.Column="1"
-                   TextColor="LightGray"
-                Text="Message44 Mes498 98 78798 79 8798 79 87  978987897987  879sage Messagee Messagessage"
+            <Label Grid.Column="1" Grid.Row="1"
+                   TextColor="Gray"
+                Text="Lorem ipsum dolor sit amet, autem dicit verterem ex cum, at simul regione detraxit mel."
                 LineBreakMode="CharacterWrap"     />
 
         </Grid>

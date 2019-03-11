@@ -24,6 +24,7 @@ namespace SecurityTravelApp.iOS
         {
 
             Rg.Plugins.Popup.Popup.Init();
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 

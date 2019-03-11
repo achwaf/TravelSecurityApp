@@ -21,7 +21,7 @@ namespace SecurityTravelApp.Views
 
         public NavigationItemComp(ServiceFactory pSrvFactory, NavigationItem pItem, Boolean HighlightFadeOut)
         {
-            AppManagementService appService = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);
+            AppManagementService appMngService = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);
             InitializeComponent();
             BindingContext = pItem;
 
@@ -31,17 +31,26 @@ namespace SecurityTravelApp.Views
             // setting the handler
             tapGestureRecognizerContainer.Tapped += async (s, e) =>
             {
-                Page lastPage = Navigation.NavigationStack.Last();
-                Type typeCurrentPage = Utilities.TypeOfNavigationTarget(pItem.target);
+                Page lastPage = appMngService.CurrentPage;
+                Type typeAskedtPage = Utilities.TypeOfNavigationTarget(pItem.target);
 
                 // effects on NavigationItem : highlighting
                 showHighlight();
-                if (lastPage.GetType() != typeCurrentPage)
+                if (lastPage.GetType() != typeAskedtPage)
                 {
+                    Page targetPage = appMngService.lookUpPage(pItem.target);
                     var paramAfterNav = new AfterNavigationParams() { navigationTarget = pItem.target };
-                    Page page = (Page)Activator.CreateInstance(typeCurrentPage, pSrvFactory, paramAfterNav);
-                    await Navigation.PushAsync(page, false);
-                    Navigation.RemovePage(Navigation.NavigationStack.ElementAt(Navigation.NavigationStack.Count - 2));
+                    if (targetPage == null)
+                    {
+                        targetPage = (Page)Activator.CreateInstance(typeAskedtPage, pSrvFactory, paramAfterNav);
+                    }
+                    else
+                    {
+                        // pages should implement Updatable Page to allow UI updates
+                        UpdatablePage updatblePage = (UpdatablePage)targetPage;
+                        updatblePage.update();
+                    }
+                    appMngService.navigateToAndSave(targetPage, pItem.target);
                     HighlightMask.IsVisible = false;
                 }
                 showAndFadeOutHighlight();
