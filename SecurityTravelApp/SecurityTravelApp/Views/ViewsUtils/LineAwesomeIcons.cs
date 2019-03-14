@@ -30,6 +30,11 @@ namespace SecurityTravelApp.Views.ViewsUtils
         public static readonly string Upload = "\uf362";
         public static readonly string Clock = "\uf18f";
         public static readonly string AngleDown = "\uf110";
+        public static readonly string Hourglass = "\uf23a";
+        public static readonly string Refresh = "\uf2d5";
+        public static readonly string Exclamation = "\uf1cd";
+        public static readonly string Download = "\uf1bd";
+        public static readonly string Filter = "\uf1f3";
 
     }
 

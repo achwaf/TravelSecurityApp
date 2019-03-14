@@ -15,7 +15,7 @@
         <AbsoluteLayout x:Name="TapSlider" VerticalOptions="Center">
 
             <Grid  x:Name="SliderBackground" AbsoluteLayout.LayoutFlags="YProportional, WidthProportional" AbsoluteLayout.LayoutBounds="{StaticResource AbsoluteLayoutBackground}">
-                <BoxView x:Name="SliderBorder" IsVisible="true" Opacity=".5" Color="#bf0000" CornerRadius="{StaticResource BackgroundCornerRadius}"
+                <BoxView x:Name="SliderBorder" IsVisible="true" Opacity=".3" Color="#bf0000" CornerRadius="{StaticResource BackgroundCornerRadius}"
                     VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
                 <BoxView x:Name="SliderFiller" IsVisible="true" Color="White" CornerRadius="{StaticResource BackgroundCornerRadius}" Margin="2"
                     VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>

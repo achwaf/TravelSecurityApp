@@ -46,6 +46,18 @@ namespace SecurityTravelApp.Services
 
         }
 
+        public Type TypeOfNavigationTarget(NavigationItemTarget pTarget)
+        {
+            switch (pTarget)
+            {
+                case NavigationItemTarget.Home: return typeof(HomePage);
+                case NavigationItemTarget.Messages: return typeof(MessagesPage);
+                case NavigationItemTarget.Warnings: return typeof(AlertsPage);
+                default: return typeof(LoginPage);
+            }
+        }
+
+
         public void navigateToAndSave(Page pPage, NavigationItemTarget pTarget)
         {
             if (!ExistingPages.ContainsKey(pTarget))

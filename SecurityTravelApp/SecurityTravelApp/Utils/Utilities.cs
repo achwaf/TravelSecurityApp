@@ -8,18 +8,7 @@ using Xamarin.Forms;
 namespace SecurityTravelApp.Utils
 {
     class Utilities
-    {
-
-        public static Type TypeOfNavigationTarget(NavigationItemTarget pTarget)
-        {
-            switch (pTarget)
-            {
-                case NavigationItemTarget.Home: return typeof(HomePage);
-                case NavigationItemTarget.Messages: return typeof(MessagesPage);
-                default: return typeof(LoginPage);
-            }
-        }
-
+    {        
         static public T getOnPlatformValue<T>(Object pSource)
         {
             T value = default(T);
@@ -42,5 +31,18 @@ namespace SecurityTravelApp.Utils
             }
             return value;
         }
+
+        static public void bounceAnimate(VisualElement pElement, double pElevation)
+        {
+            Animation mapMarkerAnimation;
+            // create the bouncing animation
+            mapMarkerAnimation = new Animation();
+            var elevateAnimation = new Animation(d => pElement.TranslationY = d, 0, -pElevation, Easing.CubicOut);
+            var bounceAnimation = new Animation(d => pElement.TranslationY = d, -pElevation, 0, Easing.BounceOut);
+            mapMarkerAnimation.Add(0, .5, elevateAnimation);
+            mapMarkerAnimation.Add(.5, 1, bounceAnimation);
+            mapMarkerAnimation.Commit(pElement, "bounce", length: 1000);
+        }
+
     }
 }

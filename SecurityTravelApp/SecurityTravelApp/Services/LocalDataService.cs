@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SecurityTravelApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,6 +11,23 @@ namespace SecurityTravelApp.Services
 
         public LocalDataService() : base(TYPE)
         {
+        }
+
+        public List<Alert> getAlerts()
+        {
+            List<Alert> listeAlertes = new List<Alert>();
+
+
+            listeAlertes.Add(new Alert(AlertType.Normal, "Title for Alert", "Text providing clearly the information to be given"));
+            listeAlertes.Add(new Alert(AlertType.Normal, "Title for Alert", "Text providing clearly the information to be given, but this time I keep wrinting a little longer") { });
+            listeAlertes.Add(new Alert(AlertType.Important, "Title for important Alert", "Text emphasizing the importance of the information to be given"));
+            listeAlertes.Add(new Alert(AlertType.Important, "Title for critical Alert", "Text displaying emergency over the utter importance of the information to be given"));
+             listeAlertes.Add(new Alert(AlertType.Critical, "Title for Alert", "Text providing clearly the information to be given"));
+            listeAlertes.Add(new Alert(AlertType.Normal, "Title for Alert", "Text providing clearly the information to be given, but this time I keep wrinting a little longer") { });
+            listeAlertes.Add(new Alert(AlertType.Normal, "Title for Alert", "Text emphasizing the importance of the information to be given"));
+            listeAlertes.Add(new Alert(AlertType.Normal, "Title for Alert", "Text displaying emergency over the utter importance of the information to be given"));
+
+            return listeAlertes;
         }
 
 

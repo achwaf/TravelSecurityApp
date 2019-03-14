@@ -32,7 +32,7 @@ namespace SecurityTravelApp.Views
             tapGestureRecognizerContainer.Tapped += async (s, e) =>
             {
                 Page lastPage = appMngService.CurrentPage;
-                Type typeAskedtPage = Utilities.TypeOfNavigationTarget(pItem.target);
+                Type typeAskedtPage = appMngService.TypeOfNavigationTarget(pItem.target);
 
                 // effects on NavigationItem : highlighting
                 showHighlight();

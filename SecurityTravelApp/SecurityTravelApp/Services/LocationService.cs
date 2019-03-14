@@ -34,6 +34,11 @@ namespace SecurityTravelApp.Services
             commandAfterGettingLocation = pCallBackUponLocation;
         }
 
+        public Boolean isUserBeingLocated()
+        {
+            return userIsBeingLocated;
+        }
+
         public void getUserGeoposition()
         {
             if (!userIsBeingLocated)

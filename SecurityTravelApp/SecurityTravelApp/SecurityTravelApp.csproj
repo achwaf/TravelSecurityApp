@@ -10,12 +10,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\BottomLeftCorner.svg" />
+    <None Remove="Assets\CriticShadow.svg" />
     <None Remove="Assets\Headquarter.png" />
+    <None Remove="Assets\InfoShadow.svg" />
     <None Remove="Assets\MapMarker.svg" />
+    <None Remove="Assets\WarningShadow.svg" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Assets\BottomLeftCorner.svg" />
+    <EmbeddedResource Include="Assets\CriticShadow.svg" />
+    <EmbeddedResource Include="Assets\InfoShadow.svg" />
     <EmbeddedResource Include="Assets\MapMarker.svg" />
+    <EmbeddedResource Include="Assets\WarningShadow.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +46,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Views\AlertComp.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\AlertsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\DefinedMessageComp.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

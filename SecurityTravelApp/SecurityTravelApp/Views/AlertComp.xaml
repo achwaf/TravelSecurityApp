@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
+             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             x:Class="SecurityTravelApp.Views.AlertComp"
+             x:Name="Self">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <OnPlatform x:Key="DecorationWidth" x:TypeArguments="GridLength" Default="100" />
+            <OnPlatform x:Key="AlertHeight" x:TypeArguments="x:Double" Default="100" />
+            <OnPlatform x:Key="AlertCornerRadius" x:TypeArguments="CornerRadius" Default="10" />
+            <OnPlatform x:Key="DecorationIconMargin" x:TypeArguments="Thickness" Default="0,5,5,0" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <StackLayout>
+            <Frame Padding="0" Margin="0" CornerRadius="10" HeightRequest="{StaticResource AlertHeight}">
+                <Grid ColumnSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource DecorationWidth}"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <BoxView x:Name="IconBackground" Grid.ColumnSpan="2" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                    <AbsoluteLayout x:Name="Icon" VerticalOptions="Fill" HorizontalOptions="Fill" Margin="{StaticResource DecorationIconMargin}">
+                        <ffimageloadingsvg:SvgCachedImage x:Name="AlertIcon"
+                                              Source="resource://SecurityTravelApp.Assets.CriticShadow.svg" 
+                                                          AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                          AbsoluteLayout.LayoutBounds="1,0,150,150"/>
+                    </AbsoluteLayout>
+                    <StackLayout VerticalOptions="End" HorizontalOptions="Start" Spacing="0" Margin="5" Opacity=".7">
+                        <StackLayout Orientation="Horizontal" Spacing="3">
+                            <Label Text="{x:Static viewUtils:LineAwesomeIcons.Download}"
+                                    FontFamily="{StaticResource LineAwesome}"
+                                    TextColor="White"
+                                   HorizontalTextAlignment="Center"
+                                   Margin="0,0,0,-3"
+                                    FontSize="15"/>
+                            <Label x:Name="TextState" TextColor="White" VerticalOptions="End"
+                                   FontSize="10"
+                                   Text="14/03/2019"/>
+                        </StackLayout>
+                        <StackLayout x:Name="SeenInfo" Orientation="Horizontal" IsVisible="true"  Spacing="3">
+                            <Label Text="{x:Static viewUtils:LineAwesomeIcons.CheckCircle}"
+                                    FontFamily="{StaticResource LineAwesome}"
+                                    TextColor="White"
+                                   HorizontalTextAlignment="Center"
+                                   Margin="0,0,0,-3"
+                                    FontSize="15"/>
+                            <Label TextColor="White" VerticalOptions="End"
+                                   FontSize="10"
+                                   Text="13/03/2019"/>
+                        </StackLayout>
+                        <StackLayout x:Name="NewInfo" Orientation="Horizontal" IsVisible="true"  Spacing="3">
+                            <Label Text="{x:Static viewUtils:LineAwesomeIcons.Exclamation}"
+                                    FontFamily="{StaticResource LineAwesome}"                                    
+                                    TextColor="White"
+                                   HorizontalTextAlignment="Center"
+                                   Margin="0,0,0,-3"
+                                    FontSize="15"/>
+                            <Label TextColor="White" VerticalOptions="End"
+                                   FontSize="11"
+                                   Text="Nouveau"/>
+                        </StackLayout>
+                    </StackLayout>
+
+                    <Grid Grid.Column="1" RowSpacing="0">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <BoxView x:Name="TextBackground" Color="White" Opacity=".65" Grid.RowSpan="2" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                        <Label x:Name="Title" Margin="5,5,5,0"
+                           FontAttributes="Bold"
+                           FontSize="15"
+                           Opacity=".7" TextColor="Black"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Start"
+                           HorizontalTextAlignment="Start"
+                           VerticalTextAlignment="Start"/>
+                        <Label x:Name="TheText" Grid.Row="1" Margin="5,0,5,5"
+                           FontSize="13"                           
+                           Opacity=".5" TextColor="Black"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start"
+                           HorizontalTextAlignment="Start"
+                           VerticalTextAlignment="Center"/>
+                    </Grid>
+
+                </Grid>
+            </Frame>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

@@ -107,14 +107,16 @@
             <!--Dim Mask-->
             <BoxView x:Name="DimMask" IsVisible="false" Opacity="{StaticResource DimMaskOpacity}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" Color="Black"/>
             <Grid x:Name="StackLayoutUpFront"  VerticalOptions="End" AbsoluteLayout.LayoutFlags="All"
-                    Margin="{StaticResource UpFrontViewMargin}"
                     AbsoluteLayout.LayoutBounds=".5,1,1,1">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <comp:NavigationBarComp x:Name="NavigationBar" Grid.Row="1" VerticalOptions="End" HorizontalOptions="Fill" />
+                <BoxView  Grid.Row="1" Color="White" Opacity="{StaticResource BehindNavBarMaskOpacity}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                <comp:NavigationBarComp x:Name="NavigationBar" Grid.Row="1" VerticalOptions="End" HorizontalOptions="Fill"
+                    Margin="{StaticResource UpFrontViewMargin}"
+                                        />
 
             </Grid>
         </AbsoluteLayout>

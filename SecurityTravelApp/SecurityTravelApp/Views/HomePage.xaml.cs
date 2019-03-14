@@ -1,5 +1,6 @@
 ﻿using FFImageLoading.Svg.Forms;
 using SecurityTravelApp.Services;
+using SecurityTravelApp.Utils;
 using SecurityTravelApp.ViewModels;
 using SecurityTravelApp.Views.ViewsUtils;
 using System;
@@ -18,8 +19,11 @@ namespace SecurityTravelApp.Views
     {
         AppManagementService appMngSrv;
         CallService callSrv;
-        private Animation mapMarkerAnimation;
+        LocationService locationSrv;
         private double BounceElevation = 50;
+        private Animation waitingAnimation;
+        private Boolean continueWaitingAnimation = false;
+
 
         public HomePage(ServiceFactory pSrvFactory, AfterNavigationParams pParam)
         {
@@ -28,6 +32,7 @@ namespace SecurityTravelApp.Views
             NavigationBar.initializeContent(pSrvFactory, pParam);
             appMngSrv = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);
             callSrv = (CallService)pSrvFactory.getService(ServiceType.Call);
+            locationSrv = (LocationService)pSrvFactory.getService(ServiceType.Location);
 
             // add tap gesture recognizer 
             var tapGestureRecognizerMapMarker = new TapGestureRecognizer();
@@ -35,7 +40,17 @@ namespace SecurityTravelApp.Views
             // setting the handler
             tapGestureRecognizerMapMarker.Tapped += async (s, e) =>
             {
-                bounceAnimate(MapMarker, BounceElevation);
+                waitingForGpsPosition();
+                Utilities.bounceAnimate(MapMarker, BounceElevation);
+                if (locationSrv.isUserBeingLocated())
+                {
+                    // do nothing
+                }
+                else
+                {
+                    //await Task.Delay(5000);
+                    //gpsPositioningDone();
+                }
             };
             MapMarker.GestureRecognizers.Add(tapGestureRecognizerMapMarker);
 
@@ -43,23 +58,45 @@ namespace SecurityTravelApp.Views
             var tapGestureRecognizerHotline = new TapGestureRecognizer();
 
             // setting the handler
-            tapGestureRecognizerHotline.Tapped += async (s, e) =>
+            tapGestureRecognizerHotline.Tapped += (s, e) =>
             {
-                callSrv.callNumber("+212611111111");
+                gpsPositioningDone();
+                //callSrv.callNumber("+212611111111");
             };
             HotlineButton.GestureRecognizers.Add(tapGestureRecognizerHotline);
+
+            // animation waiting for GPS
+            waitingAnimation = new Animation();
+            var rotateAnimation = new Animation(v => GpsWaitingIcon.Rotation = v, 0, 360);
+            var fadeinAnimation = new Animation(v => GpsWaitingIcon.Opacity = v, 0, 1);
+            var fadeoutAnimation = new Animation(v => GpsWaitingIcon.Opacity = v, 1, 0);
+
+            waitingAnimation.Add(0, 1, rotateAnimation);
+            waitingAnimation.Add(0, .2, fadeinAnimation);
+            waitingAnimation.Add(.8, 1, fadeoutAnimation);
+
         }
 
-        public void bounceAnimate(VisualElement pElement, double pElevation)
+        public void waitingForGpsPosition()
         {
-            // create the bouncing animation
-            mapMarkerAnimation = new Animation();
-            var elevateAnimation = new Animation(d => pElement.TranslationY = d, 0, -pElevation, Easing.CubicOut);
-            var bounceAnimation = new Animation(d => pElement.TranslationY = d, -pElevation, 0, Easing.BounceOut);
-            mapMarkerAnimation.Add(0, .5, elevateAnimation);
-            mapMarkerAnimation.Add(.5, 1, bounceAnimation);
-            mapMarkerAnimation.Commit(MapMarker, "bounce", length: 1000);
+            GpsWaitingIcon.Opacity = 0;
+            GpsWaitingIcon.IsVisible = true;
+            GpsCheckIcon.IsVisible = false;
+            continueWaitingAnimation = true;
+            waitingAnimation.Commit(this, "waiting", 16, 2000, null, repeat: () => { return continueWaitingAnimation; });
         }
+
+        public async void gpsPositioningDone()
+        {
+            ViewExtensions.CancelAnimations(GpsWaitingIcon);
+            //continueWaitingAnimation = false;
+            GpsWaitingIcon.IsVisible = false;
+            GpsCheckIcon.Opacity = 0;
+            GpsCheckIcon.IsVisible = true;
+            await GpsCheckIcon.FadeTo(1, 200);
+            GpsCheckIcon.FadeTo(0, 2000);
+        }
+
 
         public void update()
         {

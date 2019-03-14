@@ -44,6 +44,15 @@ namespace SecurityTravelApp.Views
             var tapGestureRecognizerDimMask = new TapGestureRecognizer();
             DimMask.GestureRecognizers.Add(tapGestureRecognizerDimMask);
 
+            var tapGestureRecognizerSend = new TapGestureRecognizer();
+            SendIcon.GestureRecognizers.Add(tapGestureRecognizerSend);
+
+            var tapGestureRecognizerCancel = new TapGestureRecognizer();
+            CancelIcon.GestureRecognizers.Add(tapGestureRecognizerCancel);
+
+            var tapGestureRecognizerReduce = new TapGestureRecognizer();
+            ReduceIcon.GestureRecognizers.Add(tapGestureRecognizerReduce);
+
 
             // setting the handler to DimMask
             tapGestureRecognizerDimMask.Tapped += (s, e) =>
@@ -58,6 +67,9 @@ namespace SecurityTravelApp.Views
             // setting the handler to AddIcon
             tapGestureRecognizerAddIcon.Tapped += (s, e) =>
             {
+                messageEditor.Text = String.Empty;
+                CancelIcon.IsVisible = false;
+                ReduceIcon.IsVisible = true;
                 DimMask.Opacity = 0;
                 MessagingComp.Opacity = 0;
                 MessagingComp.TranslationY = 100;
@@ -68,16 +80,65 @@ namespace SecurityTravelApp.Views
                 MessagingComp.TranslateTo(0, 0, 500, Easing.CubicOut);
             };
 
+
+
+            // setting the handler to SendIcon
+            tapGestureRecognizerSend.Tapped += (s, e) =>
+            {
+            };
+
+            // setting the handler to ReduceIcon
+            tapGestureRecognizerReduce.Tapped += async (s, e) =>
+            {
+                messageEditor.Unfocus();
+                await Task.WhenAll(MessagingComp.TranslateTo(0, 100, 500, Easing.CubicOut),
+                DimMask.FadeTo(0, 300),
+                MessagingComp.FadeTo(0, 300));
+                DimMask.IsVisible = false;
+                MessagingComp.IsVisible = false;
+            };
+
+
+            // setting the handler to CancelIcon
+            tapGestureRecognizerCancel.Tapped += (s, e) =>
+            {
+                messageEditor.Text = String.Empty;
+            };
+
+            // subscribe to editor changes
+            messageEditor.TextChanged += MessageEditor_TextChanged;
+
             // populate the defined messages
             populateDefinedMessages(localDataSrv.getDefinedMessages());
 
             // subscribe to textUpdates from DefinedMessages
             MessagingCenter.Subscribe<DefinedMessageComp, String>(this, "TEXTUPDATE", (sender, pMessage) =>
-            {
-                // update Text
-                messageEditor.Text = pMessage;
-            });
+                    {
+                        // update Text
+                        messageEditor.Text = pMessage;
+                    });
 
+        }
+
+        private async void MessageEditor_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (CancelIcon.IsVisible && String.IsNullOrEmpty(messageEditor.Text))
+            {
+                switchBetween(CancelIcon, ReduceIcon);
+            }
+            else if (ReduceIcon.IsVisible && !String.IsNullOrEmpty(messageEditor.Text))
+            {
+                switchBetween(ReduceIcon, CancelIcon);
+            }
+        }
+
+        private async void switchBetween(VisualElement pElemenOut, VisualElement pElementIn)
+        {
+            pElementIn.Opacity = 0;
+            pElementIn.IsVisible = true;
+            await pElemenOut.FadeTo(0, 100);
+            pElemenOut.IsVisible = false;
+            pElementIn.FadeTo(1, 100);
         }
 
         private void populateDefinedMessages(List<String> pList)
