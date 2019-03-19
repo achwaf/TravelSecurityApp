@@ -94,6 +94,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BorderlessEditorRenderer.cs" />
+    <Compile Include="BorderlessEntryRenderer.cs" />
     <Compile Include="LocationHelper_UWP.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -107,6 +108,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="empty.png" />
     <Content Include="Headquarter.png" />
     <Content Include="OCPLogo.png" />
     <Content Include="OCPOffice.png" />
@@ -138,6 +140,8 @@
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="WelcomeLogo1.png" />
+    <Content Include="WelcomeLogo2.png" />
     <Content Include="WorldMap.png" />
     <Content Include="xamarin_logo.png" />
   </ItemGroup>
@@ -166,12 +170,6 @@
       <Project>{134A9960-1162-4065-8668-6BF2D5F34F80}</Project>
       <Name>SecurityTravelApp</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\fa-solid-900.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\fa-regular-400.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\line-awesome.ttf" />

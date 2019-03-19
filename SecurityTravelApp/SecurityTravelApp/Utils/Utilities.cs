@@ -8,7 +8,7 @@ using Xamarin.Forms;
 namespace SecurityTravelApp.Utils
 {
     class Utilities
-    {        
+    {
         static public T getOnPlatformValue<T>(Object pSource)
         {
             T value = default(T);
@@ -43,6 +43,17 @@ namespace SecurityTravelApp.Utils
             mapMarkerAnimation.Add(.5, 1, bounceAnimation);
             mapMarkerAnimation.Commit(pElement, "bounce", length: 1000);
         }
+
+        static public async void switchBetween(VisualElement pElemenOut, VisualElement pElementIn)
+        {
+            pElementIn.Opacity = 0;
+            pElementIn.IsVisible = true;
+            await pElemenOut.FadeTo(0, 100);
+            pElemenOut.IsVisible = false;
+            pElementIn.FadeTo(1, 100);
+        }
+
+
 
     }
 }

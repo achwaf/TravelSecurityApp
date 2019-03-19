@@ -13,7 +13,7 @@ using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 namespace SecurityTravelApp.Droid
 {
-    [Activity(Label = "SecurityTravelApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait
+    [Activity(Label = "SecurityTravelApp", Icon = "@drawable/logoApp2", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait
         )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {

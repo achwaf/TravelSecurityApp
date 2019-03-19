@@ -50,9 +50,9 @@
                                 Margin="20,0,0,0"/>
                 </Grid>
             </Grid>
-            <StackLayout Grid.Column="1" Orientation="Horizontal">
-                <Label Text="01/03/2019" FontSize="12" TextColor="LightGray"/>
-                <Label Text="11:50" FontSize="12"  TextColor="LightGray"/>
+            <StackLayout Grid.Column="1" Orientation="Horizontal" Opacity=".6">
+                <Label Text="01/03/2019" FontSize="12" TextColor="Gray"/>
+                <Label Text="11:50" FontSize="12"  TextColor="Gray"/>
             </StackLayout>
             <Label Grid.Column="1" Grid.Row="1"
                    TextColor="Gray"

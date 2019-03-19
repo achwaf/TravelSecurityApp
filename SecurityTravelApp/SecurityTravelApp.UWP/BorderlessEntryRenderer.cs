@@ -1,15 +1,15 @@
-﻿using SecurityTravelApp.UWP;
-using SecurityTravelApp.Views.ViewsUtils;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
+using SecurityTravelApp.UWP;
+using SecurityTravelApp.Views.ViewsUtils;
 
-[assembly: ExportRenderer(typeof(BorderlessEditor), typeof(BorderlessEditorRenderer))]
+[assembly: ExportRenderer(typeof(BorderlessEntry), typeof(BorderlessEntryRenderer))]
 namespace SecurityTravelApp.UWP
 {
-    class BorderlessEditorRenderer : EditorRenderer
+    class BorderlessEntryRenderer : EntryRenderer
     {
         public static void Init() { }
-        protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
 
@@ -20,10 +20,10 @@ namespace SecurityTravelApp.UWP
                 Control.Padding = new Windows.UI.Xaml.Thickness(0);
             }
         }
-
     }
-
-
-
-
 }
+
+
+
+
+

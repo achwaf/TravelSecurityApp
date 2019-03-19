@@ -5,7 +5,8 @@
              xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
              x:Class="SecurityTravelApp.Views.LoginPage"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="white">
+             BackgroundColor="white"
+             Appearing="ContentPage_Appearing">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -23,101 +24,113 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout>
-            <Grid AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional" 
-                AbsoluteLayout.LayoutBounds=".5,.5,.9,200"
-                  VerticalOptions="Center"
-                Padding="0"
-                Margin="40,0">
-                <StackLayout
-                Padding="2"
-                BackgroundColor="{StaticResource HighLightColor}">
-                    <StackLayout
-                Padding="20"
-                Spacing="20"
-                BackgroundColor="{StaticResource OverAllColor}">
-                        <StackLayout
-                Orientation="Horizontal">
-                            <Label Text="Matricule"
-                       HorizontalTextAlignment="Start"
-                       VerticalOptions="Center"
-                       WidthRequest="{StaticResource LabelWidth}"/>
-                            <Entry x:Name="UserIdEntry"
-                    VerticalOptions="Center"
-                    BackgroundColor="{StaticResource EntryColor}"
-                    HorizontalOptions="FillAndExpand"/>
-                        </StackLayout>
-                        <StackLayout
-                Orientation="Horizontal">
-                            <Label Text="Mot de passe"
-                       HorizontalTextAlignment="Start"
-                       VerticalOptions="Center"
-                       WidthRequest="{StaticResource LabelWidth}"/>
-                            <Entry x:Name="PassEntry"
-                    VerticalOptions="Center"
-                    IsPassword="True"
-                    BackgroundColor="{StaticResource EntryColor}"
-                    HorizontalOptions="FillAndExpand"/>
-                        </StackLayout>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Label x:Name="WarningMsg"
-                           Grid.Column="0"
-                           IsVisible="false"
-                           FontSize="{StaticResource WarningMsgFontSize}"
-                           TextColor="{StaticResource WarningMsgColor}"
-                           Text="Ce texte est reservé aux messages d'alerte suite à des identifiants non valides"
-                           VerticalTextAlignment="Center"
-                           HorizontalTextAlignment="Start"
-                           VerticalOptions="FillAndExpand"
-                           HorizontalOptions="FillAndExpand"
-                           Margin="10,0"/>
-                            <StackLayout x:Name="Button"
-                         Grid.Column="1"
-                         Spacing="10"
-                         Orientation="Horizontal"
-                         HorizontalOptions="End"
-                         VerticalOptions="Start"
-                         HeightRequest="{StaticResource ButtonHeight}">
-                                <Label x:Name="ConfirmerIcon" 
-                       Text="{x:Static viewUtils:FontAwesomeSolidIcons.Check}"
-                       Margin="10,0,0,0"
-                       VerticalTextAlignment="Center"
-                       HorizontalTextAlignment="Center"
-                       VerticalOptions="Fill"
-                       HorizontalOptions="End"
-                       FontFamily="{StaticResource FontAwesomeSolid}"
-                       TextColor="{StaticResource HighLightColor}"/>
-                                <Label Text="Se Connecter"
-                       Margin="0,0,10,0"
-                       VerticalTextAlignment="Center"
-                       HorizontalOptions="End"
-                       FontAttributes="Bold"
-                       HorizontalTextAlignment="Start"
-                       VerticalOptions="Fill"
-                       TextColor="{StaticResource HighLightColor}"/>
-                            </StackLayout>
-                        </Grid>
-                    </StackLayout>
-                </StackLayout>
-
-            </Grid>
-            <!--Dim Mask-->
-            <BoxView x:Name="DimMask" IsVisible="false" Opacity="{StaticResource DimMaskOpacity}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" Color="Black"/>
-            <Grid x:Name="StackLayoutUpFront"  VerticalOptions="End" AbsoluteLayout.LayoutFlags="All"
-                    AbsoluteLayout.LayoutBounds=".5,1,1,1">
-
+            <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" RowSpacing="0">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="70"/>
                 </Grid.RowDefinitions>
-                <BoxView  Grid.Row="1" Color="White" Opacity="{StaticResource BehindNavBarMaskOpacity}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
-                <comp:NavigationBarComp x:Name="NavigationBar" Grid.Row="1" VerticalOptions="End" HorizontalOptions="Fill"
-                    Margin="{StaticResource UpFrontViewMargin}"
-                                        />
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Margin="10,5,10,0">
+                    <Image Source="OCPLogo.png" HorizontalOptions="Center" VerticalOptions="Center"
+                               Aspect="AspectFit"/>
+                    <Label Text="Welcome to GCC" TextColor="LightGray" HorizontalOptions="Center" VerticalOptions="Center"
+                               FontSize="15"/>
+                </StackLayout>
+                <Image x:Name="Logo1" Grid.Row="1" 
+                       Source="WelcomeLogo1.png" VerticalOptions="End" HorizontalOptions="Center" HeightRequest="150"/>
+                <Image x:Name="Logo2" Grid.Row="1" IsVisible="False"
+                       Source="WelcomeLogo2.png" VerticalOptions="End" HorizontalOptions="Center" HeightRequest="150"/>
+                <StackLayout x:Name="AppName" Grid.Row="2" Orientation="Horizontal" Margin="5"
+                             VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label Text="Travel" TextColor="DarkGray"
+                               FontSize="25"/>
+                    <Label Text="SECURITY" TextColor="DarkGray"
+                               FontAttributes="Bold" FontSize="25"/>
+                </StackLayout>
+                <Grid  x:Name="LoginComp" Grid.Row="3" Padding="20"
+                        HorizontalOptions="Fill" VerticalOptions="Center"
+                        BackgroundColor="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Margin="25,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="45"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="*"/>
+                            <!--spacer-->
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+                        <BoxView Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Color="#334711" CornerRadius="22.5" VerticalOptions="Fill" HorizontalOptions="Fill" />
+                        <BoxView Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Color="White" CornerRadius="22" VerticalOptions="Fill" HorizontalOptions="Fill" Margin="1" />
+                        <BoxView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Color="#334711" CornerRadius="22.5" VerticalOptions="Fill" HorizontalOptions="Fill" />
+                        <BoxView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Color="White" CornerRadius="22" VerticalOptions="Fill" HorizontalOptions="Fill" Margin="1" />
+                        <Label Grid.Column="0" Grid.Row="0"
+                           Text="{x:Static viewUtils:LineAwesomeIcons.User}" FontAttributes="Bold"
+                           FontFamily="{StaticResource LineAwesome}" 
+                               VerticalOptions="Center" VerticalTextAlignment="Center"
+                               HorizontalOptions="End" HorizontalTextAlignment="Center"
+                           TextColor="Gray"
+                           FontSize="20"/>
+                        <Grid x:Name="TogglePass" Grid.Column="0" Grid.Row="1">
+                            <Label x:Name="ShowPass"
+                               Text="{x:Static viewUtils:LineAwesomeIcons.Eye}" IsVisible="False" FontAttributes="Bold"
+                               FontFamily="{StaticResource LineAwesome}" 
+                                   VerticalOptions="Center" VerticalTextAlignment="Center"
+                                   HorizontalOptions="End" HorizontalTextAlignment="Center"
+                               TextColor="Gray"
+                               FontSize="20"/>
+                            <Label x:Name="HidePass"
+                               Text="{x:Static viewUtils:LineAwesomeIcons.EyeSlash}" FontAttributes="Bold"
+                               FontFamily="{StaticResource LineAwesome}" 
+                                   VerticalOptions="Center" VerticalTextAlignment="Center"
+                                   HorizontalOptions="End" HorizontalTextAlignment="Center"
+                               TextColor="Gray"
+                               FontSize="20"/>
+                        </Grid>
+                        <viewUtils:BorderlessEntry x:Name="IDEntry" Grid.Column="1" Grid.Row="0" Margin="10,8,10,0"
+                                                Placeholder="ID"                                                
+                                                PlaceholderColor="LightGray"
+                                                VerticalOptions="Fill"
+                                                HeightRequest="30"
+                                                HorizontalOptions="Fill"
+                                                TextColor="Gray"/>
+                        <viewUtils:BorderlessEntry x:Name="PassEntry" Grid.Column="1" Grid.Row="1" Margin="10,8,10,0"
+                                                Placeholder="Password"
+                                                IsPassword="True"
+                                                PlaceholderColor="LightGray"
+                                                VerticalOptions="Fill"
+                                                HeightRequest="30"
+                                                HorizontalOptions="Fill"
+                                                TextColor="Gray"/>
 
+                    </Grid>
+                    <Grid  x:Name="LoginButton" Grid.Row="1" HorizontalOptions="Center" Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <BoxView Color="#334711" Grid.ColumnSpan="2"
+                             VerticalOptions="Fill" HorizontalOptions="Fill" CornerRadius="5"/>
+                        <Label Grid.Column="0" Margin="20,5,0,5"
+                                   Text="{x:Static viewUtils:LineAwesomeIcons.Signin}"
+                                   FontFamily="{StaticResource LineAwesome}" 
+                                       VerticalOptions="Center" VerticalTextAlignment="Center"
+                                       HorizontalOptions="End" HorizontalTextAlignment="Center"
+                                   TextColor="White"
+                                   FontSize="25"/>
+                        <Label Grid.Column="1" Text="Log in" Margin="0,5,20,5" TextColor="White"
+                                       FontAttributes="Bold"
+                                       VerticalOptions="Center" VerticalTextAlignment="Center"
+                                       HorizontalOptions="Start" HorizontalTextAlignment="Center"/>
+                    </Grid>
+                </Grid>
             </Grid>
         </AbsoluteLayout>
     </ContentPage.Content>

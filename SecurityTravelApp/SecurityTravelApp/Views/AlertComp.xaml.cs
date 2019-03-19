@@ -23,11 +23,21 @@ namespace SecurityTravelApp.Views
         private Color WarningColor = Color.FromHex("#E8BD4A");
         private Color InfoColor = Color.FromHex("#6CBEED");
 
+        private Boolean ContinueFlashing = false;
+
 
         public AlertComp(Alert pAlert)
         {
             InitializeComponent();
 
+
+
+            // create flashing animation
+            Animation flashLoop = new Animation();
+            Animation fadeIn = new Animation(d => NewInfo.Opacity = d, .7, 1);
+            Animation fadeOut = new Animation(d => NewInfo.Opacity = d, 1, .7);
+            flashLoop.Add(0, .5, fadeIn);
+            flashLoop.Add(.5, 1, fadeOut);
 
             // setting the taphandler   
             var tapGestureRecognizer = new TapGestureRecognizer();
@@ -63,6 +73,44 @@ namespace SecurityTravelApp.Views
             // filling texts
             Title.Text = pAlert.title;
             TheText.Text = pAlert.text;
+            RegionText.Text = pAlert.region;
+
+
+            // date recieved and seen region
+            if (pAlert.isSeen)
+            {
+                NewInfo.IsVisible = false;
+                SeenInfo.IsVisible = true;
+
+                // display time if seen today, display date elsewise
+                if (pAlert.dateSeen.Date == DateTime.Today)
+                {
+                    TextSeen.Text = pAlert.dateSeen.ToShortTimeString();
+                }
+                else
+                {
+                    TextSeen.Text = pAlert.dateSeen.ToShortDateString();
+                }
+            }
+            else
+            {
+                ContinueFlashing = true;
+                NewInfo.IsVisible = true;
+                SeenInfo.IsVisible = false;
+                // luaunch the animation
+                flashLoop.Commit(NewInfo, "flash", length: 200, repeat: () => { return true; });
+            }
+
+            // display time if recieved today, display date elsewise
+            if (pAlert.dateReceived.Date == DateTime.Today)
+            {
+                TextRecieved.Text = pAlert.dateReceived.ToShortTimeString();
+            }
+            else
+            {
+                TextRecieved.Text = pAlert.dateReceived.ToShortDateString();
+            }
+
         }
     }
 }

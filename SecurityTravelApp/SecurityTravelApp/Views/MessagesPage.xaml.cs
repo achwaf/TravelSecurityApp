@@ -124,21 +124,12 @@ namespace SecurityTravelApp.Views
         {
             if (CancelIcon.IsVisible && String.IsNullOrEmpty(messageEditor.Text))
             {
-                switchBetween(CancelIcon, ReduceIcon);
+                Utilities.switchBetween(CancelIcon, ReduceIcon);
             }
             else if (ReduceIcon.IsVisible && !String.IsNullOrEmpty(messageEditor.Text))
             {
-                switchBetween(ReduceIcon, CancelIcon);
+                Utilities.switchBetween(ReduceIcon, CancelIcon);
             }
-        }
-
-        private async void switchBetween(VisualElement pElemenOut, VisualElement pElementIn)
-        {
-            pElementIn.Opacity = 0;
-            pElementIn.IsVisible = true;
-            await pElemenOut.FadeTo(0, 100);
-            pElemenOut.IsVisible = false;
-            pElementIn.FadeTo(1, 100);
         }
 
         private void populateDefinedMessages(List<String> pList)

@@ -35,6 +35,10 @@ namespace SecurityTravelApp.Views.ViewsUtils
         public static readonly string Exclamation = "\uf1cd";
         public static readonly string Download = "\uf1bd";
         public static readonly string Filter = "\uf1f3";
+        public static readonly string CircleDot = "\uf1bc";
+        public static readonly string HandUp = "\uf228";
+        public static readonly string User = "\uf364";
+        public static readonly string Calendar = "\uf15c";
 
     }
 

@@ -56,14 +56,24 @@ namespace SecurityTravelApp.Views
 
             // add tap gesture to Hotline Button
             var tapGestureRecognizerHotline = new TapGestureRecognizer();
+            HotlineButton.GestureRecognizers.Add(tapGestureRecognizerHotline);
 
-            // setting the handler
+            // add tap gesture to Side Button
+            var tapGestureRecognizerSideButton = new TapGestureRecognizer();
+            SideButton.GestureRecognizers.Add(tapGestureRecognizerSideButton);
+
+            // setting the handler to hotline Buton
             tapGestureRecognizerHotline.Tapped += (s, e) =>
             {
-                gpsPositioningDone();
-                //callSrv.callNumber("+212611111111");
+                callSrv.callNumber("+212611111111");
             };
-            HotlineButton.GestureRecognizers.Add(tapGestureRecognizerHotline);
+
+
+            // setting the handler to Side  Buton
+            tapGestureRecognizerSideButton.Tapped += (s, e) =>
+            {
+                gpsPositioningDone();
+            };
 
             // animation waiting for GPS
             waitingAnimation = new Animation();

@@ -22,7 +22,7 @@
                     <!--<RowDefinition Height="80"/>-->
                 </Grid.RowDefinitions>
                 <StackLayout Grid.Row="0" Orientation="Horizontal" 
-                             HorizontalOptions="Fill" Margin="10" Spacing="15">
+                             HorizontalOptions="Fill" Margin="10,10,10,0" Spacing="20">
                     <Label HorizontalOptions="StartAndExpand"
                            VerticalOptions="Center"
                            HorizontalTextAlignment="Start"
@@ -31,7 +31,7 @@
                     <Label x:Name="SearchIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Search}"
                                 FontFamily="{StaticResource LineAwesome}"
                                 TextColor="LightBlue"
-                                FontSize="35"
+                                FontSize="25"
                                 Margin="0,2,0,0"
                                 VerticalTextAlignment="Center"
                                 HorizontalTextAlignment="Center" 
@@ -40,7 +40,7 @@
                     <Label x:Name="CheckIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Check}"
                                 FontFamily="{StaticResource LineAwesome}"
                                 TextColor="LightBlue"
-                                FontSize="35"
+                                FontSize="25"
                                 Margin="0,2,0,0"
                                 VerticalTextAlignment="Center"
                                 HorizontalTextAlignment="Center" 
@@ -49,13 +49,18 @@
                     <Label x:Name="AddIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Plus}"
                                 FontFamily="{StaticResource LineAwesome}"
                                 TextColor="LightBlue"
-                                FontSize="35"
+                                FontSize="25"
                                 Margin="0,2,0,0"
                                 VerticalTextAlignment="Center"
                                 HorizontalTextAlignment="Center" 
                                 VerticalOptions="Center"
                                 HorizontalOptions="End"/>
                 </StackLayout>
+
+                <Grid x:Name="EmptyInfo" IsVisible="False" Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill" Opacity=".2" Margin="0,0,0,70">
+                    <Image Source="empty.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="150" WidthRequest="150"/>
+                    <Label Text="Empty" FontSize="25" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
+                </Grid>
                 <ScrollView  Grid.Row="1" Margin="{StaticResource UpFrontViewMargin}">
                     <StackLayout Orientation="Vertical" HorizontalOptions="Fill" Spacing="20"
                                  Margin="0,10">
@@ -139,7 +144,7 @@
                             <Label x:Name="CancelIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Close}" IsVisible="False"
                                    FontFamily="{StaticResource LineAwesome}"
                                    TextColor="OrangeRed"
-                                   FontSize="35"
+                                   FontSize="25"
                                    WidthRequest="50"
                                    HeightRequest="50"
                                    VerticalTextAlignment="Center"
@@ -149,7 +154,7 @@
                             <Label x:Name="ReduceIcon" Text="{x:Static viewUtils:LineAwesomeIcons.AngleDown}" IsVisible="True"
                                    FontFamily="{StaticResource LineAwesome}"
                                    TextColor="White" Opacity=".7"
-                                   FontSize="35"
+                                   FontSize="25"
                                    WidthRequest="50"
                                    HeightRequest="50"
                                    VerticalTextAlignment="Center"
@@ -159,7 +164,7 @@
                             <Label x:Name="SendIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Send}" Grid.Row="1"
                                    FontFamily="{StaticResource LineAwesome}"
                                    TextColor="LightSeaGreen"
-                                   FontSize="35"
+                                   FontSize="25"
                                    WidthRequest="50"
                                    HeightRequest="50"
                                    VerticalTextAlignment="Center"
