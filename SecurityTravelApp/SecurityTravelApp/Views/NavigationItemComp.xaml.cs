@@ -36,21 +36,16 @@ namespace SecurityTravelApp.Views
 
                 // effects on NavigationItem : highlighting
                 showHighlight();
+
+                // remove the notification 
+                pItem.carriesNotif = false;
+                pItem.numberOfNotif = 0;
+
+                // action
                 if (lastPage.GetType() != typeAskedtPage)
                 {
-                    Page targetPage = appMngService.lookUpPage(pItem.target);
                     var paramAfterNav = new AfterNavigationParams() { navigationTarget = pItem.target };
-                    if (targetPage == null)
-                    {
-                        targetPage = (Page)Activator.CreateInstance(typeAskedtPage, pSrvFactory, paramAfterNav);
-                    }
-                    else
-                    {
-                        // pages should implement Updatable Page to allow UI updates
-                        UpdatablePage updatblePage = (UpdatablePage)targetPage;
-                        updatblePage.update();
-                    }
-                    appMngService.navigateToAndSave(targetPage, pItem.target);
+                    appMngService.navigateTo(pItem.target, pSrvFactory, paramAfterNav);
                     HighlightMask.IsVisible = false;
                 }
                 showAndFadeOutHighlight();
@@ -63,10 +58,10 @@ namespace SecurityTravelApp.Views
                 showAndFadeOutHighlight();
             }
 
-            updateView(pItem);
+            SetView(pItem);
         }
 
-        private void updateView(NavigationItem pItem)
+        private void SetView(NavigationItem pItem)
         {
             // notification type
             if (pItem.notifType == NavigationItemNotifType.Numerical)

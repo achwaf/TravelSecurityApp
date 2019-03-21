@@ -109,6 +109,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="empty.png" />
+    <Content Include="EN.png" />
+    <Content Include="flightTravel.png" />
+    <Content Include="FR.png" />
     <Content Include="Headquarter.png" />
     <Content Include="OCPLogo.png" />
     <Content Include="OCPOffice.png" />

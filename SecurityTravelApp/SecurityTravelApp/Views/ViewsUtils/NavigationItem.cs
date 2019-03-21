@@ -42,6 +42,8 @@ namespace SecurityTravelApp.Views.ViewsUtils
             {
                 _carriesNotif = value;
                 OnPropertyChanged();
+                OnPropertyChanged("showNumericalNotif");
+                OnPropertyChanged("showDotNotif");
             }
         }
         public int numberOfNotif
@@ -51,6 +53,30 @@ namespace SecurityTravelApp.Views.ViewsUtils
             {
                 _numberOfNotif = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public Boolean showDotNotif
+        {
+            get
+            {
+                if (notifType == NavigationItemNotifType.Dot && _carriesNotif)
+                {
+                    return true;
+                }
+                else return false;
+            }
+        }
+
+        public Boolean showNumericalNotif
+        {
+            get
+            {
+                if (notifType == NavigationItemNotifType.Numerical && _carriesNotif)
+                {
+                    return true;
+                }
+                else return false;
             }
         }
 

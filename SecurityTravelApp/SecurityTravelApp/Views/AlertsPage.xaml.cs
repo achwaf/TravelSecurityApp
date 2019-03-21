@@ -24,8 +24,13 @@ namespace SecurityTravelApp.Views
 
 
             localDataSrv = (LocalDataService)pSrvFactory.getService(ServiceType.LocalData);
-
             populateAlerts(localDataSrv.getAlerts());
+
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
         }
 
 
@@ -37,11 +42,24 @@ namespace SecurityTravelApp.Views
                 AlertsContainer.Children.Add(alertComp);
             }
             // adding spacer to be able to scroll up the last elements
-            AlertsContainer.Children.Add(new BoxView() { HeightRequest = 60});
+            AlertsContainer.Children.Add(new BoxView() { HeightRequest = 60 });
         }
+
+
 
         public void update()
         {
+        }
+
+        // Invoked when a hardware back button is pressed
+        protected override bool OnBackButtonPressed()
+        {
+            // Return true if you don't want to close this popup page when a back button is pressed
+            //if (PopupNavigation.Instance.PopupStack.Count > 0)
+            //{
+            //    PopupNavigation.Instance.PopAsync();
+            //}
+            return true;
         }
     }
 }

@@ -62,24 +62,9 @@
                     <Label Text="Empty" FontSize="25" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
                 </Grid>
                 <ScrollView  Grid.Row="1" Margin="{StaticResource UpFrontViewMargin}">
-                    <StackLayout Orientation="Vertical" HorizontalOptions="Fill" Spacing="20"
-                                 Margin="0,10">
-                        <comp:MessageComp />
-                        <comp:MessageComp />
-                        <comp:MessageComp />
-                        <comp:MessageComp />
-                        <comp:MessageComp />
-                        <comp:MessageComp />
-                        <comp:MessageComp />
-                        <comp:MessageComp />
-                        <comp:MessageComp />
-                        <comp:MessageComp />
-                        <comp:MessageComp />
-                        <comp:MessageComp />
-                        <comp:MessageComp />
-                        <comp:MessageComp />
-                        <comp:MessageComp />
-                    </StackLayout>
+                    <StackLayout x:Name="MessageContainer" Orientation="Vertical" HorizontalOptions="Fill" Spacing="20"
+                                 Margin="0,10"/>
+
                 </ScrollView>
             </Grid>
             <!--Dim Mask-->

@@ -26,7 +26,6 @@
                     <BoxView x:Name="IconBackground" Grid.ColumnSpan="2" VerticalOptions="Fill" HorizontalOptions="Fill"/>
                     <AbsoluteLayout x:Name="Icon" VerticalOptions="Fill" HorizontalOptions="Fill" Margin="{StaticResource DecorationIconMargin}">
                         <ffimageloadingsvg:SvgCachedImage x:Name="AlertIcon"
-                                              Source="resource://SecurityTravelApp.Assets.CriticShadow.svg" 
                                                           AbsoluteLayout.LayoutFlags="PositionProportional"
                                                           AbsoluteLayout.LayoutBounds="1,0,150,150"/>
                     </AbsoluteLayout>
@@ -37,7 +36,6 @@
                                     FontFamily="{StaticResource LineAwesome}"
                                     TextColor="White"
                                    HorizontalTextAlignment="Center"
-                                   Margin="0,0,0,-3"
                                     FontSize="15"/>
                             <Label x:Name="TextSeen" TextColor="White" VerticalOptions="End"
                                    FontSize="10"/>
@@ -47,7 +45,6 @@
                                     FontFamily="{StaticResource LineAwesome}"                                    
                                     TextColor="White"
                                    HorizontalTextAlignment="Center"
-                                   Margin="0,0,0,-3"
                                     FontSize="15"/>
                             <Label TextColor="White" VerticalOptions="End"
                                    FontSize="11"
@@ -77,12 +74,14 @@
                            FontAttributes="Bold"
                            FontSize="15"
                            Opacity=".7" TextColor="Black"
+                           LineBreakMode="TailTruncation"
                            VerticalOptions="Center"
                            HorizontalOptions="Start"
                            HorizontalTextAlignment="Start"
                            VerticalTextAlignment="Start"/>
                         <Label x:Name="RegionText" Grid.Row="1" Margin="5,0,5,5"
-                           FontSize="13"                           
+                           FontSize="13"          
+                           LineBreakMode="TailTruncation"
                            Opacity=".2" TextColor="Black" FontAttributes="Bold"
                            VerticalOptions="Start"
                            HorizontalOptions="Start"
@@ -94,7 +93,7 @@
                            VerticalOptions="Start"
                            HorizontalOptions="Start"
                            HorizontalTextAlignment="Start"
-                           VerticalTextAlignment="Center"/>
+                           VerticalTextAlignment="Start"/>
                     </Grid>
 
                 </Grid>

@@ -1,4 +1,5 @@
 ﻿using SecurityTravelApp.DependencyServices;
+using SecurityTravelApp.Models;
 using SecurityTravelApp.Services;
 using SecurityTravelApp.Utils;
 using SecurityTravelApp.ViewModels;
@@ -17,7 +18,6 @@ namespace SecurityTravelApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MessagesPage : ContentPage, UpdatablePage
     {
-        IKeyboardCheck keyboardService;
         LocalDataService localDataSrv;
 
         private double DimMaskOpacity;
@@ -85,17 +85,24 @@ namespace SecurityTravelApp.Views
             // setting the handler to SendIcon
             tapGestureRecognizerSend.Tapped += (s, e) =>
             {
+                // add msg to list
+                String msg = messageEditor.Text;
+                MessageContainer.Children.Insert(0, new MessageComp(new Message(msg, false, "")));
+
+                // reduce msg composer
+                reduceMsgComposer();
+
+                // flush editor
+                messageEditor.Text = String.Empty;
+
+                // add msg to sqlite
+                // send msg to backend
             };
 
             // setting the handler to ReduceIcon
             tapGestureRecognizerReduce.Tapped += async (s, e) =>
             {
-                messageEditor.Unfocus();
-                await Task.WhenAll(MessagingComp.TranslateTo(0, 100, 500, Easing.CubicOut),
-                DimMask.FadeTo(0, 300),
-                MessagingComp.FadeTo(0, 300));
-                DimMask.IsVisible = false;
-                MessagingComp.IsVisible = false;
+                reduceMsgComposer();
             };
 
 
@@ -111,6 +118,9 @@ namespace SecurityTravelApp.Views
             // populate the defined messages
             populateDefinedMessages(localDataSrv.getDefinedMessages());
 
+            // pupulate the stored messages
+            pupulateMessages(localDataSrv.getMessages());
+
             // subscribe to textUpdates from DefinedMessages
             MessagingCenter.Subscribe<DefinedMessageComp, String>(this, "TEXTUPDATE", (sender, pMessage) =>
                     {
@@ -120,8 +130,32 @@ namespace SecurityTravelApp.Views
 
         }
 
+        private async void reduceMsgComposer()
+        {
+            messageEditor.Unfocus();
+            await Task.WhenAll(MessagingComp.TranslateTo(0, 100, 500, Easing.CubicOut),
+            DimMask.FadeTo(0, 300),
+            MessagingComp.FadeTo(0, 300));
+            DimMask.IsVisible = false;
+            MessagingComp.IsVisible = false;
+        }
+
         private async void MessageEditor_TextChanged(object sender, TextChangedEventArgs e)
         {
+            // send button effect
+            if (String.IsNullOrEmpty(messageEditor.Text))
+            {
+                SendIcon.FadeTo(.4, 100);
+                SendIcon.IsEnabled = false;
+
+            }
+            else
+            {
+                SendIcon.FadeTo(1, 100);
+                SendIcon.IsEnabled = true;
+            }
+
+            // delete/cancel button effect
             if (CancelIcon.IsVisible && String.IsNullOrEmpty(messageEditor.Text))
             {
                 Utilities.switchBetween(CancelIcon, ReduceIcon);
@@ -141,6 +175,17 @@ namespace SecurityTravelApp.Views
         }
 
 
+        private void pupulateMessages(List<Message> pList)
+        {
+            foreach (var msg in pList)
+            {
+                MessageComp alertComp = new MessageComp(msg);
+                MessageContainer.Children.Add(alertComp);
+            }
+            // adding spacer to be able to scroll up the last elements
+            MessageContainer.Children.Add(new BoxView() { HeightRequest = 60 });
+        }
+
         public void update()
         {
         }
@@ -155,19 +200,15 @@ namespace SecurityTravelApp.Views
             ThePage.Padding = new Thickness(0, 0, 0, 200);
         }
 
-        protected override void OnAppearing()
+        // Invoked when a hardware back button is pressed
+        protected override bool OnBackButtonPressed()
         {
-            base.OnAppearing();
-            //keyboardService.KeyboardIsShown += KeyboardService_KeyboardIsShown;
-            //keyboardService.KeyboardIsHidden += KeyboardService_KeyboardIsHidden;
-
-        }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-            //keyboardService.KeyboardIsShown -= KeyboardService_KeyboardIsShown;
-            //keyboardService.KeyboardIsHidden -= KeyboardService_KeyboardIsHidden;
+            // Return true if you don't want to close this popup page when a back button is pressed
+            //if (PopupNavigation.Instance.PopupStack.Count > 0)
+            //{
+            //    PopupNavigation.Instance.PopAsync();
+            //}
+            return true;
         }
     }
 }

@@ -24,32 +24,42 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout>
-            <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" RowSpacing="0">
+            <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" RowSpacing="0" Margin="10,5,10,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="70"/>
                 </Grid.RowDefinitions>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Margin="10,5,10,0">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
                     <Image Source="OCPLogo.png" HorizontalOptions="Center" VerticalOptions="Center"
                                Aspect="AspectFit"/>
                     <Label Text="Welcome to GCC" TextColor="LightGray" HorizontalOptions="Center" VerticalOptions="Center"
                                FontSize="15"/>
                 </StackLayout>
-                <Image x:Name="Logo1" Grid.Row="1" 
-                       Source="WelcomeLogo1.png" VerticalOptions="End" HorizontalOptions="Center" HeightRequest="150"/>
-                <Image x:Name="Logo2" Grid.Row="1" IsVisible="False"
-                       Source="WelcomeLogo2.png" VerticalOptions="End" HorizontalOptions="Center" HeightRequest="150"/>
-                <StackLayout x:Name="AppName" Grid.Row="2" Orientation="Horizontal" Margin="5"
-                             VerticalOptions="Center" HorizontalOptions="Center">
-                    <Label Text="Travel" TextColor="DarkGray"
+                <Grid Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill">
+                    <Image x:Name="TravelLine" Source="flightTravel.png" HorizontalOptions="Center" VerticalOptions="End"
+                               Aspect="AspectFit" IsVisible="False"/>
+                    <Grid Grid.Row="0" VerticalOptions="End" HorizontalOptions="Fill" RowSpacing="0" Margin="0,0,0,40">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Image x:Name="Logo1" Grid.Row="0" 
+                                Source="WelcomeLogo1.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="150"/>
+                        <Image x:Name="Logo2" Grid.Row="0" IsVisible="False"
+                                Source="WelcomeLogo2.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="150"/>
+
+                        <StackLayout x:Name="AppName" Grid.Row="1" Orientation="Horizontal" Margin="5"
+                             VerticalOptions="End" HorizontalOptions="Center">
+                            <Label Text="Travel" TextColor="DarkGray"
                                FontSize="25"/>
-                    <Label Text="SECURITY" TextColor="DarkGray"
+                            <Label Text="SECURITY" TextColor="DarkGray"
                                FontAttributes="Bold" FontSize="25"/>
-                </StackLayout>
-                <Grid  x:Name="LoginComp" Grid.Row="3" Padding="20"
+                        </StackLayout>
+                    </Grid>
+                </Grid>
+
+                <Grid  x:Name="LoginComp" Grid.Row="2" Padding="20,0,20,20"
                         HorizontalOptions="Fill" VerticalOptions="Center"
                         BackgroundColor="White">
                     <Grid.RowDefinitions>
@@ -111,21 +121,21 @@
                                                 TextColor="Gray"/>
 
                     </Grid>
-                    <Grid  x:Name="LoginButton" Grid.Row="1" HorizontalOptions="Center" Margin="10">
+                    <Grid  x:Name="LoginButton" Grid.Row="1" HorizontalOptions="Center" HeightRequest="46" Margin="20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <BoxView Color="#334711" Grid.ColumnSpan="2"
-                             VerticalOptions="Fill" HorizontalOptions="Fill" CornerRadius="5"/>
-                        <Label Grid.Column="0" Margin="20,5,0,5"
+                             VerticalOptions="Fill" HorizontalOptions="Fill" CornerRadius="23"/>
+                        <Label Grid.Column="0" Margin="20,0,0,0"
                                    Text="{x:Static viewUtils:LineAwesomeIcons.Signin}"
                                    FontFamily="{StaticResource LineAwesome}" 
                                        VerticalOptions="Center" VerticalTextAlignment="Center"
                                        HorizontalOptions="End" HorizontalTextAlignment="Center"
                                    TextColor="White"
                                    FontSize="25"/>
-                        <Label Grid.Column="1" Text="Log in" Margin="0,5,20,5" TextColor="White"
+                        <Label Grid.Column="1" Text="Log in" Margin="0,0,20,0" TextColor="White"
                                        FontAttributes="Bold"
                                        VerticalOptions="Center" VerticalTextAlignment="Center"
                                        HorizontalOptions="Start" HorizontalTextAlignment="Center"/>

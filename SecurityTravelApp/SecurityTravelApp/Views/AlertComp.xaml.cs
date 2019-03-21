@@ -1,6 +1,8 @@
 ﻿using FFImageLoading.Forms;
 using FFImageLoading.Svg.Forms;
+using Rg.Plugins.Popup.Services;
 using SecurityTravelApp.Models;
+using SecurityTravelApp.Views.Popups;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +49,8 @@ namespace SecurityTravelApp.Views
             {
                 Icon.FadeTo(.5, 50);
                 await TextBackground.FadeTo(.85, 50);
+
+                PopupNavigation.Instance.PushAsync(new AlertPopup(pAlert), false);
 
                 Icon.FadeTo(1, 500);
                 TextBackground.FadeTo(.65, 500);

@@ -50,17 +50,18 @@
                            HeightRequest="{StaticResource IconSize}"
                            Margin="5,5,5,0"
                        />
-                <Grid x:Name="NumercialNotif"
+                <Grid x:Name="Notif" IsVisible="{Binding carriesNotif}">
+                    <Grid x:Name="NumercialNotif" 
                       HorizontalOptions="End"
                       VerticalOptions="Start"
                       Margin="0,5,5,0"
-                      IsVisible="true">
-                    <BoxView CornerRadius="{StaticResource NotificationCornerRadius}"
+                      IsVisible="{Binding showNumericalNotif}">
+                        <BoxView CornerRadius="{StaticResource NotificationCornerRadius}"
                          Color="{StaticResource NotificationColor}"
                          WidthRequest="{StaticResource NumericalNotifSize}"
                          HeightRequest="{StaticResource NumericalNotifSize}"
                          />
-                    <Label x:Name="NotifNumber"
+                        <Label x:Name="NotifNumber"
                            Text="{Binding numberOfNotif}"
                            FontSize="{StaticResource NumericalNotifTextSize}"
                            FontAttributes="bold"  
@@ -68,19 +69,21 @@
                            HorizontalOptions="CenterAndExpand"
                            VerticalTextAlignment="Center"
                            HorizontalTextAlignment="Center"/>
-                </Grid>
-                <Grid x:Name="DotNotif"
+                    </Grid>
+                    <Grid x:Name="DotNotif"
                       HorizontalOptions="End"
                       VerticalOptions="Start"
                       Margin="0,10,15,0"
-                      IsVisible="{Binding notifType,Converter=NavigationItemTypeNotifToBool}">
-                    <BoxView 
+                      IsVisible="{Binding showDotNotif}">
+                        <BoxView 
                          CornerRadius="{StaticResource NotificationCornerRadius}"
                          Color="{StaticResource NotificationColor}"
                          WidthRequest="{StaticResource DotNotifSize}"
                          HeightRequest="{StaticResource DotNotifSize}"
                          />
+                    </Grid>
                 </Grid>
+
                 <Label Grid.Row="1"
                    HorizontalOptions="Center"
                    VerticalOptions="End"

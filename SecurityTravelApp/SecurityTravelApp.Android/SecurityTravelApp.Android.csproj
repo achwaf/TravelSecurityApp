@@ -75,7 +75,6 @@
   <ItemGroup>
     <Compile Include="BorderlessEditorRenderer.cs" />
     <Compile Include="BorderlessEntryRenderer.cs" />
-    <Compile Include="KeyboardCheck_Droid.cs" />
     <Compile Include="LocationHelper_Droid.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="PhoneCall_Droid.cs" />
@@ -142,6 +141,15 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\logoAppLauncher.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\EN.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\FR.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\flightTravel.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

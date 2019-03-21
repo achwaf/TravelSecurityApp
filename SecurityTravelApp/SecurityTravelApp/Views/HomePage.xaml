@@ -51,7 +51,7 @@
                                FontAttributes="Bold" FontSize="25"/>
                     </StackLayout>
                 </Grid>
-                <Grid Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="#F3F7F7">
+                <Grid Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="#F3F7F7" MinimumHeightRequest="300">
                     <Image Source="WorldMap.png" Opacity=".25"
                            VerticalOptions="Fill"
                            HorizontalOptions="Fill" Aspect="AspectFit"/>
@@ -89,7 +89,7 @@
                                 VerticalTextAlignment="Start"
                                 HorizontalTextAlignment="End" />
                     </Grid>
-                    <StackLayout x:Name="PositionInfo" Margin="46.5,65,100,39"
+                    <StackLayout x:Name="PositionInfo" Margin="46.5,65,100,39" BackgroundColor="#40FFFFFF"
                           VerticalOptions="Center" HorizontalOptions="Center" 
                           Spacing="0">
                         <Label Text="Last checkin" FontSize="12" FontAttributes="Bold" Margin="0,0,0,5"
@@ -116,7 +116,7 @@
                         </StackLayout>
 
                     </StackLayout>
-                    <Label Text="Tapez l'épingle pour envoyer la position" TextColor="OrangeRed" 
+                    <Label x:Name="GPSIndication" Text="Tapez l'épingle pour envoyer la position" TextColor="OrangeRed" 
                            Opacity=".2" FontSize="10"
                            VerticalOptions="End"
                            HorizontalOptions="Start"

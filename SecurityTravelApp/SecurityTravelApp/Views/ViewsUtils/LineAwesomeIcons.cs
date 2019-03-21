@@ -23,6 +23,7 @@ namespace SecurityTravelApp.Views.ViewsUtils
         public static readonly string CheckCircle = "\uf17c";
         public static readonly string Check = "\uf17b";
         public static readonly string Signin = "\uf2fb";
+        public static readonly string Signout = "\uf2fc";
         public static readonly string Eye = "\uf1d4";
         public static readonly string EyeSlash = "\uf1d5";
         public static readonly string EllipsisVertical = "\uf1c4";
@@ -39,6 +40,8 @@ namespace SecurityTravelApp.Views.ViewsUtils
         public static readonly string HandUp = "\uf228";
         public static readonly string User = "\uf364";
         public static readonly string Calendar = "\uf15c";
+        public static readonly string LeftCircle = "\uf11a";
+        public static readonly string Microphone = "\uf28c";
 
     }
 

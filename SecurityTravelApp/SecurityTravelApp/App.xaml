@@ -18,20 +18,6 @@
             <OnPlatform x:Key="DimMaskOpacity" x:TypeArguments="x:Double" Default=".5" />
             <OnPlatform x:Key="BehindNavBarMaskOpacity" x:TypeArguments="x:Double" Default=".6" />
 
-            <OnPlatform x:TypeArguments="x:String" x:Key="FontAwesomeRegular" >
-                <OnPlatform.Platforms>
-                    <On Platform="Android" Value="fa-regular-400.ttf#Font Awesome 5 Free" />
-                    <On Platform="UWP" Value="/Assets/fa-regular-400.ttf#Font Awesome 5 Free" />
-                    <On Platform="iOS" Value="fa-regular-400" />
-                </OnPlatform.Platforms>
-            </OnPlatform>
-            <OnPlatform x:TypeArguments="x:String" x:Key="FontAwesomeSolid">
-                <OnPlatform.Platforms>
-                    <On Platform="Android" Value="fa-solid-900.ttf#Font Awesome 5 Free Solid" />
-                    <On Platform="UWP" Value="/Assets/fa-solid-900.ttf#Font Awesome 5 Free Solid" />
-                    <On Platform="iOS" Value="fa-solid-900" />
-                </OnPlatform.Platforms>
-            </OnPlatform>
             <OnPlatform x:TypeArguments="x:String" x:Key="LineAwesome">
                 <OnPlatform.Platforms>
                     <On Platform="Android" Value="line-awesome.ttf#LineAwesome" />

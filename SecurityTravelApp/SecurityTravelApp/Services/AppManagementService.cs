@@ -28,7 +28,7 @@ namespace SecurityTravelApp.Services
         {
             ExistingPages = new Dictionary<NavigationItemTarget, Page>();
             navigationItems = new List<NavigationItem>();
-            fillWithTestData();
+            fillWithData();
         }
 
         public void config(Application pAppRef)
@@ -53,12 +53,13 @@ namespace SecurityTravelApp.Services
                 case NavigationItemTarget.Home: return typeof(HomePage);
                 case NavigationItemTarget.Messages: return typeof(MessagesPage);
                 case NavigationItemTarget.Warnings: return typeof(AlertsPage);
-                default: return typeof(LoginPage);
+                case NavigationItemTarget.Login: return typeof(LoginPage);
+                default: return typeof(PopupTestPage);
             }
         }
 
 
-        public void navigateToAndSave(Page pPage, NavigationItemTarget pTarget)
+        private void navigateToAndSave(Page pPage, NavigationItemTarget pTarget)
         {
             if (!ExistingPages.ContainsKey(pTarget))
             {
@@ -66,6 +67,22 @@ namespace SecurityTravelApp.Services
             }
             CurrentPage = pPage;
             AppReference.MainPage = CurrentPage;
+        }
+
+        public void navigateTo(NavigationItemTarget pType, ServiceFactory pSrvFactory, AfterNavigationParams pParamAfterNav)
+        {
+            Page targetPage = lookUpPage(pType);
+            if (targetPage == null)
+            {
+                targetPage = (Page)Activator.CreateInstance(TypeOfNavigationTarget(pType), pSrvFactory, pParamAfterNav);
+            }
+            else
+            {
+                // pages should implement Updatable Page to allow UI updates
+                UpdatablePage updatblePage = (UpdatablePage)targetPage;
+                updatblePage.update();
+            }
+            navigateToAndSave(targetPage, pType);
         }
 
         public List<NavigationItem> getTheNavigationItems()
@@ -109,7 +126,7 @@ namespace SecurityTravelApp.Services
             }
         }
 
-        private void fillWithTestData()
+        private void fillWithData()
         {
             navigationItems.Add(createNavigationItemTest(2, "Home", NavigationItemTarget.Home, LineAwesomeIcons.Home, true, NavigationItemNotifType.Dot));
             navigationItems.Add(createNavigationItemTest(4, "Messages", NavigationItemTarget.Messages, LineAwesomeIcons.Messages, false));

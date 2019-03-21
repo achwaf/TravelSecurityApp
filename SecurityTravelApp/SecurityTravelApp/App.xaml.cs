@@ -33,7 +33,7 @@ namespace SecurityTravelApp
             // or when the home page is displayed
             //appMngSrv.checkForAllRequiredPermissions();
 
-            appMngSrv.navigateToAndSave( new HomePage(serviceFactory, null),NavigationItemTarget.Home);
+            appMngSrv.navigateTo(NavigationItemTarget.Login, serviceFactory, null);
         }
 
         protected override void OnStart()

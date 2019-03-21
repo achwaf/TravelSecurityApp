@@ -44,42 +44,39 @@ namespace SecurityTravelApp.Views
                 {
                     PassEntry.IsPassword = false;
                     Utilities.switchBetween(HidePass, ShowPass);
+
                 }
             };
 
             // defining tap handler Login
             tapGestureRecognizerLogin.Tapped += (s, e) =>
             {
-                appMngSrv.navigateToAndSave(appMngSrv.lookUpPage(NavigationItemTarget.Home), NavigationItemTarget.Home);
+                appMngSrv.navigateTo(NavigationItemTarget.Home, pSrvFactory, null);
             };
         }
 
-        private async void welcomeAniamtion()
-        {
-            await animateLogo();
-            await Task.Delay(1000);
-            showLoginEntries();
-        }
 
-
-        private async Task animateLogo()
+        private async Task welcomeAniamtion()
         {
+            LoginComp.Opacity = 0;
             Logo1.Opacity = 1;
             Logo2.Opacity = 0;
+            TravelLine.Opacity = 0;
             Logo1.IsVisible = true;
             Logo2.IsVisible = true;
+            TravelLine.IsVisible = true;
 
             await Logo1.FadeTo(0, 1500, Easing.CubicIn);
-            Logo2.FadeTo(1, 3000, Easing.CubicOut);
-
+            showLoginEntries();
+            Logo2.FadeTo(1, 1500, Easing.CubicOut);
+            TravelLine.FadeTo(.5, 3000, Easing.CubicInOut);
+            Logo1.IsVisible = false;
         }
 
         private async void showLoginEntries()
         {
-            LoginComp.TranslationY = 40;
             LoginComp.Opacity = 0;
-            LoginComp.FadeTo(1, 200, Easing.CubicIn);
-            await LoginComp.TranslateTo(0, 0, 200, Easing.CubicIn);
+            LoginComp.FadeTo(1, 1500, Easing.CubicOut);
         }
 
 
@@ -93,5 +90,17 @@ namespace SecurityTravelApp.Views
             LoginComp.Opacity = 0;
             welcomeAniamtion();
         }
+
+        // Invoked when a hardware back button is pressed
+        protected override bool OnBackButtonPressed()
+        {
+            // Return true if you don't want to close this popup page when a back button is pressed
+            //if (PopupNavigation.Instance.PopupStack.Count > 0)
+            //{
+            //    PopupNavigation.Instance.PopAsync();
+            //}
+            return true;
+        }
     }
+
 }

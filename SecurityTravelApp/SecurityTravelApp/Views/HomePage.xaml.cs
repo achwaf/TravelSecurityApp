@@ -1,7 +1,9 @@
 ﻿using FFImageLoading.Svg.Forms;
+using Rg.Plugins.Popup.Services;
 using SecurityTravelApp.Services;
 using SecurityTravelApp.Utils;
 using SecurityTravelApp.ViewModels;
+using SecurityTravelApp.Views.Popups;
 using SecurityTravelApp.Views.ViewsUtils;
 using System;
 using System.Collections.Generic;
@@ -51,6 +53,12 @@ namespace SecurityTravelApp.Views
                     //await Task.Delay(5000);
                     //gpsPositioningDone();
                 }
+
+                // hide the gps indication since the user knows how to send gps henceforth
+                if (GPSIndication.Opacity > 0)
+                {
+                    GPSIndication.FadeTo(0, 4000);
+                }
             };
             MapMarker.GestureRecognizers.Add(tapGestureRecognizerMapMarker);
 
@@ -73,6 +81,7 @@ namespace SecurityTravelApp.Views
             tapGestureRecognizerSideButton.Tapped += (s, e) =>
             {
                 gpsPositioningDone();
+                PopupNavigation.Instance.PushAsync(new DrawerMenu(), false);
             };
 
             // animation waiting for GPS
@@ -118,5 +127,17 @@ namespace SecurityTravelApp.Views
 
             await appMngSrv.checkForAllRequiredPermissions();
         }
+
+        // Invoked when a hardware back button is pressed
+        protected override bool OnBackButtonPressed()
+        {
+            // Return true if you don't want to close this popup page when a back button is pressed
+            //if (PopupNavigation.Instance.PopupStack.Count > 0)
+            //{
+            //    PopupNavigation.Instance.PopAsync();
+            //}
+            return true;
+        }
+
     }
 }

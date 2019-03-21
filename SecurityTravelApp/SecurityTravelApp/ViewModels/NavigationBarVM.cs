@@ -12,11 +12,11 @@ namespace SecurityTravelApp.ViewModels
 
         AppManagementService appMngSrv;
 
-        public ObservableCollection<NavigationItem> navigationItems { get; set; }
+        public List<NavigationItem> navigationItems { get; set; }
 
         public NavigationBarVM(ServiceFactory pSrvFactory)
         {
-            navigationItems = new ObservableCollection<NavigationItem>();
+            navigationItems = new List<NavigationItem>();
             // call the service to retrieve data about navigation items
             appMngSrv = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);
 
@@ -28,8 +28,6 @@ namespace SecurityTravelApp.ViewModels
 
         private void updateNavigationItems(List<NavigationItem> pItems)
         {
-            // apply updates to the observableCollection so the UI changes accordingly 
-
             // compare the local navigation items with the retrieved list
             foreach (var item in pItems)
             {
