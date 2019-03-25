@@ -1,7 +1,11 @@
 ﻿using SecurityTravelApp.Models;
+using SecurityTravelApp.Services.LocalDataServiceUtils.entities;
+using SQLite;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SecurityTravelApp.Services
 {
@@ -9,9 +13,78 @@ namespace SecurityTravelApp.Services
     {
         const ServiceType TYPE = ServiceType.LocalData;
 
+        private SQLiteAsyncConnection database;
+        private const String databaseName = "DB.sqlite";
+
         public LocalDataService() : base(TYPE)
         {
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), databaseName);
+            //checkDBExists(path);
         }
+
+
+
+        private void checkDBExists(String pPath)
+        {
+            if (File.Exists(pPath))
+            {
+                // connect to database
+                database = new SQLiteAsyncConnection(pPath);
+            }
+            else
+            {
+                // create new database
+                database = new SQLiteAsyncConnection(pPath);
+                database.CreateTableAsync<MessageDB>().Wait();
+                database.CreateTableAsync<AlertDB>().Wait();
+                database.CreateTableAsync<UserLocation>().Wait();
+            }
+        }
+
+        public async Task<Boolean> resetDatabase()
+        {
+            await database.DeleteAllAsync<MessageDB>();
+            await database.DeleteAllAsync<AlertDB>();
+            await database.DeleteAllAsync<UserLocation>();
+
+            return true;
+        }
+
+        public async Task<Boolean> saveListAlertToDB(List<Alert> pListe)
+        {
+            var vListAlertDB = new List<AlertDB>();
+
+            foreach (var agent in pListe)
+            {
+                AlertDB vAlertDB = new AlertDB();
+                // set values
+                vListAlertDB.Add(vAlertDB);
+            }
+            await database.InsertAllAsync(vListAlertDB);
+            return true;
+
+        }
+
+        public async Task<List<MessageDB>> getListMessageFromDB()
+        {
+            var vList = await database.Table<MessageDB>().ToListAsync();
+            return vList;
+        }
+
+
+        public async Task<MessageDB> getAgentFromDB(string A, string B)
+        {
+            if (!String.IsNullOrWhiteSpace(A))
+            {
+
+                MessageDB result = await database.Table<MessageDB>().Where(x => true).FirstOrDefaultAsync();
+                return result;
+
+            }
+            return null;
+
+        }
+
 
         public List<Alert> getAlerts()
         {

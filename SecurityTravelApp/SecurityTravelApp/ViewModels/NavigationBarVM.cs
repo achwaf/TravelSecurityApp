@@ -12,19 +12,17 @@ namespace SecurityTravelApp.ViewModels
 
         AppManagementService appMngSrv;
 
-        public List<NavigationItem> navigationItems { get; set; }
+        public ObservableCollection<NavigationItem> navigationItems { get; set; }
 
         public NavigationBarVM(ServiceFactory pSrvFactory)
         {
-            navigationItems = new List<NavigationItem>();
+            navigationItems = new ObservableCollection<NavigationItem>();
             // call the service to retrieve data about navigation items
             appMngSrv = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);
 
             //get the navigation items and fill the ViewModel
             fillWithNavigationItems(appMngSrv.getTheNavigationItems());
         }
-
-
 
         private void updateNavigationItems(List<NavigationItem> pItems)
         {

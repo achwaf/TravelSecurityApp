@@ -6,6 +6,6 @@ namespace SecurityTravelApp.Views.ViewsUtils
 {
     public interface UpdatablePage
     {
-        void update();
+        void update(NavigationParams pParam);
     }
 }

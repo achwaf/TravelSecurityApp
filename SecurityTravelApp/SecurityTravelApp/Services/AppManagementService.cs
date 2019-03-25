@@ -69,7 +69,22 @@ namespace SecurityTravelApp.Services
             AppReference.MainPage = CurrentPage;
         }
 
-        public void navigateTo(NavigationItemTarget pType, ServiceFactory pSrvFactory, AfterNavigationParams pParamAfterNav)
+        public void incementNotif(NavigationItemTarget pType, int pIncrement = 1)
+        {
+            NavigationItem navItem = navigationItems.Find(x => x.target.Equals(pType));
+            // if navItem is null ghir nmchi n3awd n9ra lbac
+            navItem.carriesNotif = true;
+            navItem.numberOfNotif += pIncrement;
+
+            if (AppReference.MainPage is UpdatablePage)
+            {
+                UpdatablePage updatblePage = (UpdatablePage)AppReference.MainPage;
+                updatblePage.update(new NavigationParams() { navigationUpdateTarget = pType });
+            }
+
+        }
+
+        public void navigateTo(NavigationItemTarget pType, ServiceFactory pSrvFactory, NavigationParams pParamAfterNav)
         {
             Page targetPage = lookUpPage(pType);
             if (targetPage == null)
@@ -80,7 +95,7 @@ namespace SecurityTravelApp.Services
             {
                 // pages should implement Updatable Page to allow UI updates
                 UpdatablePage updatblePage = (UpdatablePage)targetPage;
-                updatblePage.update();
+                updatblePage.update(new NavigationParams() { navigationTarget = pType });
             }
             navigateToAndSave(targetPage, pType);
         }
@@ -128,14 +143,14 @@ namespace SecurityTravelApp.Services
 
         private void fillWithData()
         {
-            navigationItems.Add(createNavigationItemTest(2, "Home", NavigationItemTarget.Home, LineAwesomeIcons.Home, true, NavigationItemNotifType.Dot));
-            navigationItems.Add(createNavigationItemTest(4, "Messages", NavigationItemTarget.Messages, LineAwesomeIcons.Messages, false));
-            navigationItems.Add(createNavigationItemTest(3, "Warnings", NavigationItemTarget.Warnings, LineAwesomeIcons.Warnings, true, NavigationItemNotifType.Numerical, NavigationItemState.Current, 5));
-            navigationItems.Add(createNavigationItemTest(5, "Docs", NavigationItemTarget.Docs, LineAwesomeIcons.Docs, true, NavigationItemNotifType.Numerical, NavigationItemState.Shaded, 2));
+            navigationItems.Add(createNavigationItem(2, "Home", NavigationItemTarget.Home, LineAwesomeIcons.Home, true, NavigationItemNotifType.Dot));
+            navigationItems.Add(createNavigationItem(4, "Messages", NavigationItemTarget.Messages, LineAwesomeIcons.Messages, false));
+            navigationItems.Add(createNavigationItem(3, "Warnings", NavigationItemTarget.Warnings, LineAwesomeIcons.Warnings, true, NavigationItemNotifType.Numerical, NavigationItemState.Current, 5));
+            navigationItems.Add(createNavigationItem(5, "Docs", NavigationItemTarget.Docs, LineAwesomeIcons.Docs, true, NavigationItemNotifType.Numerical, NavigationItemState.Shaded, 2));
         }
 
 
-        private NavigationItem createNavigationItemTest(int pId, String pText, NavigationItemTarget pTarget, String pSolidIcon, Boolean pCarriesNotif = true, NavigationItemNotifType pType = NavigationItemNotifType.Numerical, NavigationItemState pState = NavigationItemState.Shaded, int pNumberNotif = 99)
+        private NavigationItem createNavigationItem(int pId, String pText, NavigationItemTarget pTarget, String pSolidIcon, Boolean pCarriesNotif = true, NavigationItemNotifType pType = NavigationItemNotifType.Numerical, NavigationItemState pState = NavigationItemState.Shaded, int pNumberNotif = 0)
         {
             return new NavigationItem
             {

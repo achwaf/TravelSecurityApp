@@ -4,8 +4,9 @@ using System.Text;
 
 namespace SecurityTravelApp.Views.ViewsUtils
 {
-    public class AfterNavigationParams
+    public class NavigationParams
     {
         public NavigationItemTarget navigationTarget { get; set; }
+        public NavigationItemTarget navigationUpdateTarget { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace SecurityTravelApp.Services
         const ServiceType TYPE = ServiceType.Location;
         private const int STALETIME = 1000 * 60 * 2;
         private const int INTERVALTIME = 1000 * 60 * 10;
+        private const int INTERVALTIMEFIRSTGET = 0;
         private const int TIMEVALIDITY = 1000 * 30;
         private const int GETLOCATIONATTEMPTS = 6;
 
@@ -21,7 +22,7 @@ namespace SecurityTravelApp.Services
         private Geoposition currentGeoposition;
         private int locationAttemptsCounter;
         private bool userIsBeingLocated;
-        Command commandAfterGettingLocation;
+        private bool userIsBeingTracked;
 
         public LocationService() : base(TYPE)
         {
@@ -29,14 +30,15 @@ namespace SecurityTravelApp.Services
             locationHelper.LocationChanged += locationHelper_LocationChanged;
         }
 
-        public void setUpdateCommand(Command pCallBackUponLocation)
-        {
-            commandAfterGettingLocation = pCallBackUponLocation;
-        }
-
         public Boolean isUserBeingLocated()
         {
             return userIsBeingLocated;
+        }
+
+
+        public Boolean isUserBeingTracked()
+        {
+            return userIsBeingTracked;
         }
 
         public void getUserGeoposition()
@@ -47,11 +49,18 @@ namespace SecurityTravelApp.Services
                 // get the last known geoposition
                 Geoposition gpsPosition = locationHelper.getLastKnownGPSLocation();
                 Geoposition networkPosition = locationHelper.getLastKnownNetworkLocation();
-                currentGeoposition = betterLocation(gpsPosition, networkPosition);
+                if (networkPosition != null)
+                {
+                    currentGeoposition = betterLocation(networkPosition, gpsPosition);
+                }
+                else
+                {
+                    currentGeoposition = betterLocation(gpsPosition, networkPosition);
+                }
 
                 // activate listening to providers
                 locationAttemptsCounter = GETLOCATIONATTEMPTS;
-                locationHelper.activateLocationUpdates(INTERVALTIME);
+                locationHelper.reactivateLocationUpdates(INTERVALTIMEFIRSTGET);
 
             }
         }
@@ -60,7 +69,6 @@ namespace SecurityTravelApp.Services
         private void locationHelper_LocationChanged(object sender, EventArgs e)
         {
             // listen to N attempts for better accuracy
-
             Geoposition newPosition = ((GeopositionEventArgs)e).Position;
             if (userIsBeingLocated)
             {
@@ -70,6 +78,9 @@ namespace SecurityTravelApp.Services
                     {
                         currentGeoposition = newPosition;
                     }
+
+                    // send update
+                    MessagingCenter.Send<LocationService, Geoposition>(this, "LOCATIONUPDATE", currentGeoposition);
                 }
                 else
                 {
@@ -80,8 +91,8 @@ namespace SecurityTravelApp.Services
                     {
                         currentGeoposition = newPosition;
                     }
-                    // perform action
-                    commandAfterGettingLocation.Execute(currentGeoposition);
+                    // send update
+                    MessagingCenter.Send<LocationService, Geoposition>(this, "LOCATIONUPDATE", currentGeoposition);
                     // work is done
                     userIsBeingLocated = false;
                 }

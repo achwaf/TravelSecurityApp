@@ -13,12 +13,12 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoginPage : ContentPage, UpdatablePage
+    public partial class LoginPage : ContentPage
     {
 
         AppManagementService appMngSrv;
 
-        public LoginPage(ServiceFactory pSrvFactory, AfterNavigationParams pParam)
+        public LoginPage(ServiceFactory pSrvFactory, NavigationParams pParam)
         {
             InitializeComponent();
             appMngSrv = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);
@@ -79,10 +79,6 @@ namespace SecurityTravelApp.Views
             LoginComp.FadeTo(1, 1500, Easing.CubicOut);
         }
 
-
-        public void update()
-        {
-        }
 
         private void ContentPage_Appearing(object sender, EventArgs e)
         {

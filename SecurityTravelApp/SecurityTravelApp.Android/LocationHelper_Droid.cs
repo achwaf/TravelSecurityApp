@@ -45,11 +45,13 @@ namespace SecurityTravelApp.Droid
             return toGeoposition(location);
         }
 
-        public void activateLocationUpdates(int IntervallTime)
+        public void reactivateLocationUpdates(int IntervallTime)
         {
+            locationManager.RemoveUpdates(this);
             locationManager.RequestLocationUpdates(LocationManager.GpsProvider, IntervallTime, 0, this);
             locationManager.RequestLocationUpdates(LocationManager.NetworkProvider, IntervallTime, 0, this);
         }
+        
 
         public void disableLocationUpdates()
         {
@@ -79,10 +81,10 @@ namespace SecurityTravelApp.Droid
 
         public Geoposition toGeoposition(Location pLocation)
         {
-            Geoposition geoposition = new Geoposition();
 
             if (pLocation != null)
             {
+                Geoposition geoposition = new Geoposition();
                 geoposition.HasAccuracy = pLocation.HasAccuracy;
                 geoposition.Accuracy = pLocation.Accuracy;
                 geoposition.Altitude = pLocation.Altitude;
@@ -90,8 +92,9 @@ namespace SecurityTravelApp.Droid
                 geoposition.Latitude = pLocation.Latitude;
                 geoposition.Provider = pLocation.Provider;
                 geoposition.Time = pLocation.Time;
+                return geoposition;
             }
-            return geoposition;
+            else return null;
 
         }
     }

@@ -15,7 +15,7 @@ namespace SecurityTravelApp.UWP
     {
         public event EventHandler LocationChanged;
 
-        public void activateLocationUpdates(int IntervalTime)
+        public void reactivateLocationUpdates(int IntervalTime)
         {
             throw new NotImplementedException();
         }

@@ -24,7 +24,7 @@ namespace SecurityTravelApp.Views
             InitializeComponent();
         }
 
-        public void initializeContent(ServiceFactory pSrvFactory, AfterNavigationParams pParams)
+        public void initializeContent(ServiceFactory pSrvFactory, NavigationParams pParams)
         {
             srvFactory = pSrvFactory;
             viewModel = new NavigationBarVM(pSrvFactory);
@@ -32,8 +32,10 @@ namespace SecurityTravelApp.Views
             populateLayout(pParams);
         }
 
-        private void populateLayout(AfterNavigationParams pParams)
+        private void populateLayout(NavigationParams pParams)
         {
+            // clear
+            HorizontalLayout.Children.Clear();
             // add NavigationItemComps to the layout
             var i = 0;
             foreach (var item in viewModel.navigationItems)
@@ -49,6 +51,37 @@ namespace SecurityTravelApp.Views
                 // add it
                 Grid.SetColumn(comp, i++);
                 HorizontalLayout.Children.Add(comp);
+            }
+        }
+
+        public void update(NavigationParams pParams)
+        {
+            int index = 0;
+            NavigationItem vUpdateTargetItem = null;
+            NavigationItemComp vUpdateHighlightComp = null;
+            foreach (var el in HorizontalLayout.Children)
+            {
+                NavigationItemComp navItem = (NavigationItemComp)el;
+                NavigationItem vItem = navItem.Item;
+                if (vItem.target.Equals(pParams.navigationUpdateTarget))
+                {
+                    vUpdateTargetItem = vItem;
+                    index = HorizontalLayout.Children.IndexOf(navItem);
+                }
+                if (vItem.target.Equals(pParams.navigationTarget))
+                {
+                    vUpdateHighlightComp = navItem;
+                }
+
+            }
+            // we recreate the comp to update display, yeah it s lame but xamarin is does not help either
+            if (vUpdateTargetItem != null)
+            {
+                HorizontalLayout.Children[index] = new NavigationItemComp(srvFactory, vUpdateTargetItem, false);
+            }
+            if (vUpdateHighlightComp != null)
+            {
+                vUpdateHighlightComp.showAndFadeOutHighlight();
             }
         }
 

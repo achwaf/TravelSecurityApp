@@ -19,7 +19,7 @@ namespace SecurityTravelApp.Views
 
         AppManagementService appMngSrv;
 
-        public PopupTestPage(ServiceFactory pSrvFactory, AfterNavigationParams pParam)
+        public PopupTestPage(ServiceFactory pSrvFactory, NavigationParams pParam)
         {
             InitializeComponent();
             appMngSrv = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);

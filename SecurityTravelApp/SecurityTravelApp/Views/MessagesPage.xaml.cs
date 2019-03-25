@@ -22,7 +22,7 @@ namespace SecurityTravelApp.Views
 
         private double DimMaskOpacity;
 
-        public MessagesPage(ServiceFactory pSrvFactory, AfterNavigationParams pParam)
+        public MessagesPage(ServiceFactory pSrvFactory, NavigationParams pParam)
         {
             InitializeComponent();
             NavigationBar.initializeContent(pSrvFactory, pParam);
@@ -186,8 +186,10 @@ namespace SecurityTravelApp.Views
             MessageContainer.Children.Add(new BoxView() { HeightRequest = 60 });
         }
 
-        public void update()
+        public void update(NavigationParams pParam)
         {
+            // update navigation bar
+            NavigationBar.update(pParam);
         }
 
         private void KeyboardService_KeyboardIsHidden(object sender, EventArgs e)

@@ -50,7 +50,7 @@ namespace SecurityTravelApp.Views
                 Icon.FadeTo(.5, 50);
                 await TextBackground.FadeTo(.85, 50);
 
-                PopupNavigation.Instance.PushAsync(new AlertPopup(pAlert), false);
+                //PopupNavigation.Instance.PushAsync(new AlertPopup(pAlert), false);
 
                 Icon.FadeTo(1, 500);
                 TextBackground.FadeTo(.65, 500);

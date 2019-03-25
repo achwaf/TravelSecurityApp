@@ -28,11 +28,6 @@ namespace SecurityTravelApp
             // Selecting App language
             I18n.SelectLang(AppLanguage.EN);
 
-            // checking required permissions
-            // todo move the checking after the authentication
-            // or when the home page is displayed
-            //appMngSrv.checkForAllRequiredPermissions();
-
             appMngSrv.navigateTo(NavigationItemTarget.Login, serviceFactory, null);
         }
 

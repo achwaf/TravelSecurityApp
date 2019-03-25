@@ -21,5 +21,26 @@ namespace SecurityTravelApp.Models
                 return DateTime.FromFileTimeUtc(Time);
             }
         }
+
+
+        public String ShortDate
+        {
+            get { return Date.ToShortDateString(); }
+        }
+
+        public String ShortTime
+        {
+            get { return Date.ToLongTimeString(); }
+        }
+
+        public String LongitudeValue
+        {
+            get { return Longitude.ToString(); }
+        }
+
+        public String LatitudeValue
+        {
+            get { return Latitude.ToString(); }
+        }
     }
 }

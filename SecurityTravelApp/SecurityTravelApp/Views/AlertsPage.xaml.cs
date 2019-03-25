@@ -17,22 +17,15 @@ namespace SecurityTravelApp.Views
     {
         LocalDataService localDataSrv;
 
-        public AlertsPage(ServiceFactory pSrvFactory, AfterNavigationParams pParam)
+        public AlertsPage(ServiceFactory pSrvFactory, NavigationParams pParam)
         {
             InitializeComponent();
             NavigationBar.initializeContent(pSrvFactory, pParam);
-
 
             localDataSrv = (LocalDataService)pSrvFactory.getService(ServiceType.LocalData);
             populateAlerts(localDataSrv.getAlerts());
 
         }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-        }
-
 
         private void populateAlerts(List<Alert> pAlerts)
         {
@@ -47,8 +40,10 @@ namespace SecurityTravelApp.Views
 
 
 
-        public void update()
+        public void update(NavigationParams pParam)
         {
+            // update navigation bar
+            NavigationBar.update(pParam);
         }
 
         // Invoked when a hardware back button is pressed

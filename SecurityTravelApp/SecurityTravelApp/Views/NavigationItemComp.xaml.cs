@@ -16,14 +16,15 @@ namespace SecurityTravelApp.Views
     public partial class NavigationItemComp : ContentView
     {
 
-        public String text { get; set; }
-        public Boolean textVisible { get; set; }
+
+        public NavigationItem Item;
 
         public NavigationItemComp(ServiceFactory pSrvFactory, NavigationItem pItem, Boolean HighlightFadeOut)
         {
             AppManagementService appMngService = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);
             InitializeComponent();
-            BindingContext = pItem;
+            Item = pItem;
+            BindingContext = Item;
 
             // add tap gesture recognizer 
             var tapGestureRecognizerContainer = new TapGestureRecognizer();
@@ -44,7 +45,7 @@ namespace SecurityTravelApp.Views
                 // action
                 if (lastPage.GetType() != typeAskedtPage)
                 {
-                    var paramAfterNav = new AfterNavigationParams() { navigationTarget = pItem.target };
+                    var paramAfterNav = new NavigationParams() { navigationTarget = pItem.target };
                     appMngService.navigateTo(pItem.target, pSrvFactory, paramAfterNav);
                     HighlightMask.IsVisible = false;
                 }
@@ -77,7 +78,7 @@ namespace SecurityTravelApp.Views
 
         }
 
-        private void showHighlight()
+        public void showHighlight()
         {
             HighlightMask.Opacity = 0;
             HighlightMask.IsVisible = true;
@@ -87,7 +88,7 @@ namespace SecurityTravelApp.Views
 
 
 
-        private async void showAndFadeOutHighlight()
+        public async void showAndFadeOutHighlight()
         {
             HighlightMask.Opacity = .4;
             HighlightMask.IsVisible = true;

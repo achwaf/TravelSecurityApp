@@ -92,27 +92,27 @@
                     <StackLayout x:Name="PositionInfo" Margin="46.5,65,100,39" BackgroundColor="#40FFFFFF"
                           VerticalOptions="Center" HorizontalOptions="Center" 
                           Spacing="0">
-                        <Label Text="Last checkin" FontSize="12" FontAttributes="Bold" Margin="0,0,0,5"
+                        <Label x:Name="LastCheckinLabel" Text="Last Checkin" FontSize="12" FontAttributes="Bold" Margin="0,0,0,5"
                                HorizontalOptions="Start" Opacity="{StaticResource PositionInfoValueOpacity}"/>
                         <StackLayout Orientation="Horizontal">
                             <Label Text="{x:Static viewUtils:LineAwesomeIcons.Calendar}" WidthRequest="{StaticResource PositionInfoLabelWidth}" 
                                    Opacity="{StaticResource PositionInfoLabelOpacity}" FontFamily="{StaticResource LineAwesome}" FontSize="14"/>
-                            <Label Text="15/03/2019" FontSize="12" Opacity="{StaticResource PositionInfoValueOpacity}"/>
+                            <Label x:Name="DateLastCheckin" Text="{Binding geoposition.ShortDate}" FontSize="12" Opacity="{StaticResource PositionInfoValueOpacity}"/>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
                             <Label Text="{x:Static viewUtils:LineAwesomeIcons.Clock}" WidthRequest="{StaticResource PositionInfoLabelWidth}" 
                                    Opacity="{StaticResource PositionInfoLabelOpacity}" FontFamily="{StaticResource LineAwesome}" FontSize="14"/>
-                            <Label Text="11:51" FontSize="12" Opacity="{StaticResource PositionInfoValueOpacity}"/>
+                            <Label x:Name="TimeLastCheckin" Text="{Binding geoposition.ShortTime}" FontSize="12" Opacity="{StaticResource PositionInfoValueOpacity}"/>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
                             <Label Text="lat." FontSize="12" HorizontalOptions="Center" WidthRequest="{StaticResource PositionInfoLabelWidth}" 
                                    Opacity="{StaticResource PositionInfoLabelOpacity}"/>
-                            <Label Text="10.5524" FontSize="12" Opacity="{StaticResource PositionInfoValueOpacity}"/>
+                            <Label x:Name="LatLastCheckin" Text="{Binding geoposition.LatitudeValue}"  FontSize="12" Opacity="{StaticResource PositionInfoValueOpacity}"/>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
                             <Label Text="lng." FontSize="12" HorizontalOptions="Center" WidthRequest="{StaticResource PositionInfoLabelWidth}" 
                                    Opacity="{StaticResource PositionInfoLabelOpacity}"/>
-                            <Label Text="-54.552" FontSize="12" Opacity="{StaticResource PositionInfoValueOpacity}"/>
+                            <Label x:Name="LngLastCheckin" Text="{Binding geoposition.LongitudeValue}"  FontSize="12" Opacity="{StaticResource PositionInfoValueOpacity}"/>
                         </StackLayout>
 
                     </StackLayout>

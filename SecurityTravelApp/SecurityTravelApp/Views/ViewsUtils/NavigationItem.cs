@@ -35,6 +35,7 @@ namespace SecurityTravelApp.Views.ViewsUtils
                 OnPropertyChanged();
             }
         }
+
         public Boolean carriesNotif
         {
             get { return _carriesNotif; }

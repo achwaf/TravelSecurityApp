@@ -11,6 +11,6 @@ namespace SecurityTravelApp.DependencyServices
         Geoposition getLastKnownGPSLocation();
         Geoposition getLastKnownNetworkLocation();
         void disableLocationUpdates();
-        void activateLocationUpdates(int IntervalTime);
+        void reactivateLocationUpdates(int IntervalTime);
     }
 }

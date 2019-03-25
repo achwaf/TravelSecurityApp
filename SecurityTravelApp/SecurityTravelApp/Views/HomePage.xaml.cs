@@ -1,5 +1,6 @@
 ﻿using FFImageLoading.Svg.Forms;
 using Rg.Plugins.Popup.Services;
+using SecurityTravelApp.Models;
 using SecurityTravelApp.Services;
 using SecurityTravelApp.Utils;
 using SecurityTravelApp.ViewModels;
@@ -25,16 +26,32 @@ namespace SecurityTravelApp.Views
         private double BounceElevation = 50;
         private Animation waitingAnimation;
         private Boolean continueWaitingAnimation = false;
+        private double LastCheckinValueOpacity;
+        private HomeViewModel viewModel;
 
 
-        public HomePage(ServiceFactory pSrvFactory, AfterNavigationParams pParam)
+
+        public HomePage(ServiceFactory pSrvFactory, NavigationParams pParam)
         {
             InitializeComponent();
+            viewModel = new HomeViewModel();
+            BindingContext = viewModel;
+
             SosSlider.initializeConfig(pSrvFactory);
             NavigationBar.initializeContent(pSrvFactory, pParam);
             appMngSrv = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);
             callSrv = (CallService)pSrvFactory.getService(ServiceType.Call);
             locationSrv = (LocationService)pSrvFactory.getService(ServiceType.Location);
+
+            // getting values from xaml
+            LastCheckinValueOpacity = Utilities.getOnPlatformValue<Double>(this.Resources["PositionInfoValueOpacity"]);
+
+            // subscribe to location updates
+            MessagingCenter.Subscribe<LocationService, Geoposition>(this, "LOCATIONUPDATE", (sender, pGeoposition) =>
+            {
+                gpsPositionAfterGet(pGeoposition);
+                appMngSrv.incementNotif(NavigationItemTarget.Messages);
+            });
 
             // add tap gesture recognizer 
             var tapGestureRecognizerMapMarker = new TapGestureRecognizer();
@@ -50,10 +67,8 @@ namespace SecurityTravelApp.Views
                 }
                 else
                 {
-                    //await Task.Delay(5000);
-                    //gpsPositioningDone();
+                    locationSrv.getUserGeoposition();
                 }
-
                 // hide the gps indication since the user knows how to send gps henceforth
                 if (GPSIndication.Opacity > 0)
                 {
@@ -80,7 +95,6 @@ namespace SecurityTravelApp.Views
             // setting the handler to Side  Buton
             tapGestureRecognizerSideButton.Tapped += (s, e) =>
             {
-                gpsPositioningDone();
                 PopupNavigation.Instance.PushAsync(new DrawerMenu(), false);
             };
 
@@ -108,7 +122,7 @@ namespace SecurityTravelApp.Views
         public async void gpsPositioningDone()
         {
             ViewExtensions.CancelAnimations(GpsWaitingIcon);
-            //continueWaitingAnimation = false;
+            continueWaitingAnimation = false;
             GpsWaitingIcon.IsVisible = false;
             GpsCheckIcon.Opacity = 0;
             GpsCheckIcon.IsVisible = true;
@@ -116,15 +130,35 @@ namespace SecurityTravelApp.Views
             GpsCheckIcon.FadeTo(0, 2000);
         }
 
-
-        public void update()
+        public async void gpsPositionAfterGet(Geoposition pGeoposition)
         {
+            // check in map marker
+            gpsPositioningDone();
+            // update location values
+            viewModel.geoposition = pGeoposition;
+
+            // effect updating 
+            await LastCheckinLabel.FadeTo(0, 80);
+            LastCheckinLabel.FadeTo(LastCheckinValueOpacity, 80);
+
+            // update data base
+
+
+
+
+
+        }
+
+
+        public void update(NavigationParams pParam)
+        {
+            // update navigation bar
+            NavigationBar.update(pParam);
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-
             await appMngSrv.checkForAllRequiredPermissions();
         }
 
