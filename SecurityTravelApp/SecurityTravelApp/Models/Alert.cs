@@ -32,6 +32,8 @@ namespace SecurityTravelApp.Models
             }
         }
 
+        public Alert() { }
+
     }
 
     public enum AlertType

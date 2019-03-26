@@ -23,8 +23,8 @@ namespace SecurityTravelApp.Views
             NavigationBar.initializeContent(pSrvFactory, pParam);
 
             localDataSrv = (LocalDataService)pSrvFactory.getService(ServiceType.LocalData);
-            populateAlerts(localDataSrv.getAlerts());
 
+            populate();
         }
 
         private void populateAlerts(List<Alert> pAlerts)
@@ -38,12 +38,29 @@ namespace SecurityTravelApp.Views
             AlertsContainer.Children.Add(new BoxView() { HeightRequest = 60 });
         }
 
+        private async void populate()
+        {
+            // clear 
+            AlertsContainer.Children.Clear();
+
+            // get data from server
+
+            // get data locally
+            List<Alert> listAlerts = await localDataSrv.getListAlert();
+            populateAlerts(listAlerts);
+        }
+
 
 
         public void update(NavigationParams pParam)
         {
             // update navigation bar
             NavigationBar.update(pParam);
+            // update data
+            if (!pParam.NavigationBarOnly)
+            {
+                populate();
+            }
         }
 
         // Invoked when a hardware back button is pressed

@@ -14,13 +14,8 @@ namespace SecurityTravelApp.Models
         public double Latitude { get; set; }
         public String Provider { get; set; }
         public long Time { get; set; }
-        public DateTime Date
-        {
-            get
-            {
-                return DateTime.FromFileTimeUtc(Time);
-            }
-        }
+        public DateTime Date { get; set; }
+        public Boolean IsSOS { get; set; }
 
 
         public String ShortDate

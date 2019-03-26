@@ -34,5 +34,7 @@
 	<string>Assets.xcassets/AppIcon.appiconset</string>
   <key>NSCalendarsUsageDescription</key>
   <string>Needs Calendar Permission</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>The [app name] wants to use your microphone to record audio.</string>
 </dict>
 </plist>

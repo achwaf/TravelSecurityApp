@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SecurityTravelApp.DependencyServices
 {
-    public interface LocationHelper
+    public interface ILocationHelper
     {
         event EventHandler LocationChanged;
         Geoposition getLastKnownGPSLocation();

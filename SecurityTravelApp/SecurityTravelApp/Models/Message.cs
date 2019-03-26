@@ -11,6 +11,7 @@ namespace SecurityTravelApp.Models
         public String _text;
         public DateTime _dateSent;
         public Boolean _isSent;
+        public long id; // to bind with message in database
 
 
         public Boolean isSent
@@ -80,9 +81,11 @@ namespace SecurityTravelApp.Models
                 else return "";
             }
         }
+        public Message() { }
 
         public Message(String pText, Boolean pIsSent, String pDateSent)
         {
+            id = DateTime.Now.Millisecond;
             _text = pText;
             _isSent = pIsSent;
             if (!String.IsNullOrEmpty(pDateSent))

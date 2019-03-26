@@ -19,7 +19,7 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(LocationHelper_Droid))]
 namespace SecurityTravelApp.Droid
 {
-    class LocationHelper_Droid : Java.Lang.Object, LocationHelper, ILocationListener
+    class LocationHelper_Droid : Java.Lang.Object, ILocationHelper, ILocationListener
     {
 
         public event EventHandler LocationChanged;
@@ -51,7 +51,7 @@ namespace SecurityTravelApp.Droid
             locationManager.RequestLocationUpdates(LocationManager.GpsProvider, IntervallTime, 0, this);
             locationManager.RequestLocationUpdates(LocationManager.NetworkProvider, IntervallTime, 0, this);
         }
-        
+
 
         public void disableLocationUpdates()
         {
@@ -92,6 +92,7 @@ namespace SecurityTravelApp.Droid
                 geoposition.Latitude = pLocation.Latitude;
                 geoposition.Provider = pLocation.Provider;
                 geoposition.Time = pLocation.Time;
+                geoposition.Date = DateTime.Now;
                 return geoposition;
             }
             else return null;

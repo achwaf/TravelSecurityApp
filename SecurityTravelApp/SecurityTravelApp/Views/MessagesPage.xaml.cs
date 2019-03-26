@@ -87,7 +87,11 @@ namespace SecurityTravelApp.Views
             {
                 // add msg to list
                 String msg = messageEditor.Text;
-                MessageContainer.Children.Insert(0, new MessageComp(new Message(msg, false, "")));
+                Message message = new Message(msg, false, "");
+                MessageContainer.Children.Insert(0, new MessageComp(message));
+
+                // save to database
+                localDataSrv.saveMessage(message);
 
                 // reduce msg composer
                 reduceMsgComposer();
@@ -115,11 +119,11 @@ namespace SecurityTravelApp.Views
             // subscribe to editor changes
             messageEditor.TextChanged += MessageEditor_TextChanged;
 
-            // populate the defined messages
+            // fill predefined data
             populateDefinedMessages(localDataSrv.getDefinedMessages());
 
-            // pupulate the stored messages
-            pupulateMessages(localDataSrv.getMessages());
+            // fill with data
+            populate();
 
             // subscribe to textUpdates from DefinedMessages
             MessagingCenter.Subscribe<DefinedMessageComp, String>(this, "TEXTUPDATE", (sender, pMessage) =>
@@ -186,10 +190,28 @@ namespace SecurityTravelApp.Views
             MessageContainer.Children.Add(new BoxView() { HeightRequest = 60 });
         }
 
+
+
+        private async void populate()
+        {
+            // clear
+            MessageContainer.Children.Clear();
+
+
+            // pupulate the stored messages
+            var listMessages = await localDataSrv.getListMessage();
+            pupulateMessages(listMessages);
+        }
+
         public void update(NavigationParams pParam)
         {
             // update navigation bar
             NavigationBar.update(pParam);
+            // update data
+            if (!pParam.NavigationBarOnly)
+            {
+                // probably update only sent status of messages
+            }
         }
 
         private void KeyboardService_KeyboardIsHidden(object sender, EventArgs e)

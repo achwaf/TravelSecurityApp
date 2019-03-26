@@ -18,16 +18,20 @@ namespace SecurityTravelApp.Views
     {
 
         AppManagementService appMngSrv;
+        LocalDataService localDataSrv;
 
         public PopupTestPage(ServiceFactory pSrvFactory, NavigationParams pParam)
         {
             InitializeComponent();
             appMngSrv = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);
+            localDataSrv = (LocalDataService)pSrvFactory.getService(ServiceType.LocalData);
 
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private async void Button_Clicked(object sender, EventArgs e)
         {
+            await localDataSrv.getListLocation();
+            await localDataSrv.getLastPosition();
         }
     }
 }

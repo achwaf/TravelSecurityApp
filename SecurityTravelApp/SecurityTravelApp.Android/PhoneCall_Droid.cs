@@ -20,7 +20,7 @@ namespace SecurityTravelApp.Droid
 {
     class PhoneCall_Droid : IPhoneCall
     {
-        public async void makePhoneCall(String pNumber)
+        public void makePhoneCall(String pNumber)
         {
             try
             {

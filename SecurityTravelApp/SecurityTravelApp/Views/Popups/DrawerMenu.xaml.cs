@@ -60,7 +60,7 @@ namespace SecurityTravelApp.Views.Popups
         protected override bool OnBackButtonPressed()
         {
             closeAppMenu();
-            return base.OnBackButtonPressed();
+            return true;
         }
     }
 }

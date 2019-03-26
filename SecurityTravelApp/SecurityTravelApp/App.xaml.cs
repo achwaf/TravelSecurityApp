@@ -28,7 +28,7 @@ namespace SecurityTravelApp
             // Selecting App language
             I18n.SelectLang(AppLanguage.EN);
 
-            appMngSrv.navigateTo(NavigationItemTarget.Login, serviceFactory, null);
+            appMngSrv.navigateTo(NavigationItemTarget.Home, serviceFactory, null);
         }
 
         protected override void OnStart()

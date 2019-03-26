@@ -11,28 +11,30 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(LocationHelper_UWP))]
 namespace SecurityTravelApp.UWP
 {
-    public class LocationHelper_UWP : LocationHelper
+    public class LocationHelper_UWP : ILocationHelper
     {
         public event EventHandler LocationChanged;
 
         public void reactivateLocationUpdates(int IntervalTime)
         {
-            throw new NotImplementedException();
+            // nothing
         }
 
         public void disableLocationUpdates()
         {
-            throw new NotImplementedException();
+            // nothing
         }
 
         public Geoposition getLastKnownGPSLocation()
         {
-            throw new NotImplementedException();
+            // nothing
+            return null;
         }
 
         public Geoposition getLastKnownNetworkLocation()
         {
-            throw new NotImplementedException();
+            // nothing
+            return null;
         }
     }
 }

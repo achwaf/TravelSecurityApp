@@ -1,4 +1,4 @@
-﻿using FFImageLoading.Svg.Forms;
+﻿using Plugin.Geolocator;
 using Rg.Plugins.Popup.Services;
 using SecurityTravelApp.Models;
 using SecurityTravelApp.Services;
@@ -7,10 +7,7 @@ using SecurityTravelApp.ViewModels;
 using SecurityTravelApp.Views.Popups;
 using SecurityTravelApp.Views.ViewsUtils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -23,6 +20,8 @@ namespace SecurityTravelApp.Views
         AppManagementService appMngSrv;
         CallService callSrv;
         LocationService locationSrv;
+        AudioService audioSrv;
+        LocalDataService localDataSrv;
         private double BounceElevation = 50;
         private Animation waitingAnimation;
         private Boolean continueWaitingAnimation = false;
@@ -39,9 +38,12 @@ namespace SecurityTravelApp.Views
 
             SosSlider.initializeConfig(pSrvFactory);
             NavigationBar.initializeContent(pSrvFactory, pParam);
+
             appMngSrv = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);
             callSrv = (CallService)pSrvFactory.getService(ServiceType.Call);
             locationSrv = (LocationService)pSrvFactory.getService(ServiceType.Location);
+            audioSrv = (AudioService)pSrvFactory.getService(ServiceType.Audio);
+            localDataSrv = (LocalDataService)pSrvFactory.getService(ServiceType.LocalData);
 
             // getting values from xaml
             LastCheckinValueOpacity = Utilities.getOnPlatformValue<Double>(this.Resources["PositionInfoValueOpacity"]);
@@ -50,8 +52,22 @@ namespace SecurityTravelApp.Views
             MessagingCenter.Subscribe<LocationService, Geoposition>(this, "LOCATIONUPDATE", (sender, pGeoposition) =>
             {
                 gpsPositionAfterGet(pGeoposition);
-                appMngSrv.incementNotif(NavigationItemTarget.Messages);
+                localDataSrv.savePosition(pGeoposition);
             });
+
+            // subscribe to SOS location updates
+            MessagingCenter.Subscribe<LocationService, Geoposition>(this, "LOCATIONUPDATESOS", (sender, pGeoposition) =>
+            {
+                // just send the damn SOS location
+            });
+
+
+            // subscribe to SOS Trigger
+            MessagingCenter.Subscribe<TapSliderComp>(this, "SOS", (sender) =>
+            {
+                performSOSProcedure();
+            });
+
 
             // add tap gesture recognizer 
             var tapGestureRecognizerMapMarker = new TapGestureRecognizer();
@@ -61,14 +77,10 @@ namespace SecurityTravelApp.Views
             {
                 waitingForGpsPosition();
                 Utilities.bounceAnimate(MapMarker, BounceElevation);
-                if (locationSrv.isUserBeingLocated())
-                {
-                    // do nothing
-                }
-                else
-                {
-                    locationSrv.getUserGeoposition();
-                }
+
+                // perform SOS procedure 
+                sendPosition();
+
                 // hide the gps indication since the user knows how to send gps henceforth
                 if (GPSIndication.Opacity > 0)
                 {
@@ -110,6 +122,51 @@ namespace SecurityTravelApp.Views
 
         }
 
+        public void sendPosition()
+        {
+            if (locationSrv.isUserBeingLocated())
+            {
+                // do nothing, the current location is being retirived and will
+                // be sent as soon as it is available
+            }
+            else
+            {
+                if (locationSrv.isGpsEnabled())
+                {
+                    // start getting location
+                    locationSrv.getUserGeoposition();
+                    // sending to server is done upon updates arrival through subscription to LOCATIONUPDATE
+                }
+                else
+                {
+                    cancelWaitingForGpsAnimation();
+                    DisplayAlert("Alert", I18n.GetText(AppTextID.ALERT_GPS_DISABLED), "OK");
+                }
+            }
+        }
+
+        public void performSOSProcedure()
+        {
+            if (locationSrv.isGpsEnabled())
+            {
+                // start getting location SOS
+                locationSrv.getUserGeopositionSOS();
+                // start audio recording
+                var audioFile = audioSrv.recordAudio();
+                if (audioFile != null)
+                {
+                    // add reference to file in database
+
+                }
+                // aaaaaaaand then make a call, yeah something s not right is this order but welp
+                callSrv.callNumber("+212600000000");
+            }
+            else
+            {
+                DisplayAlert("Alert", I18n.GetText(AppTextID.ALERT_GPS_DISABLED), "OK");
+            }
+        }
+
         public void waitingForGpsPosition()
         {
             GpsWaitingIcon.Opacity = 0;
@@ -119,11 +176,16 @@ namespace SecurityTravelApp.Views
             waitingAnimation.Commit(this, "waiting", 16, 2000, null, repeat: () => { return continueWaitingAnimation; });
         }
 
-        public async void gpsPositioningDone()
+        public void cancelWaitingForGpsAnimation()
         {
             ViewExtensions.CancelAnimations(GpsWaitingIcon);
             continueWaitingAnimation = false;
             GpsWaitingIcon.IsVisible = false;
+        }
+
+        public async void gpsPositioningDone()
+        {
+            cancelWaitingForGpsAnimation();
             GpsCheckIcon.Opacity = 0;
             GpsCheckIcon.IsVisible = true;
             await GpsCheckIcon.FadeTo(1, 200);
@@ -134,6 +196,7 @@ namespace SecurityTravelApp.Views
         {
             // check in map marker
             gpsPositioningDone();
+
             // update location values
             viewModel.geoposition = pGeoposition;
 
@@ -146,7 +209,6 @@ namespace SecurityTravelApp.Views
 
 
 
-
         }
 
 
@@ -154,6 +216,11 @@ namespace SecurityTravelApp.Views
         {
             // update navigation bar
             NavigationBar.update(pParam);
+            // update data
+            if (!pParam.NavigationBarOnly)
+            {
+                
+            }
         }
 
         protected override async void OnAppearing()

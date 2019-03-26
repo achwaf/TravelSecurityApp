@@ -51,9 +51,15 @@
                                     TextColor="White"
                                    HorizontalTextAlignment="Center"
                                     FontSize="15"/>
-                            <Label x:Name="Recieved" FontSize="10" WidthRequest="30" Text="Reçu" HorizontalOptions="Center"
+                            <Label x:Name="Recieved" FontSize="10" WidthRequest="30" Text="Reçu" 
+                                   HorizontalTextAlignment="Center"
+                                   VerticalOptions="Center"
+                                   VerticalTextAlignment="Center"
+                                   HorizontalOptions="Center"
                                    TextColor="White"/>
                             <Label x:Name="TextRecieved" FontSize="10" 
+                                   VerticalOptions="Center"
+                                   VerticalTextAlignment="Center"
                                    TextColor="White"/>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Spacing="0">
@@ -62,9 +68,15 @@
                                     TextColor="White"
                                    HorizontalTextAlignment="Center"
                                     FontSize="15"/>
-                            <Label x:Name="Seen" FontSize="10" WidthRequest="30" Text="Vu" HorizontalOptions="Center"
+                            <Label x:Name="Seen" FontSize="10" WidthRequest="30" Text="Vu" 
+                                   HorizontalTextAlignment="Center"
+                                   VerticalOptions="Center"
+                                   VerticalTextAlignment="Center"
+                                   HorizontalOptions="Center"
                                    TextColor="White"/>
                             <Label x:Name="TextSeen" FontSize="10" 
+                                   VerticalOptions="Center"
+                                   VerticalTextAlignment="Center"
                                    TextColor="White"/>
                         </StackLayout>
                     </StackLayout>

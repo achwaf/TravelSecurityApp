@@ -8,5 +8,6 @@ namespace SecurityTravelApp.Views.ViewsUtils
     {
         public NavigationItemTarget navigationTarget { get; set; }
         public NavigationItemTarget navigationUpdateTarget { get; set; }
+        public Boolean NavigationBarOnly { get; set; }
     }
 }

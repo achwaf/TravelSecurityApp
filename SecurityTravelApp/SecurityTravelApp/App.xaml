@@ -5,7 +5,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <!--Global Styles-->
-            <Color x:Key="NavigationPrimary">#2196F3</Color>
+            <Color x:Key="NavigationPrimary">#334711</Color>
 
             <Color x:Key="TestColorRED">Red</Color>
             <Color x:Key="TestColorGREEN">Green</Color>

@@ -134,8 +134,8 @@
                                    HeightRequest="50"
                                    VerticalTextAlignment="Center"
                                    HorizontalTextAlignment="Center" 
-                                   VerticalOptions="Center"
-                                   HorizontalOptions="Center"/>
+                                   VerticalOptions="Fill"
+                                   HorizontalOptions="Fill"/>
                             <Label x:Name="ReduceIcon" Text="{x:Static viewUtils:LineAwesomeIcons.AngleDown}" IsVisible="True"
                                    FontFamily="{StaticResource LineAwesome}"
                                    TextColor="White" Opacity=".7"
@@ -144,8 +144,8 @@
                                    HeightRequest="50"
                                    VerticalTextAlignment="Center"
                                    HorizontalTextAlignment="Center" 
-                                   VerticalOptions="Center"
-                                   HorizontalOptions="Center"/>
+                                   VerticalOptions="Fill"
+                                   HorizontalOptions="Fill"/>
                             <Label x:Name="SendIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Send}" Grid.Row="1"
                                    FontFamily="{StaticResource LineAwesome}"
                                    TextColor="LightSeaGreen"
@@ -154,8 +154,8 @@
                                    HeightRequest="50"
                                    VerticalTextAlignment="Center"
                                    HorizontalTextAlignment="Center" 
-                                   VerticalOptions="Center"
-                                   HorizontalOptions="Center"/>
+                                   VerticalOptions="Fill"
+                                   HorizontalOptions="Fill"/>
                         </Grid>
                     </Grid>
                 </Grid>

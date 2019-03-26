@@ -19,7 +19,11 @@ namespace SecurityTravelApp.Services
         public LocalDataService() : base(TYPE)
         {
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), databaseName);
-            //checkDBExists(path);
+
+            
+            checkDBExists(path);
+
+
         }
 
 
@@ -35,9 +39,10 @@ namespace SecurityTravelApp.Services
             {
                 // create new database
                 database = new SQLiteAsyncConnection(pPath);
-                database.CreateTableAsync<MessageDB>().Wait();
-                database.CreateTableAsync<AlertDB>().Wait();
-                database.CreateTableAsync<UserLocation>().Wait();
+                database.CreateTableAsync<MessageDB>();
+                database.CreateTableAsync<AlertDB>();
+                database.CreateTableAsync<LocationDB>();
+                database.CreateTableAsync<AudioRecordDB>();
             }
         }
 
@@ -45,48 +50,177 @@ namespace SecurityTravelApp.Services
         {
             await database.DeleteAllAsync<MessageDB>();
             await database.DeleteAllAsync<AlertDB>();
-            await database.DeleteAllAsync<UserLocation>();
+            await database.DeleteAllAsync<LocationDB>();
+            await database.DeleteAllAsync<AudioRecordDB>();
 
             return true;
         }
 
-        public async Task<Boolean> saveListAlertToDB(List<Alert> pListe)
+        public async Task<Boolean> savePosition(Geoposition pGeoposition)
+        {
+            LocationDB location = new LocationDB()
+            {
+                Accuracy = pGeoposition.Accuracy,
+                Altitude = pGeoposition.Altitude,
+                Longitude = pGeoposition.Longitude,
+                Latitude = pGeoposition.Latitude,
+                Provider = pGeoposition.Provider,
+                DateCheckin = pGeoposition.Date,
+                IsSOS = pGeoposition.IsSOS
+            };
+
+            await database.InsertAsync(location);
+            return true;
+        }
+
+
+        public async Task<List<Geoposition>> getListLocation()
+        {
+            var vList = await database.Table<LocationDB>().ToListAsync();
+            var vListGeoposition = new List<Geoposition>();
+
+            if (vList != null && vList.Count > 0)
+            {
+                foreach (var locationDB in vList)
+                {
+                    Geoposition geoposition = new Geoposition()
+                    {
+                        Accuracy = locationDB.Accuracy,
+                        Altitude = locationDB.Altitude,
+                        Longitude = locationDB.Longitude,
+                        Latitude = locationDB.Latitude,
+                        Provider = locationDB.Provider,
+                        Date = locationDB.DateCheckin,
+                        IsSOS = locationDB.IsSOS
+                    };
+                    vListGeoposition.Add(geoposition);
+                }
+            }
+            return vListGeoposition;
+        }
+
+        public async Task<Geoposition> getLastPosition()
+        {
+            Geoposition result = null;
+            var location = await database.Table<LocationDB>().OrderByDescending<DateTime>(x => x.DateCheckin).FirstAsync();
+
+            if (location != null)
+            {
+                result = new Geoposition()
+                {
+                    Accuracy = location.Accuracy,
+                    Latitude = location.Latitude,
+                    Altitude = location.Altitude,
+                    Longitude = location.Longitude,
+                    Date = location.DateCheckin,
+                    IsSOS = location.IsSOS
+                };
+            }
+            return result;
+        }
+
+        public async Task<Boolean> saveListAlert(List<Alert> pListe)
         {
             var vListAlertDB = new List<AlertDB>();
 
-            foreach (var agent in pListe)
+            foreach (var alert in pListe)
             {
-                AlertDB vAlertDB = new AlertDB();
+                AlertDB alertDB = new AlertDB();
                 // set values
-                vListAlertDB.Add(vAlertDB);
+                alertDB.Text = alert.text;
+                alertDB.DateSeen = alert.dateSeen;
+                alertDB.DateReceived = alert.dateReceived;
+                alertDB.Region = alert.region;
+                alertDB.Type = alert.type;
+                alertDB.Title = alert.title;
+                alertDB.IsSeen = alert.isSeen;
+                vListAlertDB.Add(alertDB);
             }
             await database.InsertAllAsync(vListAlertDB);
             return true;
 
         }
 
-        public async Task<List<MessageDB>> getListMessageFromDB()
-        {
-            var vList = await database.Table<MessageDB>().ToListAsync();
-            return vList;
-        }
 
-
-        public async Task<MessageDB> getAgentFromDB(string A, string B)
+        public async Task<List<Alert>> getListAlert()
         {
-            if (!String.IsNullOrWhiteSpace(A))
+            var vList = await database.Table<AlertDB>().ToListAsync();
+            var vListAlert = new List<Alert>();
+
+            if (vList != null && vList.Count > 0)
             {
-
-                MessageDB result = await database.Table<MessageDB>().Where(x => true).FirstOrDefaultAsync();
-                return result;
-
+                foreach (var alertDB in vList)
+                {
+                    Alert alert = new Alert();
+                    alert.text = alertDB.Text;
+                    alert.dateSeen = alertDB.DateSeen;
+                    alert.dateReceived = alertDB.DateReceived;
+                    alert.region = alertDB.Region;
+                    alert.type = alertDB.Type;
+                    alert.title = alertDB.Title;
+                    alert.isSeen = alertDB.IsSeen;
+                    vListAlert.Add(alert);
+                }
             }
-            return null;
+            return vListAlert;
+        }
 
+        public async Task<Boolean> saveMessage(Message pMessage)
+        {
+            MessageDB message = new MessageDB()
+            {
+                DateSent = pMessage.dateSent,
+                Text = pMessage.text,
+                ID = pMessage.id
+            };
+
+            await database.InsertAsync(message);
+            return true;
+        }
+
+        public async Task<Boolean> saveListMessage(List<Message> pListe)
+        {
+            if (pListe != null && pListe.Count > 0)
+            {
+                var vListMsgDB = new List<MessageDB>();
+
+                foreach (var message in pListe)
+                {
+                    MessageDB messageDB = new MessageDB();
+                    // set values
+                    messageDB.DateSent = message.dateSent;
+                    messageDB.Text = message.text;
+                    messageDB.ID = message.id;
+                    vListMsgDB.Add(messageDB);
+                }
+                await database.InsertAllAsync(vListMsgDB);
+            }
+            return true;
+        }
+
+        public async Task<List<Message>> getListMessage()
+        {
+            // order descend by ID since it is time of message in milliseconds
+            var vList = await database.Table<MessageDB>().OrderByDescending<long>(x => x.ID).ToListAsync();
+            var vListMsg = new List<Message>();
+
+            if (vList != null && vList.Count > 0)
+            {
+                foreach (var msg in vList)
+                {
+                    Message message = new Message();
+                    message.text = msg.Text;
+                    message.isSent = msg.IsSent;
+                    message.dateSent = msg.DateSent;
+                    message.id = msg.ID;
+                    vListMsg.Add(message);
+                }
+            }
+            return vListMsg;
         }
 
 
-        public List<Alert> getAlerts()
+        private List<Alert> getAlerts()
         {
             List<Alert> listeAlertes = new List<Alert>();
 
@@ -105,7 +239,7 @@ namespace SecurityTravelApp.Services
 
 
 
-        public List<Message> getMessages()
+        private List<Message> getMessages()
         {
             List<Message> listeMessages = new List<Message>();
 
@@ -122,6 +256,9 @@ namespace SecurityTravelApp.Services
 
         public List<String> getDefinedMessages()
         {
+            // plan to add these defined messages to database
+            // and allow update form server
+
             List<String> listeMessages = new List<string>();
 
 

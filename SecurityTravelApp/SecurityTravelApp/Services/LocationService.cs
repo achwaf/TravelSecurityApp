@@ -1,4 +1,5 @@
-﻿using SecurityTravelApp.DependencyServices;
+﻿using Plugin.Geolocator;
+using SecurityTravelApp.DependencyServices;
 using SecurityTravelApp.Models;
 using System;
 using System.Collections.Generic;
@@ -16,17 +17,18 @@ namespace SecurityTravelApp.Services
         private const int INTERVALTIME = 1000 * 60 * 10;
         private const int INTERVALTIMEFIRSTGET = 0;
         private const int TIMEVALIDITY = 1000 * 30;
-        private const int GETLOCATIONATTEMPTS = 6;
+        private const int GETLOCATIONATTEMPTS = 3;
 
-        private LocationHelper locationHelper;
+        private ILocationHelper locationHelper;
         private Geoposition currentGeoposition;
         private int locationAttemptsCounter;
         private bool userIsBeingLocated;
         private bool userIsBeingTracked;
+        private bool isSOSActivted = false;
 
         public LocationService() : base(TYPE)
         {
-            locationHelper = DependencyService.Get<LocationHelper>();
+            locationHelper = DependencyService.Get<ILocationHelper>();
             locationHelper.LocationChanged += locationHelper_LocationChanged;
         }
 
@@ -65,6 +67,21 @@ namespace SecurityTravelApp.Services
             }
         }
 
+        public void getUserGeopositionSOS()
+        {
+            isSOSActivted = true;
+            getUserGeoposition();
+            locationAttemptsCounter = GETLOCATIONATTEMPTS;
+        }
+
+        public Boolean isGpsEnabled()
+        {
+            if (!CrossGeolocator.IsSupported)
+                return false;
+
+            return CrossGeolocator.Current.IsGeolocationEnabled;
+        }
+
 
         private void locationHelper_LocationChanged(object sender, EventArgs e)
         {
@@ -79,8 +96,17 @@ namespace SecurityTravelApp.Services
                         currentGeoposition = newPosition;
                     }
 
-                    // send update
-                    MessagingCenter.Send<LocationService, Geoposition>(this, "LOCATIONUPDATE", currentGeoposition);
+                    // send all attempts in case of SOS update
+                    if (isSOSActivted)
+                    {
+                        currentGeoposition.IsSOS = true;
+                        MessagingCenter.Send<LocationService, Geoposition>(this, "LOCATIONUPDATESOS", currentGeoposition);
+                    }
+                    else
+                    {
+                        //test
+                        MessagingCenter.Send<LocationService, Geoposition>(this, "LOCATIONUPDATE", currentGeoposition);
+                    }
                 }
                 else
                 {
@@ -91,10 +117,21 @@ namespace SecurityTravelApp.Services
                     {
                         currentGeoposition = newPosition;
                     }
-                    // send update
-                    MessagingCenter.Send<LocationService, Geoposition>(this, "LOCATIONUPDATE", currentGeoposition);
+                    // send this last update as follow up to previous ones 
+                    if (isSOSActivted)
+                    {
+                        currentGeoposition.IsSOS = true;
+                        MessagingCenter.Send<LocationService, Geoposition>(this, "LOCATIONUPDATESOS", currentGeoposition);
+                    }
+                    // in non SOS case, this last location is normally the only one sent
+                    else
+                    {
+                        currentGeoposition.IsSOS = false;
+                        MessagingCenter.Send<LocationService, Geoposition>(this, "LOCATIONUPDATE", currentGeoposition);
+                    }
                     // work is done
                     userIsBeingLocated = false;
+                    isSOSActivted = false;
                 }
             }
             // if other updates have arrived after the user has been located, update the currentGeoposition

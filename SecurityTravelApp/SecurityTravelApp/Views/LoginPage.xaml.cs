@@ -69,7 +69,7 @@ namespace SecurityTravelApp.Views
             await Logo1.FadeTo(0, 1500, Easing.CubicIn);
             showLoginEntries();
             Logo2.FadeTo(1, 1500, Easing.CubicOut);
-            TravelLine.FadeTo(.5, 3000, Easing.CubicInOut);
+            TravelLine.FadeTo(.3, 1500, Easing.CubicOut);
             Logo1.IsVisible = false;
         }
 

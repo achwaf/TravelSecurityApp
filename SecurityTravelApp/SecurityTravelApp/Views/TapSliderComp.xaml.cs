@@ -204,6 +204,7 @@ namespace SecurityTravelApp.Views
                     if (await appMngSrv.checkForPermission(Permission.Phone))
                     {
                         callSrv.callNumber("+212600000000");
+                        MessagingCenter.Send<TapSliderComp>(this, "SOS");
                     }
                     timer.Stop();
                 }

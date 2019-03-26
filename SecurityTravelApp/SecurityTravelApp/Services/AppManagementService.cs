@@ -36,6 +36,17 @@ namespace SecurityTravelApp.Services
             AppReference = pAppRef;
         }
 
+        public void startSyncThread()
+        {
+            var task = Task.Run(async () =>
+            {
+                // Run code here to sync data
+                // messages
+                // locations
+                // audios
+            });
+        }
+
         public Page lookUpPage(NavigationItemTarget pTarget)
         {
             if (ExistingPages.ContainsKey(pTarget))
@@ -54,6 +65,7 @@ namespace SecurityTravelApp.Services
                 case NavigationItemTarget.Messages: return typeof(MessagesPage);
                 case NavigationItemTarget.Warnings: return typeof(AlertsPage);
                 case NavigationItemTarget.Login: return typeof(LoginPage);
+                case NavigationItemTarget.Docs: return typeof(PopupTestPage);
                 default: return typeof(PopupTestPage);
             }
         }
@@ -79,7 +91,7 @@ namespace SecurityTravelApp.Services
             if (AppReference.MainPage is UpdatablePage)
             {
                 UpdatablePage updatblePage = (UpdatablePage)AppReference.MainPage;
-                updatblePage.update(new NavigationParams() { navigationUpdateTarget = pType });
+                updatblePage.update(new NavigationParams() { navigationUpdateTarget = pType, NavigationBarOnly = true });
             }
 
         }
@@ -95,7 +107,7 @@ namespace SecurityTravelApp.Services
             {
                 // pages should implement Updatable Page to allow UI updates
                 UpdatablePage updatblePage = (UpdatablePage)targetPage;
-                updatblePage.update(new NavigationParams() { navigationTarget = pType });
+                updatblePage.update(new NavigationParams() { navigationTarget = pType, NavigationBarOnly = false });
             }
             navigateToAndSave(targetPage, pType);
         }
@@ -109,6 +121,8 @@ namespace SecurityTravelApp.Services
         {
             await checkForPermission(Permission.Phone);
             await checkForPermission(Permission.Location);
+            await checkForPermission(Permission.Microphone);
+            await checkForPermission(Permission.Storage);
             return false;
         }
 
@@ -143,10 +157,10 @@ namespace SecurityTravelApp.Services
 
         private void fillWithData()
         {
-            navigationItems.Add(createNavigationItem(2, "Home", NavigationItemTarget.Home, LineAwesomeIcons.Home, true, NavigationItemNotifType.Dot));
+            navigationItems.Add(createNavigationItem(2, "Home", NavigationItemTarget.Home, LineAwesomeIcons.Home, false, NavigationItemNotifType.Dot));
             navigationItems.Add(createNavigationItem(4, "Messages", NavigationItemTarget.Messages, LineAwesomeIcons.Messages, false));
-            navigationItems.Add(createNavigationItem(3, "Warnings", NavigationItemTarget.Warnings, LineAwesomeIcons.Warnings, true, NavigationItemNotifType.Numerical, NavigationItemState.Current, 5));
-            navigationItems.Add(createNavigationItem(5, "Docs", NavigationItemTarget.Docs, LineAwesomeIcons.Docs, true, NavigationItemNotifType.Numerical, NavigationItemState.Shaded, 2));
+            navigationItems.Add(createNavigationItem(3, "Warnings", NavigationItemTarget.Warnings, LineAwesomeIcons.Warnings, false, NavigationItemNotifType.Numerical, NavigationItemState.Current));
+            navigationItems.Add(createNavigationItem(5, "Docs", NavigationItemTarget.Docs, LineAwesomeIcons.Docs, false, NavigationItemNotifType.Numerical, NavigationItemState.Shaded));
         }
 
 
