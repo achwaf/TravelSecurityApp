@@ -5,8 +5,11 @@ using System.Text;
 
 namespace SecurityTravelApp.Services.LocalDataServiceUtils.entities
 {
-    public class LocationDB
+    public class LocationDB : Sendable
     {
+
+        [SQLite.PrimaryKey]
+        public Guid ID { get; set; }
         public float Accuracy { get; set; }
         public double Altitude { get; set; }
         public double Longitude { get; set; }

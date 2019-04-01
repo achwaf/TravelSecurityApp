@@ -36,16 +36,16 @@ namespace SecurityTravelApp.Services
                 if (audioPath != null)
                 {
                     // stop the recording after a few seconds
-                    Device.StartTimer(TimeSpan.FromSeconds(10), () =>
+                    Device.StartTimer(TimeSpan.FromSeconds(20), () =>
                     {
                         recorder.StopRecording();
                         return true;
                     });
-                    isRecording = true;
+                    isRecording = false;
                 }
                 else
                 {
-                    isRecording = true;
+                    isRecording = false;
                 }
             }
 

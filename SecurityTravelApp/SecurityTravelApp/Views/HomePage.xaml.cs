@@ -53,6 +53,7 @@ namespace SecurityTravelApp.Views
             {
                 gpsPositionAfterGet(pGeoposition);
                 localDataSrv.savePosition(pGeoposition);
+                // try send the location
             });
 
             // subscribe to SOS location updates
@@ -155,7 +156,8 @@ namespace SecurityTravelApp.Views
                 var audioFile = audioSrv.recordAudio();
                 if (audioFile != null)
                 {
-                    // add reference to file in database
+                    // add reference to file in database, later the audio will be sent
+
 
                 }
                 // aaaaaaaand then make a call, yeah something s not right is this order but welp
@@ -219,7 +221,7 @@ namespace SecurityTravelApp.Views
             // update data
             if (!pParam.NavigationBarOnly)
             {
-                
+
             }
         }
 

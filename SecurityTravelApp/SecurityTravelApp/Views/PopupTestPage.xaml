@@ -4,7 +4,10 @@
              x:Class="SecurityTravelApp.Views.PopupTestPage">
     <ContentPage.Content>
         <StackLayout Spacing="10" Margin="10" VerticalOptions="Center">
-            <Button Text="alert popup" Clicked="Button_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
+            <Button Text="record and call" Clicked="Button_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
+            <Button Text="add audio and toggle sendable" Clicked="Button2_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
+            <Button Text="launch sync" Clicked="Button3_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
+            <Button Text="track user" Clicked="Button4_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

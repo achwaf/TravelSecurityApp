@@ -3,6 +3,7 @@ using SecurityTravelApp.DependencyServices;
 using SecurityTravelApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -14,10 +15,10 @@ namespace SecurityTravelApp.Services
 
         const ServiceType TYPE = ServiceType.Location;
         private const int STALETIME = 1000 * 60 * 2;
-        private const int INTERVALTIME = 1000 * 60 * 10;
+        private const int INTERVALTIME = 0;//1000 * 60 * 10;
         private const int INTERVALTIMEFIRSTGET = 0;
         private const int TIMEVALIDITY = 1000 * 30;
-        private const int GETLOCATIONATTEMPTS = 3;
+        private const int GETLOCATIONATTEMPTS = 10;
 
         private ILocationHelper locationHelper;
         private Geoposition currentGeoposition;
@@ -45,6 +46,8 @@ namespace SecurityTravelApp.Services
 
         public void getUserGeoposition()
         {
+
+            Debug.WriteLine("GPS requests Launched");
             if (!userIsBeingLocated)
             {
                 userIsBeingLocated = true;
@@ -67,6 +70,15 @@ namespace SecurityTravelApp.Services
             }
         }
 
+        public void trackUserGeoposition()
+        {
+            //if (!userIsBeingTracked)
+            //{
+            //    userIsBeingTracked = true;
+                locationHelper.reactivateBackgroundLocationUpdates(INTERVALTIME);
+            //}
+        }
+
         public void getUserGeopositionSOS()
         {
             isSOSActivted = true;
@@ -85,8 +97,11 @@ namespace SecurityTravelApp.Services
 
         private void locationHelper_LocationChanged(object sender, EventArgs e)
         {
+            Debug.WriteLine("Location updated " + locationAttemptsCounter);
             // listen to N attempts for better accuracy
             Geoposition newPosition = ((GeopositionEventArgs)e).Position;
+
+            Debug.Write(" Location is  " + newPosition.Latitude + ":" + newPosition.Longitude + "/" + newPosition.Accuracy);
             if (userIsBeingLocated)
             {
                 if (--locationAttemptsCounter > 0)

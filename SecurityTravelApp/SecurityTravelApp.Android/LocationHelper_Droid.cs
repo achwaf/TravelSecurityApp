@@ -8,6 +8,7 @@ using Android.Content;
 using Android.Locations;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
 using SecurityTravelApp.DependencyServices;
@@ -52,10 +53,25 @@ namespace SecurityTravelApp.Droid
             locationManager.RequestLocationUpdates(LocationManager.NetworkProvider, IntervallTime, 0, this);
         }
 
+        private PendingIntent getPendingIntent()
+        {
+            Context context = Android.App.Application.Context;
+            Intent intent = new Intent(context, typeof(LocationUpdatesBroadcastReceiver));
+            intent.SetAction(LocationUpdatesBroadcastReceiver.ACTION_PROCESS_UPDATES);            
+            return PendingIntent.GetBroadcast(context, 0, intent, PendingIntentFlags.UpdateCurrent);
+        }
+
+        public void reactivateBackgroundLocationUpdates(int IntervallTime)
+        {
+            locationManager.RemoveUpdates(this);
+            locationManager.RequestLocationUpdates(LocationManager.GpsProvider, IntervallTime, 0, getPendingIntent());
+            locationManager.RequestLocationUpdates(LocationManager.NetworkProvider, IntervallTime, 0, getPendingIntent());
+        }
+
 
         public void disableLocationUpdates()
         {
-            locationManager.RemoveUpdates(this);
+            locationManager.RemoveUpdates(getPendingIntent());
         }
 
         public void OnLocationChanged(Location location)
@@ -79,7 +95,7 @@ namespace SecurityTravelApp.Droid
         {
         }
 
-        public Geoposition toGeoposition(Location pLocation)
+        public static Geoposition toGeoposition(Location pLocation)
         {
 
             if (pLocation != null)

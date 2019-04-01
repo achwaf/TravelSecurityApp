@@ -4,9 +4,10 @@ using System.Text;
 
 namespace SecurityTravelApp.Models
 {
-    public class Geoposition
+    public class Geoposition : Matchable
     {
 
+        public Guid ID { get; set; }
         public bool HasAccuracy { get; set; }
         public float Accuracy { get; set; }
         public double Altitude { get; set; }
@@ -16,6 +17,8 @@ namespace SecurityTravelApp.Models
         public long Time { get; set; }
         public DateTime Date { get; set; }
         public Boolean IsSOS { get; set; }
+
+        public Geoposition() { ID = Guid.NewGuid(); }
 
 
         public String ShortDate

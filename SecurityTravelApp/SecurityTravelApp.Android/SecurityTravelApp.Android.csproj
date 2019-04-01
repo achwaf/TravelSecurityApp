@@ -80,6 +80,7 @@
     <Compile Include="BorderlessEditorRenderer.cs" />
     <Compile Include="BorderlessEntryRenderer.cs" />
     <Compile Include="LocationHelper_Droid.cs" />
+    <Compile Include="LocationUpdatesBroadcastReceiver.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="PhoneCall_Droid.cs" />
     <Compile Include="Resources\Resource.designer.cs" />

@@ -20,7 +20,12 @@ namespace SecurityTravelApp.Services
         {
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), databaseName);
 
-            
+
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+
             checkDBExists(path);
 
 
@@ -56,6 +61,20 @@ namespace SecurityTravelApp.Services
             return true;
         }
 
+        public async Task<Boolean> toggleSendable(Sendable pObject, Boolean pIsSendable)
+        {
+            pObject.IsSendable = pIsSendable;
+            await database.UpdateAsync(pObject);
+
+            return true;
+        }
+
+        public async Task<Boolean> updateToDB(Object pObject)
+        {
+            await database.UpdateAsync(pObject);
+            return true;
+        }
+
         public async Task<Boolean> savePosition(Geoposition pGeoposition)
         {
             LocationDB location = new LocationDB()
@@ -66,6 +85,7 @@ namespace SecurityTravelApp.Services
                 Latitude = pGeoposition.Latitude,
                 Provider = pGeoposition.Provider,
                 DateCheckin = pGeoposition.Date,
+                ID = pGeoposition.ID,
                 IsSOS = pGeoposition.IsSOS
             };
 
@@ -91,6 +111,39 @@ namespace SecurityTravelApp.Services
                         Latitude = locationDB.Latitude,
                         Provider = locationDB.Provider,
                         Date = locationDB.DateCheckin,
+                        ID = locationDB.ID,
+                        IsSOS = locationDB.IsSOS
+                    };
+                    vListGeoposition.Add(geoposition);
+                }
+            }
+            return vListGeoposition;
+        }
+
+        public async Task<LocationDB> getLocationDB(Geoposition pPosition)
+        {
+            var location = await database.Table<LocationDB>().FirstAsync(x => x.ID == pPosition.ID);
+            return location;
+        }
+
+        public async Task<List<Geoposition>> getListLocationForSync()
+        {
+            var vList = await database.Table<LocationDB>().Where(x => x.IsSendable && !x.IsSent).ToListAsync();
+            var vListGeoposition = new List<Geoposition>();
+
+            if (vList != null && vList.Count > 0)
+            {
+                foreach (var locationDB in vList)
+                {
+                    Geoposition geoposition = new Geoposition()
+                    {
+                        Accuracy = locationDB.Accuracy,
+                        Altitude = locationDB.Altitude,
+                        Longitude = locationDB.Longitude,
+                        Latitude = locationDB.Latitude,
+                        Provider = locationDB.Provider,
+                        Date = locationDB.DateCheckin,
+                        ID = locationDB.ID,
                         IsSOS = locationDB.IsSOS
                     };
                     vListGeoposition.Add(geoposition);
@@ -113,10 +166,79 @@ namespace SecurityTravelApp.Services
                     Altitude = location.Altitude,
                     Longitude = location.Longitude,
                     Date = location.DateCheckin,
+                    ID = location.ID,
                     IsSOS = location.IsSOS
                 };
             }
             return result;
+        }
+
+        public async Task<Boolean> saveAudioRecord(AudioRecord pAudioRecord)
+        {
+            AudioRecordDB location = new AudioRecordDB()
+            {
+                ID = pAudioRecord.ID,
+                AudioFile = pAudioRecord.audioFile,
+                DateSent = pAudioRecord.dateSent,
+                IsSent = pAudioRecord.isSent,
+                AudioLabel = pAudioRecord.audioLabel
+            };
+
+            await database.InsertAsync(location);
+            return true;
+        }
+
+
+        public async Task<List<AudioRecord>> getListAudioRecord()
+        {
+            var vList = await database.Table<AudioRecordDB>().ToListAsync();
+            var vListAudioRecord = new List<AudioRecord>();
+
+            if (vList != null && vList.Count > 0)
+            {
+                foreach (var audioDB in vList)
+                {
+                    AudioRecord audioRecord = new AudioRecord()
+                    {
+                        ID = audioDB.ID,
+                        audioFile = audioDB.AudioFile,
+                        dateSent = audioDB.DateSent,
+                        isSent = audioDB.IsSent,
+                        audioLabel = audioDB.AudioLabel
+                    };
+                    vListAudioRecord.Add(audioRecord);
+                }
+            }
+            return vListAudioRecord;
+        }
+
+        public async Task<List<AudioRecord>> getListAudioRecordForSync()
+        {
+            var vList = await database.Table<AudioRecordDB>().Where(x => x.IsSendable && !x.IsSent).ToListAsync();
+            var vListAudioRecord = new List<AudioRecord>();
+
+            if (vList != null && vList.Count > 0)
+            {
+                foreach (var audioDB in vList)
+                {
+                    AudioRecord audioRecord = new AudioRecord()
+                    {
+                        ID = audioDB.ID,
+                        audioFile = audioDB.AudioFile,
+                        dateSent = audioDB.DateSent,
+                        isSent = audioDB.IsSent,
+                        audioLabel = audioDB.AudioLabel
+                    };
+                    vListAudioRecord.Add(audioRecord);
+                }
+            }
+            return vListAudioRecord;
+        }
+
+        public async Task<AudioRecordDB> getAudioRecordDB(AudioRecord pAudioRecord)
+        {
+            var audioRecordDB = await database.Table<AudioRecordDB>().FirstAsync(x => x.ID == pAudioRecord.ID);
+            return audioRecordDB;
         }
 
         public async Task<Boolean> saveListAlert(List<Alert> pListe)
@@ -171,7 +293,7 @@ namespace SecurityTravelApp.Services
             {
                 DateSent = pMessage.dateSent,
                 Text = pMessage.text,
-                ID = pMessage.id
+                ID = pMessage.ID
             };
 
             await database.InsertAsync(message);
@@ -190,7 +312,7 @@ namespace SecurityTravelApp.Services
                     // set values
                     messageDB.DateSent = message.dateSent;
                     messageDB.Text = message.text;
-                    messageDB.ID = message.id;
+                    messageDB.ID = message.ID;
                     vListMsgDB.Add(messageDB);
                 }
                 await database.InsertAllAsync(vListMsgDB);
@@ -201,7 +323,7 @@ namespace SecurityTravelApp.Services
         public async Task<List<Message>> getListMessage()
         {
             // order descend by ID since it is time of message in milliseconds
-            var vList = await database.Table<MessageDB>().OrderByDescending<long>(x => x.ID).ToListAsync();
+            var vList = await database.Table<MessageDB>().OrderByDescending<Guid>(x => x.ID).ToListAsync();
             var vListMsg = new List<Message>();
 
             if (vList != null && vList.Count > 0)
@@ -212,7 +334,7 @@ namespace SecurityTravelApp.Services
                     message.text = msg.Text;
                     message.isSent = msg.IsSent;
                     message.dateSent = msg.DateSent;
-                    message.id = msg.ID;
+                    message.ID = msg.ID;
                     vListMsg.Add(message);
                 }
             }

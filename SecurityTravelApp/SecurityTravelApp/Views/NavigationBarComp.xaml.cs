@@ -74,7 +74,7 @@ namespace SecurityTravelApp.Views
                 }
 
             }
-            // we recreate the comp to update display, yeah it s lame but xamarin is does not help either
+            // we recreate the comp to update display, yeah it s lame but xamarin does not help either
             if (vUpdateTargetItem != null)
             {
                 HorizontalLayout.Children[index] = new NavigationItemComp(srvFactory, vUpdateTargetItem, false);

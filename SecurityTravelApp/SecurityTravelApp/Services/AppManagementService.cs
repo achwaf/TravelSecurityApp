@@ -1,11 +1,14 @@
 ﻿using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
+using SecurityTravelApp.Models;
 using SecurityTravelApp.Views;
 using SecurityTravelApp.Views.ViewsUtils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using Xamarin.Forms;
 
 namespace SecurityTravelApp.Services
@@ -20,6 +23,10 @@ namespace SecurityTravelApp.Services
 
         private Dictionary<NavigationItemTarget, Page> ExistingPages;
         private Application AppReference;
+        private Task syncTask;
+        private Timer syncTimer;
+        LocalDataService localDataSrv;
+        ServerDataService serverDataSrv;
 
         public Page CurrentPage;
 
@@ -29,22 +36,126 @@ namespace SecurityTravelApp.Services
             ExistingPages = new Dictionary<NavigationItemTarget, Page>();
             navigationItems = new List<NavigationItem>();
             fillWithData();
+
+            syncTimer = new Timer();
+            syncTimer.Elapsed += new ElapsedEventHandler(OnTimeEventAsync);
+            syncTimer.Interval = 300000;  // 5 min
+            syncTimer.AutoReset = true;
         }
 
-        public void config(Application pAppRef)
+        public void launchTaskSync()
+        {
+            if (!syncTimer.Enabled)
+            {
+                // launch immediately
+                Debug.WriteLine("Triggered");
+                triggerSyncTask();
+                // and after TimeInterval continue looping over
+                syncTimer.Start();
+            }
+        }
+
+        private void OnTimeEventAsync(object source, ElapsedEventArgs e)
+        {
+            triggerSyncTask();
+        }
+
+        public void triggerSyncTask()
+        {
+            if (syncTask == null || syncTask.IsCompleted)
+            {
+                syncTask = Task.Run(async () =>
+                {
+                    syncData();
+                });
+            }
+        }
+
+        public async void syncData()
+        {
+            { // Run code here to sync data about
+
+                Boolean AllLocationsAreSync = true;
+                Boolean AllAudiosAreSync = true;
+                Boolean AllMessagesAreSync = true;
+
+                // locations
+                var listLocation = await localDataSrv.getListLocationForSync();
+                foreach (Geoposition position in listLocation)
+                {
+                    // send the position to server
+
+                    // if failure to send to server 
+                    AllLocationsAreSync = false;
+
+                    // upond result update the database
+                    var locationDB = await localDataSrv.getLocationDB(position);
+                    locationDB.IsSent = true;
+                    locationDB.DateSent = DateTime.Now;
+                    await localDataSrv.updateToDB(locationDB);
+                }
+
+
+                // audios
+
+                var listAudioFile = await localDataSrv.getListAudioRecordForSync();
+                List<Task<Boolean>> taskList = new List<Task<Boolean>>();
+                for (int i = 0; i < listAudioFile.Count; i++)
+                {
+                    AudioRecord audio = listAudioFile[i];
+                    // send the audio to server
+                    Debug.WriteLine("audio" + i + " is being sent to server ");
+                    var task = serverDataSrv.sendDataToServer();
+                    taskList.Add(task);
+                }
+                // wait for all requests to complete
+                Debug.WriteLine("waiting for all");
+                Task.WaitAll(taskList.ToArray());
+                // process the results 
+                for (int i = 0; i < taskList.Count; i++)
+                {
+                    Task<Boolean> task = taskList[i];
+                    AllAudiosAreSync = AllAudiosAreSync && task.Result;
+                    if (task.Result)
+                    {
+                        // upond result update the database
+                        var audioDB = await localDataSrv.getAudioRecordDB(listAudioFile[i]);
+                        audioDB.IsSent = true;
+                        audioDB.DateSent = DateTime.Now;
+                        localDataSrv.updateToDB(audioDB);
+                    }
+                }
+
+
+
+
+                // messages
+
+
+
+                // if all are sync stop the timer
+                if (AllAudiosAreSync && AllLocationsAreSync && AllMessagesAreSync)
+                {
+                    Debug.WriteLine("Timer stopped");
+                    syncTimer.Stop();
+                }
+
+
+                // update the current page
+                //if (AppReference.MainPage is UpdatablePage)
+                //{
+                //    UpdatablePage updatblePage = (UpdatablePage)AppReference.MainPage;
+                //    updatblePage.update(new NavigationParams() { NavigationBarOnly = false });
+                //}
+
+            }
+        }
+
+        public void config(Application pAppRef, LocalDataService pLocalSrv, ServerDataService pServerSrv)
         {
             AppReference = pAppRef;
-        }
-
-        public void startSyncThread()
-        {
-            var task = Task.Run(async () =>
-            {
-                // Run code here to sync data
-                // messages
-                // locations
-                // audios
-            });
+            localDataSrv = pLocalSrv;
+            serverDataSrv = pServerSrv;
         }
 
         public Page lookUpPage(NavigationItemTarget pTarget)

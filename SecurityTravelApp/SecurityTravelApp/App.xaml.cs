@@ -19,11 +19,13 @@ namespace SecurityTravelApp
             InitializeComponent();
             serviceFactory = new ServiceFactory();
 
-            // instantiating services
+            // instantiating services that should be configured
             appMngSrv = (AppManagementService)serviceFactory.getService(ServiceType.AppManagement);
+            var localDataSrv = (LocalDataService)serviceFactory.getService(ServiceType.LocalData);
+            var serverDataSrv = (ServerDataService)serviceFactory.getService(ServiceType.ServerData);
 
             // setting services dependencies and configs
-            appMngSrv.config(this);
+            appMngSrv.config(this, localDataSrv, serverDataSrv);
 
             // Selecting App language
             I18n.SelectLang(AppLanguage.EN);
