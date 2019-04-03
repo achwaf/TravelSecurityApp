@@ -41,7 +41,7 @@
                     <StackLayout Orientation="Horizontal">
                         <Image Source="OCPLogo.png" HorizontalOptions="Center" VerticalOptions="Center"
                                Aspect="AspectFit"/>
-                        <Label Text="Welcome to GCC" TextColor="LightGray" HorizontalOptions="Center" VerticalOptions="Center"
+                        <Label x:Name="WelcomeTXT" TextColor="LightGray" HorizontalOptions="Center" VerticalOptions="Center"
                                FontSize="15"/>
                     </StackLayout>
                     <StackLayout Grid.Row="1" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center">
@@ -92,7 +92,7 @@
                     <StackLayout x:Name="PositionInfo" Margin="46.5,65,100,39" BackgroundColor="#40FFFFFF"
                           VerticalOptions="Center" HorizontalOptions="Center" 
                           Spacing="0">
-                        <Label x:Name="LastCheckinLabel" Text="Last Checkin" FontSize="12" FontAttributes="Bold" Margin="0,0,0,5"
+                        <Label x:Name="LastCheckinLabel" FontSize="12" FontAttributes="Bold" Margin="0,0,0,5"
                                HorizontalOptions="Start" Opacity="{StaticResource PositionInfoValueOpacity}"/>
                         <StackLayout Orientation="Horizontal">
                             <Label Text="{x:Static viewUtils:LineAwesomeIcons.Calendar}" WidthRequest="{StaticResource PositionInfoLabelWidth}" 
@@ -116,7 +116,7 @@
                         </StackLayout>
 
                     </StackLayout>
-                    <Label x:Name="GPSIndication" Text="Tapez l'épingle pour envoyer la position" TextColor="OrangeRed" 
+                    <Label x:Name="GPSIndication" TextColor="OrangeRed" 
                            Opacity=".2" FontSize="10"
                            VerticalOptions="End"
                            HorizontalOptions="Start"

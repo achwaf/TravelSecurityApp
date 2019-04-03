@@ -15,7 +15,7 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HomePage : ContentPage, UpdatablePage
+    public partial class HomePage : ContentPage, UpdatablePage, I18nable
     {
         AppManagementService appMngSrv;
         CallService callSrv;
@@ -60,6 +60,31 @@ namespace SecurityTravelApp.Views
             MessagingCenter.Subscribe<LocationService, Geoposition>(this, "LOCATIONUPDATESOS", (sender, pGeoposition) =>
             {
                 // just send the damn SOS location
+            });
+
+
+            // subscribe to Lougout event
+            MessagingCenter.Subscribe<DrawerMenu>(this, "USERLOGOUT", (sender) =>
+            {
+                // ensure pending actions will complete before loging out
+
+                // save flag
+                LocalDataService.setUserLoggedInFlag(false);
+                appMngSrv.navigateTo(NavigationItemTarget.Login, pSrvFactory);
+            });
+
+            // subscribe to Lang Select FR
+            MessagingCenter.Subscribe<DrawerMenu>(this, "FRLANGSELECT", (sender) =>
+            {
+                LocalDataService.setLanguagePreference(AppLanguage.FR);
+                updateTXT();
+            });
+
+            // subscribe to Lang Select EN
+            MessagingCenter.Subscribe<DrawerMenu>(this, "ENLANGSELECT", (sender) =>
+            {
+                LocalDataService.setLanguagePreference(AppLanguage.EN);
+                updateTXT();
             });
 
 
@@ -123,26 +148,35 @@ namespace SecurityTravelApp.Views
 
         }
 
+        public void updateTXT()
+        {
+            WelcomeTXT.Text = I18n.GetText(AppTextID.WELCOME_GCC);
+            LastCheckinLabel.Text = I18n.GetText(AppTextID.LAST_CHECKIN);
+            GPSIndication.Text = I18n.GetText(AppTextID.GPS_TAP_INDICATION);
+        }
+
         public void sendPosition()
         {
-            if (locationSrv.isUserBeingLocated())
+
+            if (locationSrv.isGpsEnabled())
             {
-                // do nothing, the current location is being retirived and will
-                // be sent as soon as it is available
-            }
-            else
-            {
-                if (locationSrv.isGpsEnabled())
+                if (locationSrv.isUserBeingLocated())
                 {
-                    // start getting location
-                    locationSrv.getUserGeoposition();
-                    // sending to server is done upon updates arrival through subscription to LOCATIONUPDATE
+                    // do nothing, the current location is being retirived and will
+                    // be sent as soon as it is available
                 }
                 else
                 {
-                    cancelWaitingForGpsAnimation();
-                    DisplayAlert("Alert", I18n.GetText(AppTextID.ALERT_GPS_DISABLED), "OK");
+                    // start getting location
+                    locationSrv.getUserGeoposition();
+                    // sending to server is done upon updates arrival through subscription to LOCATIONUPDATE }
                 }
+
+            }
+            else
+            {
+                cancelWaitingForGpsAnimation();
+                DisplayAlert("Alert", I18n.GetText(AppTextID.ALERT_GPS_DISABLED), "OK");
             }
         }
 
@@ -213,6 +247,27 @@ namespace SecurityTravelApp.Views
 
         }
 
+        public void continueTrackingForeGround()
+        {
+            // check if the user should continue being tracked
+            LocalDataService.setUserTrackingFlag(true);
+
+            // continue tracking if yes
+            if (LocalDataService.getUserTrackingFlag())
+            {
+                // launch geoposition updates in foreground whether  the GPS is On or Off
+                locationSrv.disableBackgroundLocationUpdates();
+                locationSrv.trackUserGeopositionInForeGround();
+
+                // and then ask to activate GPS if it is Off 
+                if (!locationSrv.isGpsEnabled())
+                {
+                    DisplayAlert("Alert", I18n.GetText(AppTextID.ALERT_GPS_DISABLED), "OK");
+                }
+
+            }
+        }
+
 
         public void update(NavigationParams pParam)
         {
@@ -229,6 +284,13 @@ namespace SecurityTravelApp.Views
         {
             base.OnAppearing();
             await appMngSrv.checkForAllRequiredPermissions();
+
+            if (LocalDataService.getUserTrackingFlag())
+            {
+                // user was being tracked while the app is background
+                continueTrackingForeGround();
+            }
+
         }
 
         // Invoked when a hardware back button is pressed

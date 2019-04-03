@@ -1,6 +1,8 @@
 ﻿using FFImageLoading.Forms;
 using Rg.Plugins.Popup.Services;
 using SecurityTravelApp.Models;
+using SecurityTravelApp.Utils;
+using SecurityTravelApp.Views.ViewsUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,7 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views.Popups
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AlertPopup : Rg.Plugins.Popup.Pages.PopupPage
+    public partial class AlertPopup : Rg.Plugins.Popup.Pages.PopupPage , I18nable
     {
         private Uri CriticSvg = new Uri("resource://SecurityTravelApp.Assets.CriticShadow.svg");
         private Uri WarningSvg = new Uri("resource://SecurityTravelApp.Assets.WarningShadow.svg");
@@ -64,6 +66,14 @@ namespace SecurityTravelApp.Views.Popups
             // date recieved and seen region
             TextSeen.Text = pAlert.dateSeen.ToString();
             TextRecieved.Text = pAlert.dateReceived.ToString();
+
+            updateTXT();
+        }
+
+        public void updateTXT()
+        {
+            Recieved.Text = I18n.GetText(AppTextID.RECIEVED);
+            Seen.Text = I18n.GetText(AppTextID.SEEN);
         }
     }
 }

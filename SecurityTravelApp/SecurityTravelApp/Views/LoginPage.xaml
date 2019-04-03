@@ -33,7 +33,7 @@
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
                     <Image Source="OCPLogo.png" HorizontalOptions="Center" VerticalOptions="Center"
                                Aspect="AspectFit"/>
-                    <Label Text="Welcome to GCC" TextColor="LightGray" HorizontalOptions="Center" VerticalOptions="Center"
+                    <Label x:Name="welcomeTXT" Text="Welcome to GCC" TextColor="LightGray" HorizontalOptions="Center" VerticalOptions="Center"
                                FontSize="15"/>
                 </StackLayout>
                 <Grid Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill">
@@ -135,7 +135,7 @@
                                        HorizontalOptions="End" HorizontalTextAlignment="Center"
                                    TextColor="White"
                                    FontSize="25"/>
-                        <Label Grid.Column="1" Text="Log in" Margin="0,0,20,0" TextColor="White"
+                        <Label x:Name="LoginTXT" Grid.Column="1" Text="Log in" Margin="0,0,20,0" TextColor="White"
                                        FontAttributes="Bold"
                                        VerticalOptions="Center" VerticalTextAlignment="Center"
                                        HorizontalOptions="Start" HorizontalTextAlignment="Center"/>

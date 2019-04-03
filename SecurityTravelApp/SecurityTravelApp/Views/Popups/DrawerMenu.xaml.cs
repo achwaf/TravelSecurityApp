@@ -1,4 +1,7 @@
 ﻿using Rg.Plugins.Popup.Services;
+using SecurityTravelApp.Services;
+using SecurityTravelApp.Utils;
+using SecurityTravelApp.Views.ViewsUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +14,9 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views.Popups
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class DrawerMenu : Rg.Plugins.Popup.Pages.PopupPage
+    public partial class DrawerMenu : Rg.Plugins.Popup.Pages.PopupPage, I18nable
     {
+        private AppLanguage SelectedLang;
         public DrawerMenu()
         {
             InitializeComponent();
@@ -25,7 +29,7 @@ namespace SecurityTravelApp.Views.Popups
                 {
                     await closeAppMenu();
                 };
-                container.GestureRecognizers.Add(tapGestureRecognizerContainer);
+                BackgroundContainer.GestureRecognizers.Add(tapGestureRecognizerContainer);
             }
 
             // add tap_handler for the backIcon button
@@ -36,6 +40,44 @@ namespace SecurityTravelApp.Views.Popups
             };
             backIcon.GestureRecognizers.Add(tapGestureRecognizerBack);
 
+            // add tap_handler to logout action
+            var tapGestureRecognizerLogout = new TapGestureRecognizer();
+            tapGestureRecognizerLogout.Tapped += async (s, e) =>
+            {
+                await closeAppMenu();
+                MessagingCenter.Send<DrawerMenu>(this, "USERLOGOUT");
+            };
+            LogoutAction.GestureRecognizers.Add(tapGestureRecognizerLogout);
+
+            // add tap_handler to FR action
+            var tapGestureRecognizerSelectFR = new TapGestureRecognizer();
+            tapGestureRecognizerSelectFR.Tapped += async (s, e) =>
+            {
+                SelectedLang = AppLanguage.FR;
+                MessagingCenter.Send<DrawerMenu>(this, "FRLANGSELECT");
+                updateTXT();
+            };
+            FRLang.GestureRecognizers.Add(tapGestureRecognizerSelectFR);
+
+            // add tap_handler to EN action
+            var tapGestureRecognizerSelectEN = new TapGestureRecognizer();
+            tapGestureRecognizerSelectEN.Tapped += async (s, e) =>
+            {
+                SelectedLang = AppLanguage.EN;
+                MessagingCenter.Send<DrawerMenu>(this, "ENLANGSELECT");
+                updateTXT();
+            };
+            ENLang.GestureRecognizers.Add(tapGestureRecognizerSelectEN);
+
+            // apply language
+            updateTXT();
+
+        }
+
+        public void updateTXT()
+        {
+            LogoutTXT.Text = I18n.GetText(AppTextID.LOGOUT, SelectedLang);
+            RecordedTXT.Text = I18n.GetText(AppTextID.RECORDED_AUDIO, SelectedLang);
         }
 
         protected override void OnAppearing()

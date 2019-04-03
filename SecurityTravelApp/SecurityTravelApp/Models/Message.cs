@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SecurityTravelApp.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -66,7 +67,7 @@ namespace SecurityTravelApp.Models
                 {
                     return _dateSent.ToShortDateString();
                 }
-                else return "En attente d'envoi";
+                else return I18n.GetText(AppTextID.WAITING_FOR_TRANSFER);
             }
         }
 
@@ -83,7 +84,7 @@ namespace SecurityTravelApp.Models
         }
         public Message() { ID = Guid.NewGuid(); }
 
-        public Message(String pText, Boolean pIsSent, String pDateSent):base()
+        public Message(String pText, Boolean pIsSent, String pDateSent) : this()
         {
             _text = pText;
             _isSent = pIsSent;

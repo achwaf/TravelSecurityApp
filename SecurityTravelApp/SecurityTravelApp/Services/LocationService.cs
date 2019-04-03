@@ -15,10 +15,10 @@ namespace SecurityTravelApp.Services
 
         const ServiceType TYPE = ServiceType.Location;
         private const int STALETIME = 1000 * 60 * 2;
-        private const int INTERVALTIME = 0;//1000 * 60 * 10;
+        private const int INTERVALTIME = 1000 * 4;
         private const int INTERVALTIMEFIRSTGET = 0;
         private const int TIMEVALIDITY = 1000 * 30;
-        private const int GETLOCATIONATTEMPTS = 10;
+        private const int GETLOCATIONATTEMPTS = 1;
 
         private ILocationHelper locationHelper;
         private Geoposition currentGeoposition;
@@ -70,13 +70,35 @@ namespace SecurityTravelApp.Services
             }
         }
 
-        public void trackUserGeoposition()
+        public void trackUserGeopositionInBackground()
         {
-            //if (!userIsBeingTracked)
-            //{
-            //    userIsBeingTracked = true;
-                locationHelper.reactivateBackgroundLocationUpdates(INTERVALTIME);
-            //}
+            // this method is supposed to be called only when the application goes to background
+            if (!userIsBeingTracked)
+            {
+                // IMPORTANT 
+                // the code of this class is not involved in these background updates
+                // we only activate the updates
+                // the executed code is in the BroadReciever Android, IOS is not yet implemented
+                userIsBeingLocated = true;
+                userIsBeingTracked = true;
+                locationHelper.disableLocationUpdates();
+                locationHelper.activateBackgroundLocationUpdates(INTERVALTIME);
+            }
+        }
+
+        public void trackUserGeopositionInForeGround()
+        {
+            if (!userIsBeingTracked)
+            {
+                userIsBeingLocated = true;
+                userIsBeingTracked = true;
+                locationHelper.reactivateLocationUpdates(INTERVALTIME);
+            }
+        }
+
+        public void stopTrackingUserGeoposition()
+        {
+            userIsBeingTracked = false;
         }
 
         public void getUserGeopositionSOS()
@@ -84,6 +106,11 @@ namespace SecurityTravelApp.Services
             isSOSActivted = true;
             getUserGeoposition();
             locationAttemptsCounter = GETLOCATIONATTEMPTS;
+        }
+
+        public void disableBackgroundLocationUpdates()
+        {
+            locationHelper.disableBackgroundLocationUpdates();
         }
 
         public Boolean isGpsEnabled()
@@ -125,8 +152,14 @@ namespace SecurityTravelApp.Services
                 }
                 else
                 {
-                    // stop linstening
-                    locationHelper.disableLocationUpdates();
+                    // IMPORTANT
+                    // if the use is tracked , this bloc is overstepped and the loop goes on and on
+                    if (!userIsBeingTracked)
+                    {
+                        // stop linstening
+                        locationHelper.disableLocationUpdates();
+                    }
+
                     // update the current position
                     if (betterLocation(newPosition, currentGeoposition) != currentGeoposition)
                     {
@@ -145,7 +178,11 @@ namespace SecurityTravelApp.Services
                         MessagingCenter.Send<LocationService, Geoposition>(this, "LOCATIONUPDATE", currentGeoposition);
                     }
                     // work is done
-                    userIsBeingLocated = false;
+
+                    if (!userIsBeingTracked)
+                    {
+                        userIsBeingLocated = false;
+                    }
                     isSOSActivted = false;
                 }
             }

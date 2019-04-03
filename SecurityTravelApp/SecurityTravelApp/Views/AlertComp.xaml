@@ -46,9 +46,8 @@
                                     TextColor="White"
                                    HorizontalTextAlignment="Center"
                                     FontSize="15"/>
-                            <Label TextColor="White" VerticalOptions="End"
-                                   FontSize="11"
-                                   Text="Nouveau"/>
+                            <Label x:Name="NewAlertTXT" TextColor="White" VerticalOptions="End"
+                                   FontSize="11"/>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal" Spacing="3"  Opacity=".7">
                             <Label Text="{x:Static viewUtils:LineAwesomeIcons.Download}"

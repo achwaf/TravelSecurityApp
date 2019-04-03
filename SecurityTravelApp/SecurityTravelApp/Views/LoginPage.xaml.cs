@@ -13,15 +13,17 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoginPage : ContentPage
+    public partial class LoginPage : ContentPage, UpdatablePage , I18nable
     {
 
         AppManagementService appMngSrv;
+        LocalDataService localDataSrv;
 
         public LoginPage(ServiceFactory pSrvFactory, NavigationParams pParam)
         {
             InitializeComponent();
             appMngSrv = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);
+            localDataSrv = (LocalDataService)pSrvFactory.getService(ServiceType.LocalData);
 
             // setting the taphandler for togglepass   
             var tapGestureRecognizerPass = new TapGestureRecognizer();
@@ -51,8 +53,17 @@ namespace SecurityTravelApp.Views
             // defining tap handler Login
             tapGestureRecognizerLogin.Tapped += (s, e) =>
             {
+                LocalDataService.setUserLoggedInFlag(true);
                 appMngSrv.navigateTo(NavigationItemTarget.Home, pSrvFactory, null);
             };
+        }
+
+
+        public void updateTXT()
+        {
+            welcomeTXT.Text = I18n.GetText(AppTextID.WELCOME_GCC);
+            PassEntry.Placeholder = I18n.GetText(AppTextID.PASSWORD);
+            LoginTXT.Text = I18n.GetText(AppTextID.LOGIN);
         }
 
 
@@ -96,6 +107,10 @@ namespace SecurityTravelApp.Views
             //    PopupNavigation.Instance.PopAsync();
             //}
             return true;
+        }
+
+        public void update(NavigationParams pParam)
+        {
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿using SecurityTravelApp.Models;
+using SecurityTravelApp.Views.ViewsUtils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +14,7 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MessageComp : ContentView
+    public partial class MessageComp : ContentView, I18nable
     {
         private Boolean continueFlashAnimation;
         private Animation flashingAnimation;
@@ -49,6 +50,11 @@ namespace SecurityTravelApp.Views
             // check animationPendingIcon for first display
             checkAnimationPendingIcon();
 
+        }
+
+        public void updateTXT()
+        {
+            DateSent.Text = theMessage.DateString;
         }
 
         private void checkAnimationPendingIcon()

@@ -1,5 +1,6 @@
 ﻿using SecurityTravelApp.Models;
 using SecurityTravelApp.Services;
+using SecurityTravelApp.Utils;
 using SecurityTravelApp.Views.ViewsUtils;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AlertsPage : ContentPage, UpdatablePage
+    public partial class AlertsPage : ContentPage, UpdatablePage, I18nable
     {
         LocalDataService localDataSrv;
 
@@ -50,7 +51,14 @@ namespace SecurityTravelApp.Views
             populateAlerts(listAlerts);
         }
 
+        public void updateTXT()
+        {
+            AlertTXT.Text = I18n.GetText(AppTextID.ALERTS);
+            EmptyTXT.Text = I18n.GetText(AppTextID.EMPTY);
 
+            
+
+        }
 
         public void update(NavigationParams pParam)
         {

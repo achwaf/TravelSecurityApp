@@ -71,7 +71,14 @@ namespace SecurityTravelApp.Views
 
         private void Button4_Clicked(object sender, EventArgs e)
         {
-            locationSrv.trackUserGeoposition();
+            LocalDataService.setUserTrackingFlag(true);
+            locationSrv.trackUserGeopositionInBackground();
+        }
+
+        private void Button5_Clicked(object sender, EventArgs e)
+        {
+            LocalDataService.setUserTrackingFlag(false);
+            locationSrv.stopTrackingUserGeoposition();
         }
     }
 }

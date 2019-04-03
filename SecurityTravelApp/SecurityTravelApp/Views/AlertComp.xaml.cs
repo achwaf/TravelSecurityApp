@@ -2,7 +2,9 @@
 using FFImageLoading.Svg.Forms;
 using Rg.Plugins.Popup.Services;
 using SecurityTravelApp.Models;
+using SecurityTravelApp.Utils;
 using SecurityTravelApp.Views.Popups;
+using SecurityTravelApp.Views.ViewsUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +17,7 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AlertComp : ContentView
+    public partial class AlertComp : ContentView , I18nable
     {
         private Uri CriticSvg = new Uri("resource://SecurityTravelApp.Assets.CriticShadow.svg");
         private Uri WarningSvg = new Uri("resource://SecurityTravelApp.Assets.WarningShadow.svg");
@@ -115,6 +117,11 @@ namespace SecurityTravelApp.Views
                 TextRecieved.Text = pAlert.dateReceived.ToShortDateString();
             }
 
+        }
+
+        public void updateTXT()
+        {
+            NewAlertTXT.Text = I18n.GetText(AppTextID.NEW);
         }
     }
 }

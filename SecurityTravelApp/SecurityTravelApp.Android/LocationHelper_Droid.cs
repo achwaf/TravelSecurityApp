@@ -57,21 +57,25 @@ namespace SecurityTravelApp.Droid
         {
             Context context = Android.App.Application.Context;
             Intent intent = new Intent(context, typeof(LocationUpdatesBroadcastReceiver));
-            intent.SetAction(LocationUpdatesBroadcastReceiver.ACTION_PROCESS_UPDATES);            
+            intent.SetAction(LocationUpdatesBroadcastReceiver.ACTION_PROCESS_UPDATES);
             return PendingIntent.GetBroadcast(context, 0, intent, PendingIntentFlags.UpdateCurrent);
         }
 
-        public void reactivateBackgroundLocationUpdates(int IntervallTime)
+        public void activateBackgroundLocationUpdates(int IntervallTime)
         {
-            locationManager.RemoveUpdates(this);
             locationManager.RequestLocationUpdates(LocationManager.GpsProvider, IntervallTime, 0, getPendingIntent());
             locationManager.RequestLocationUpdates(LocationManager.NetworkProvider, IntervallTime, 0, getPendingIntent());
         }
 
 
-        public void disableLocationUpdates()
+        public void disableBackgroundLocationUpdates()
         {
             locationManager.RemoveUpdates(getPendingIntent());
+        }
+
+        public void disableLocationUpdates()
+        {
+            locationManager.RemoveUpdates(this);
         }
 
         public void OnLocationChanged(Location location)

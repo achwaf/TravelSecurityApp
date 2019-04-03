@@ -16,7 +16,7 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MessagesPage : ContentPage, UpdatablePage
+    public partial class MessagesPage : ContentPage, UpdatablePage , I18nable
     {
         LocalDataService localDataSrv;
 
@@ -134,6 +134,11 @@ namespace SecurityTravelApp.Views
 
         }
 
+        public void updateTXT()
+        {
+            MsgTXT.Text = I18n.GetText(AppTextID.MESSAGES);
+        }
+
         private async void reduceMsgComposer()
         {
             messageEditor.Unfocus();
@@ -211,6 +216,13 @@ namespace SecurityTravelApp.Views
             if (!pParam.NavigationBarOnly)
             {
                 // probably update only sent status of messages
+                // update TXT for children messages , we omit the last because it s just a spacer
+                for (int i = 0; i < MessageContainer.Children.Count - 1; i++)
+                {
+                    View child = MessageContainer.Children[i];
+                    MessageComp msg = (MessageComp)child;
+                    msg.updateTXT();
+                }
             }
         }
 

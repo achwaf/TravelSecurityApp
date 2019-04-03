@@ -6,6 +6,7 @@ using Android.Locations;
 using Android.OS;
 using Android.Support.V4.App;
 using SecurityTravelApp.Models;
+using SecurityTravelApp.Services;
 
 namespace SecurityTravelApp.Droid
 {
@@ -17,6 +18,9 @@ namespace SecurityTravelApp.Droid
         private static String PRIMARY_CHANNEL = "default";
 
         private NotificationManager mNotificationManager;
+        private String TrackingOngoing = "Tracking en cours";
+        private String TrackingStopped = "Tracking arrêté";
+        private Boolean IsTrackingStillOn;
 
         public override void OnReceive(Context pContext, Intent intent)
         {
@@ -27,20 +31,28 @@ namespace SecurityTravelApp.Droid
                     String action = intent.Action;
                     if (ACTION_PROCESS_UPDATES.Equals(action))
                     {
+                        // stop updates if flag is off
+                        IsTrackingStillOn = true;
+                        if (!LocalDataService.getUserTrackingFlag())
+                        {
+                            var locationHelper = new LocationHelper_Droid();
+                            locationHelper.disableBackgroundLocationUpdates();
+                            IsTrackingStillOn = false;
+                        }
+
                         Location value = (Location)intent.Extras.Get("location");
                         Geoposition location = LocationHelper_Droid.toGeoposition(value);
                         showNotification(pContext, location);
 
-                        // stop updates
-                        var locationHelper = new LocationHelper_Droid();
-                        locationHelper.disableLocationUpdates();
+                        // launch job to save in database and send it to server when data transfer is active
+                        //LocationUpdateJobService.EnqueueWork()
                     }
                 }
             }
             catch (Exception e)
             {
                 var locationHelper = new LocationHelper_Droid();
-                locationHelper.disableLocationUpdates();
+                locationHelper.disableBackgroundLocationUpdates();
             }
 
         }
@@ -64,10 +76,10 @@ namespace SecurityTravelApp.Droid
                     stackBuilder.GetPendingIntent(0, PendingIntentFlags.UpdateCurrent);
 
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(pContext, PRIMARY_CHANNEL)
-                    .SetContentTitle("Location chekin")
+                    .SetContentTitle(IsTrackingStillOn ? TrackingOngoing : TrackingStopped)
                     .SetSubText(pLocation.Date.ToLongTimeString())
                     .SetContentText("Long: " + pLocation.LongitudeValue + ", Lat: " + pLocation.LatitudeValue)
-                    .SetSmallIcon(Resource.Drawable.logoApp2)
+                    .SetSmallIcon(Resource.Drawable.AppNotifIcon)
                     .SetAutoCancel(true);
 
             getNotificationManager(pContext).Notify(0, notificationBuilder.Build());

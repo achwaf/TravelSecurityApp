@@ -207,7 +207,7 @@ namespace SecurityTravelApp.Services
 
         }
 
-        public void navigateTo(NavigationItemTarget pType, ServiceFactory pSrvFactory, NavigationParams pParamAfterNav)
+        public void navigateTo(NavigationItemTarget pType, ServiceFactory pSrvFactory, NavigationParams pParamAfterNav = null)
         {
             Page targetPage = lookUpPage(pType);
             if (targetPage == null)

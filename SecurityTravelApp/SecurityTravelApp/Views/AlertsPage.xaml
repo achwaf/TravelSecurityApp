@@ -21,11 +21,10 @@
                 </Grid.RowDefinitions>
                 <StackLayout Grid.Row="0" Orientation="Horizontal" 
                              HorizontalOptions="Fill" Margin="10,10,10,0" Spacing="20">
-                    <Label HorizontalOptions="StartAndExpand"
+                    <Label x:Name="AlertTXT" HorizontalOptions="StartAndExpand"
                            VerticalOptions="Center"
                            HorizontalTextAlignment="Start"
-                           VerticalTextAlignment="Center"
-                           Text="Alertes" FontSize="30" TextColor="DimGray"/>
+                           VerticalTextAlignment="Center" FontSize="30" TextColor="DimGray"/>
                     <Label x:Name="SearchIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Search}"
                                 FontFamily="{StaticResource LineAwesome}"
                                 TextColor="LightBlue"
@@ -56,7 +55,7 @@
                 </StackLayout>
                 <Grid x:Name="EmptyInfo" IsVisible="false" Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill" Opacity=".2" Margin="0,0,0,70">
                     <Image Source="empty.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="150" WidthRequest="150"/>
-                    <Label Text="Empty" FontSize="25" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
+                    <Label x:Name="EmptyTXT" FontSize="25" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
                 </Grid>
                 <ScrollView  Grid.Row="1" Margin="{StaticResource UpFrontViewMargin}">
                     <StackLayout x:Name="AlertsContainer" Orientation="Vertical" HorizontalOptions="Fill" Spacing="10"

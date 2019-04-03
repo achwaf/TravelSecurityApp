@@ -1,36 +1,79 @@
 ﻿using SecurityTravelApp.Models;
 using SecurityTravelApp.Services.LocalDataServiceUtils.entities;
+using SecurityTravelApp.Utils;
 using SQLite;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace SecurityTravelApp.Services
 {
-    class LocalDataService : ServiceAbstract
+    public class LocalDataService : ServiceAbstract
     {
         const ServiceType TYPE = ServiceType.LocalData;
 
         private SQLiteAsyncConnection database;
         private const String databaseName = "DB.sqlite";
+        private const String UserTrackingFlag = "UserTrackingFlag";
+        private const String PreferredLang = "PreferredLang";
+        private const String UserLoggedInFlag = "UserLoggedInFlag";
 
         public LocalDataService() : base(TYPE)
         {
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), databaseName);
 
-
             if (File.Exists(path))
             {
                 File.Delete(path);
             }
-
             checkDBExists(path);
 
-
+            fillDatabase();
         }
 
+        private async void fillDatabase()
+        {
+            await saveListMessage(getMessages());
+            await saveListAlert(getAlerts());
+        }
+
+        static public void setUserLoggedInFlag(Boolean pValue)
+        {
+            Preferences.Set(UserLoggedInFlag, pValue);
+        }
+
+        static public Boolean getUserLoggedInFlag()
+        {
+            return Preferences.Get(UserLoggedInFlag, false);
+        }
+
+
+        static public void setUserTrackingFlag(Boolean pValue)
+        {
+            Preferences.Set(UserTrackingFlag, pValue);
+        }
+
+
+        static public Boolean getUserTrackingFlag()
+        {
+            return Preferences.Get(UserTrackingFlag, false);
+        }
+
+
+        static public void setLanguagePreference(AppLanguage pValue)
+        {
+            Preferences.Set(PreferredLang, pValue.ToString());
+        }
+
+
+        static public AppLanguage getLanguagePreference()
+        {
+            String value = Preferences.Get(PreferredLang, AppLanguage.FR.ToString());
+            return (AppLanguage) Enum.Parse(typeof(AppLanguage), value);
+        }
 
 
         private void checkDBExists(String pPath)
@@ -393,4 +436,5 @@ namespace SecurityTravelApp.Services
             return listeMessages;
         }
     }
+
 }
