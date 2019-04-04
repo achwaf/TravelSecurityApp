@@ -17,7 +17,7 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AlertComp : ContentView , I18nable
+    public partial class AlertComp : ContentView, I18nable
     {
         private Uri CriticSvg = new Uri("resource://SecurityTravelApp.Assets.CriticShadow.svg");
         private Uri WarningSvg = new Uri("resource://SecurityTravelApp.Assets.WarningShadow.svg");
@@ -28,16 +28,15 @@ namespace SecurityTravelApp.Views
         private Color InfoColor = Color.FromHex("#6CBEED");
 
         private Boolean ContinueFlashing = false;
-
+        private Alert Item;
+        Animation flashLoop;
 
         public AlertComp(Alert pAlert)
         {
             InitializeComponent();
-
-
-
+            Item = pAlert;
             // create flashing animation
-            Animation flashLoop = new Animation();
+            flashLoop = new Animation();
             Animation fadeIn = new Animation(d => NewInfo.Opacity = d, .7, 1);
             Animation fadeOut = new Animation(d => NewInfo.Opacity = d, 1, .7);
             flashLoop.Add(0, .5, fadeIn);
@@ -49,18 +48,84 @@ namespace SecurityTravelApp.Views
 
             tapGestureRecognizer.Tapped += async (s, e) =>
             {
+
+                // update state of alert comp
+                Item.isSeen = true;
+                Item.dateSeen = DateTime.Now;
+                dateRecievedAndSeen();
+
                 Icon.FadeTo(.5, 50);
                 await TextBackground.FadeTo(.85, 50);
 
-                PopupNavigation.Instance.PushAsync(new AlertPopup(pAlert), false);
+                PopupNavigation.Instance.PushAsync(new AlertPopup(Item), false);
 
                 Icon.FadeTo(1, 500);
                 TextBackground.FadeTo(.65, 500);
+
+
+                // send event to update in data base
+                MessagingCenter.Send<AlertComp, Alert>(this, "ALERTSEEN", Item);
             };
 
+            // set colors
+            setColors();
+            // date recieved and seen texts
+            dateRecievedAndSeen();
 
+            // filling texts
+            Title.Text = pAlert.title;
+            TheText.Text = pAlert.text;
+            RegionText.Text = pAlert.region;
+
+            // apply language
+            updateTXT();
+        }
+
+        private void dateRecievedAndSeen()
+        {
+            // date recieved and seen region
+            if (Item.isSeen)
+            {
+                ContinueFlashing = false;
+                NewInfo.IsVisible = false;
+                SeenInfo.IsVisible = true;
+
+                // display time if seen today, display date elsewise
+                if (Item.dateSeen.Date == DateTime.Today)
+                {
+                    TextSeen.Text = Item.dateSeen.ToShortTimeString();
+                }
+                else
+                {
+                    TextSeen.Text = Item.dateSeen.ToShortDateString();
+                }
+                Container.Opacity = .5;
+            }
+            else
+            {
+                Container.Opacity = 1;
+                ContinueFlashing = true;
+                NewInfo.IsVisible = true;
+                SeenInfo.IsVisible = false;
+                // luaunch the animation
+                flashLoop.Commit(NewInfo, "flash", length: 200, repeat: () => { return ContinueFlashing; });
+            }
+
+            // display time if recieved today, display date elsewise
+            if (Item.dateReceived.Date == DateTime.Today)
+            {
+                TextRecieved.Text = Item.dateReceived.ToShortTimeString();
+            }
+            else
+            {
+                TextRecieved.Text = Item.dateReceived.ToShortDateString();
+            }
+        }
+
+        private void setColors()
+        {
             // setting icon and colorIcon
-            switch (pAlert.type)
+            switch (Item.type)
             {
                 case AlertType.Critical:
                     AlertIcon.Source = new EmbeddedResourceImageSource(CriticSvg);
@@ -75,48 +140,6 @@ namespace SecurityTravelApp.Views
                     IconBackground.Color = InfoColor;
                     break;
             }
-
-            // filling texts
-            Title.Text = pAlert.title;
-            TheText.Text = pAlert.text;
-            RegionText.Text = pAlert.region;
-
-
-            // date recieved and seen region
-            if (pAlert.isSeen)
-            {
-                NewInfo.IsVisible = false;
-                SeenInfo.IsVisible = true;
-
-                // display time if seen today, display date elsewise
-                if (pAlert.dateSeen.Date == DateTime.Today)
-                {
-                    TextSeen.Text = pAlert.dateSeen.ToShortTimeString();
-                }
-                else
-                {
-                    TextSeen.Text = pAlert.dateSeen.ToShortDateString();
-                }
-            }
-            else
-            {
-                ContinueFlashing = true;
-                NewInfo.IsVisible = true;
-                SeenInfo.IsVisible = false;
-                // luaunch the animation
-                flashLoop.Commit(NewInfo, "flash", length: 200, repeat: () => { return true; });
-            }
-
-            // display time if recieved today, display date elsewise
-            if (pAlert.dateReceived.Date == DateTime.Today)
-            {
-                TextRecieved.Text = pAlert.dateReceived.ToShortTimeString();
-            }
-            else
-            {
-                TextRecieved.Text = pAlert.dateReceived.ToShortDateString();
-            }
-
         }
 
         public void updateTXT()

@@ -51,7 +51,7 @@
                                     TextColor="White"
                                    HorizontalTextAlignment="Center"
                                     FontSize="15"/>
-                            <Label x:Name="Recieved" FontSize="10" WidthRequest="30" Text="Reçu" 
+                            <Label x:Name="Recieved" FontSize="10" WidthRequest="45" Text="Reçu" 
                                    HorizontalTextAlignment="Center"
                                    VerticalOptions="Center"
                                    VerticalTextAlignment="Center"
@@ -68,7 +68,7 @@
                                     TextColor="White"
                                    HorizontalTextAlignment="Center"
                                     FontSize="15"/>
-                            <Label x:Name="Seen" FontSize="10" WidthRequest="30" Text="Vu" 
+                            <Label x:Name="Seen" FontSize="10" WidthRequest="45" Text="Vu" 
                                    HorizontalTextAlignment="Center"
                                    VerticalOptions="Center"
                                    VerticalTextAlignment="Center"

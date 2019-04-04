@@ -53,9 +53,9 @@
                                 VerticalOptions="Center"
                                 HorizontalOptions="End"/>
                 </StackLayout>
-                <Grid x:Name="EmptyInfo" IsVisible="false" Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill" Opacity=".2" Margin="0,0,0,70">
-                    <Image Source="empty.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="150" WidthRequest="150"/>
-                    <Label x:Name="EmptyTXT" FontSize="25" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Grid x:Name="EmptyInfo" IsVisible="false" Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill" Margin="0,0,0,70">
+                    <Image Source="empty.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="80" WidthRequest="80" Opacity=".15"/>
+                    <Label x:Name="EmptyTXT" FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" Opacity=".15"/>
                 </Grid>
                 <ScrollView  Grid.Row="1" Margin="{StaticResource UpFrontViewMargin}">
                     <StackLayout x:Name="AlertsContainer" Orientation="Vertical" HorizontalOptions="Fill" Spacing="10"

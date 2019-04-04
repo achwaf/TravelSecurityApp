@@ -5,8 +5,10 @@ using System.Text;
 
 namespace SecurityTravelApp.Services.LocalDataServiceUtils.entities
 {
-    public class AlertDB
+    public class AlertDB : Matchable
     {
+        [SQLite.PrimaryKey]
+        public Guid ID { get; set; }
         public String Title { get; set; }
         public String Region { get; set; }
         public String Text { get; set; }

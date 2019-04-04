@@ -84,7 +84,7 @@
                     </Grid>
                 </Grid>
 
-                <Label Grid.Row="1"
+                <Label x:Name="labelItem" Grid.Row="1"
                    HorizontalOptions="Center"
                    VerticalOptions="End"
                    HorizontalTextAlignment="Center"

@@ -15,7 +15,7 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HomePage : ContentPage, UpdatablePage, I18nable
+    public partial class HomePage : ContentPage, Updatable, I18nable
     {
         AppManagementService appMngSrv;
         CallService callSrv;
@@ -48,6 +48,7 @@ namespace SecurityTravelApp.Views
             // getting values from xaml
             LastCheckinValueOpacity = Utilities.getOnPlatformValue<Double>(this.Resources["PositionInfoValueOpacity"]);
 
+
             // subscribe to location updates
             MessagingCenter.Subscribe<LocationService, Geoposition>(this, "LOCATIONUPDATE", (sender, pGeoposition) =>
             {
@@ -76,15 +77,21 @@ namespace SecurityTravelApp.Views
             // subscribe to Lang Select FR
             MessagingCenter.Subscribe<DrawerMenu>(this, "FRLANGSELECT", (sender) =>
             {
-                LocalDataService.setLanguagePreference(AppLanguage.FR);
+                I18n.SelectLang(AppLanguage.FR);
                 updateTXT();
+
+                // save preference
+                LocalDataService.setLanguagePreference(AppLanguage.FR);
             });
 
             // subscribe to Lang Select EN
             MessagingCenter.Subscribe<DrawerMenu>(this, "ENLANGSELECT", (sender) =>
             {
-                LocalDataService.setLanguagePreference(AppLanguage.EN);
+                I18n.SelectLang(AppLanguage.EN);
                 updateTXT();
+
+                // save preference
+                LocalDataService.setLanguagePreference(AppLanguage.EN);
             });
 
 
@@ -146,6 +153,9 @@ namespace SecurityTravelApp.Views
             waitingAnimation.Add(0, .2, fadeinAnimation);
             waitingAnimation.Add(.8, 1, fadeoutAnimation);
 
+            // text
+            updateTXT();
+
         }
 
         public void updateTXT()
@@ -153,6 +163,7 @@ namespace SecurityTravelApp.Views
             WelcomeTXT.Text = I18n.GetText(AppTextID.WELCOME_GCC);
             LastCheckinLabel.Text = I18n.GetText(AppTextID.LAST_CHECKIN);
             GPSIndication.Text = I18n.GetText(AppTextID.GPS_TAP_INDICATION);
+            NavigationBar.updateTXT();
         }
 
         public void sendPosition()
@@ -185,15 +196,15 @@ namespace SecurityTravelApp.Views
             if (locationSrv.isGpsEnabled())
             {
                 // start getting location SOS
-                locationSrv.getUserGeopositionSOS();
+                //locationSrv.getUserGeopositionSOS();
                 // start audio recording
-                var audioFile = audioSrv.recordAudio();
-                if (audioFile != null)
-                {
-                    // add reference to file in database, later the audio will be sent
+                //var audioFile = audioSrv.recordAudio();
+                //if (audioFile != null)
+                //{
+                //    // add reference to file in database, later the audio will be sent
 
 
-                }
+                //}
                 // aaaaaaaand then make a call, yeah something s not right is this order but welp
                 callSrv.callNumber("+212600000000");
             }

@@ -16,10 +16,21 @@ namespace SecurityTravelApp.Views.Popups
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DrawerMenu : Rg.Plugins.Popup.Pages.PopupPage, I18nable
     {
+
+
         private AppLanguage SelectedLang;
+        private Color ToggleOffColor;
+        private Color ToggleOnColor;
+
         public DrawerMenu()
         {
             InitializeComponent();
+
+            ToggleOffColor = Color.FromHex("#D3D3D3");
+            ToggleOnColor = Color.FromHex("#90ee90");
+
+            // the lang s already selected at app startup
+            updateLangVisuals(I18n.SelectedLang());
 
             // correct the behavior of backgroud tapping in android
             if (Device.RuntimePlatform.Equals(Device.Android))
@@ -55,6 +66,7 @@ namespace SecurityTravelApp.Views.Popups
             {
                 SelectedLang = AppLanguage.FR;
                 MessagingCenter.Send<DrawerMenu>(this, "FRLANGSELECT");
+                updateLangVisuals(AppLanguage.FR);
                 updateTXT();
             };
             FRLang.GestureRecognizers.Add(tapGestureRecognizerSelectFR);
@@ -65,6 +77,7 @@ namespace SecurityTravelApp.Views.Popups
             {
                 SelectedLang = AppLanguage.EN;
                 MessagingCenter.Send<DrawerMenu>(this, "ENLANGSELECT");
+                updateLangVisuals(AppLanguage.EN);
                 updateTXT();
             };
             ENLang.GestureRecognizers.Add(tapGestureRecognizerSelectEN);
@@ -78,6 +91,28 @@ namespace SecurityTravelApp.Views.Popups
         {
             LogoutTXT.Text = I18n.GetText(AppTextID.LOGOUT, SelectedLang);
             RecordedTXT.Text = I18n.GetText(AppTextID.RECORDED_AUDIO, SelectedLang);
+        }
+
+        private void updateLangVisuals(AppLanguage pLang)
+        {
+            if (pLang.Equals(AppLanguage.EN))
+            {
+                fadeOutIn(ENLang);
+                ToggleEN.Color = ToggleOnColor;
+                ToggleFR.Color = ToggleOffColor;
+            }
+            else if (pLang.Equals(AppLanguage.FR))
+            {
+                fadeOutIn(FRLang);
+                ToggleEN.Color = ToggleOffColor;
+                ToggleFR.Color = ToggleOnColor;
+            }
+        }
+
+        private async void fadeOutIn(View pView)
+        {
+            await pView.FadeTo(.5, 100);
+            pView.FadeTo(1, 100);
         }
 
         protected override void OnAppearing()

@@ -72,7 +72,7 @@ namespace SecurityTravelApp.Services
         static public AppLanguage getLanguagePreference()
         {
             String value = Preferences.Get(PreferredLang, AppLanguage.FR.ToString());
-            return (AppLanguage) Enum.Parse(typeof(AppLanguage), value);
+            return (AppLanguage)Enum.Parse(typeof(AppLanguage), value);
         }
 
 
@@ -114,7 +114,7 @@ namespace SecurityTravelApp.Services
 
         public async Task<Boolean> updateToDB(Object pObject)
         {
-            await database.UpdateAsync(pObject);
+            var result = await database.UpdateAsync(pObject);
             return true;
         }
 
@@ -284,6 +284,28 @@ namespace SecurityTravelApp.Services
             return audioRecordDB;
         }
 
+        public async Task<Boolean> saveAlert(Alert pALert)
+        {
+            AlertDB alertDB = new AlertDB();
+            alertDB.ID = pALert.ID;
+            alertDB.Text = pALert.text;
+            alertDB.DateSeen = pALert.dateSeen;
+            alertDB.DateReceived = pALert.dateReceived;
+            alertDB.Region = pALert.region;
+            alertDB.Type = pALert.type;
+            alertDB.Title = pALert.title;
+            alertDB.IsSeen = pALert.isSeen;
+            await database.InsertAsync(alertDB);
+            return true;
+        }
+
+        public async Task<AlertDB> getAlertDB(Alert pAlert)
+        {
+            var alert = await database.Table<AlertDB>().FirstAsync(x => x.ID == pAlert.ID);
+            return alert;
+        }
+
+
         public async Task<Boolean> saveListAlert(List<Alert> pListe)
         {
             var vListAlertDB = new List<AlertDB>();
@@ -292,6 +314,7 @@ namespace SecurityTravelApp.Services
             {
                 AlertDB alertDB = new AlertDB();
                 // set values
+                alertDB.ID = alert.ID;
                 alertDB.Text = alert.text;
                 alertDB.DateSeen = alert.dateSeen;
                 alertDB.DateReceived = alert.dateReceived;
@@ -309,7 +332,7 @@ namespace SecurityTravelApp.Services
 
         public async Task<List<Alert>> getListAlert()
         {
-            var vList = await database.Table<AlertDB>().ToListAsync();
+            var vList = await database.Table<AlertDB>().OrderByDescending<DateTime>(x => x.DateReceived).ToListAsync();
             var vListAlert = new List<Alert>();
 
             if (vList != null && vList.Count > 0)
@@ -317,6 +340,7 @@ namespace SecurityTravelApp.Services
                 foreach (var alertDB in vList)
                 {
                     Alert alert = new Alert();
+                    alert.ID = alertDB.ID;
                     alert.text = alertDB.Text;
                     alert.dateSeen = alertDB.DateSeen;
                     alert.dateReceived = alertDB.DateReceived;
@@ -335,6 +359,7 @@ namespace SecurityTravelApp.Services
             MessageDB message = new MessageDB()
             {
                 DateSent = pMessage.dateSent,
+                IsSent = pMessage.isSent,
                 Text = pMessage.text,
                 ID = pMessage.ID
             };
@@ -354,6 +379,7 @@ namespace SecurityTravelApp.Services
                     MessageDB messageDB = new MessageDB();
                     // set values
                     messageDB.DateSent = message.dateSent;
+                    messageDB.IsSent = message.isSent;
                     messageDB.Text = message.text;
                     messageDB.ID = message.ID;
                     vListMsgDB.Add(messageDB);
@@ -365,8 +391,8 @@ namespace SecurityTravelApp.Services
 
         public async Task<List<Message>> getListMessage()
         {
-            // order descend by ID since it is time of message in milliseconds
-            var vList = await database.Table<MessageDB>().OrderByDescending<Guid>(x => x.ID).ToListAsync();
+            // order descend by Date sent it is time of message in milliseconds
+            var vList = await database.Table<MessageDB>().OrderByDescending<DateTime>(x => x.DateSent).ToListAsync();
             var vListMsg = new List<Message>();
 
             if (vList != null && vList.Count > 0)

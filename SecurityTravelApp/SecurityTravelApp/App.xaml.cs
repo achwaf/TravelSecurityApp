@@ -55,5 +55,6 @@ namespace SecurityTravelApp
         {
             // Handle when your app resumes
         }
+
     }
 }

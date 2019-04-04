@@ -15,7 +15,13 @@ namespace SecurityTravelApp.Utils
 
         public static void SelectLang(AppLanguage pLang)
         {
-            selectedLanguage = pLang;
+            //selectedLanguage = pLang;
+            selectedLanguage = AppLanguage.EN;
+        }
+
+        public static AppLanguage SelectedLang()
+        {
+            return selectedLanguage;
         }
 
         public static String GetText(AppTextID pID, AppLanguage pSelectedLang = AppLanguage.Empty)
@@ -31,7 +37,7 @@ namespace SecurityTravelApp.Utils
             {
                 lang = pSelectedLang;
             }
-            instance.translation.TryGetValue(selectedLanguage, out dictSelectedLang);
+            instance.translation.TryGetValue(lang, out dictSelectedLang);
             dictSelectedLang?.TryGetValue(pID, out text);
             return text;
         }
@@ -65,7 +71,10 @@ namespace SecurityTravelApp.Utils
             dictFR.Add(AppTextID.WAITING_FOR_TRANSFER, "En attente d'envoi");
             dictFR.Add(AppTextID.MESSAGES, "Messages");
             dictFR.Add(AppTextID.LAST_CHECKIN, "Dernier Chekin");
-            dictFR.Add(AppTextID.GPS_TAP_INDICATION, "Tapez l'épingle pour envoyer la position");
+            dictFR.Add(AppTextID.GPS_TAP_INDICATION, "Tapez l'épingle pour envoyer la position.");
+            dictFR.Add(AppTextID.HOME, "Accueil");
+            dictFR.Add(AppTextID.DOCS, "Docs");
+            dictFR.Add(AppTextID.WARNINGS, "Alertes");
 
 
 
@@ -74,8 +83,8 @@ namespace SecurityTravelApp.Utils
             dictEN.Add(AppTextID.AUTHENTICATE, "Log in");
             dictEN.Add(AppTextID.SOS_EN_COURS, "launching...");
             dictEN.Add(AppTextID.APPEL_DANS, "call in");
-            dictEN.Add(AppTextID.ALERT_GPS_DISABLED, "Location cannot be requested. Please turn on GPS");
-            dictFR.Add(AppTextID.WELCOME_GCC, "Welcome to GCC");
+            dictEN.Add(AppTextID.ALERT_GPS_DISABLED, "Location cannot be requested. Please turn on GPS.");
+            dictEN.Add(AppTextID.WELCOME_GCC, "Welcome to GCC");
             dictEN.Add(AppTextID.PASSWORD, "Password");
             dictEN.Add(AppTextID.LOGIN, "Log in");
             dictEN.Add(AppTextID.RECIEVED, "Recieved");
@@ -89,6 +98,9 @@ namespace SecurityTravelApp.Utils
             dictEN.Add(AppTextID.MESSAGES, "Messages");
             dictEN.Add(AppTextID.LAST_CHECKIN, "Last Checkin");
             dictEN.Add(AppTextID.GPS_TAP_INDICATION, "Tap the map marker to send location");
+            dictEN.Add(AppTextID.HOME, "Home");
+            dictEN.Add(AppTextID.DOCS, "Docs");
+            dictEN.Add(AppTextID.WARNINGS, "Warnings");
         }
     }
 
@@ -111,7 +123,10 @@ namespace SecurityTravelApp.Utils
         WAITING_FOR_TRANSFER,
         MESSAGES,
         LAST_CHECKIN,
-        GPS_TAP_INDICATION
+        GPS_TAP_INDICATION,
+        HOME,
+        DOCS,
+        WARNINGS
     }
 
     public enum AppLanguage

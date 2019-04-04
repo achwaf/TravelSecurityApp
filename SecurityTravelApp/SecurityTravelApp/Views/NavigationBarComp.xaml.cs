@@ -13,7 +13,7 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class NavigationBarComp : ContentView
+    public partial class NavigationBarComp : ContentView, I18nable
     {
         private NavigationBarVM viewModel;
         private ServiceFactory srvFactory;
@@ -85,6 +85,14 @@ namespace SecurityTravelApp.Views
             }
         }
 
+        public void updateTXT()
+        {
+            foreach (var el in HorizontalLayout.Children)
+            {
+                NavigationItemComp navItem = (NavigationItemComp)el;
+                navItem.updateTXT();
+            }
+        }
     }
 
 }

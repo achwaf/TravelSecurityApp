@@ -15,7 +15,7 @@
         </ResourceDictionary>
     </ContentView.Resources>
     <ContentView.Content>
-        <StackLayout>
+        <StackLayout x:Name="Container">
             <Frame Padding="0" Margin="0" CornerRadius="10" HeightRequest="{StaticResource AlertHeight}">
                 <Grid ColumnSpacing="0">
                     <Grid.ColumnDefinitions>

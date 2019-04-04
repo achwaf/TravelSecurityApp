@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SecurityTravelApp.Views.ViewsUtils
 {
-    public interface UpdatablePage
+    public interface Updatable
     {
         void update(NavigationParams pParam);
     }

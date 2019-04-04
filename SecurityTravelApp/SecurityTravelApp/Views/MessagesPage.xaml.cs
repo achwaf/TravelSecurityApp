@@ -16,7 +16,7 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MessagesPage : ContentPage, UpdatablePage , I18nable
+    public partial class MessagesPage : ContentPage, Updatable, I18nable
     {
         LocalDataService localDataSrv;
 
@@ -125,6 +125,9 @@ namespace SecurityTravelApp.Views
             // fill with data
             populate();
 
+            // Text
+            updateTXT();
+
             // subscribe to textUpdates from DefinedMessages
             MessagingCenter.Subscribe<DefinedMessageComp, String>(this, "TEXTUPDATE", (sender, pMessage) =>
                     {
@@ -137,6 +140,8 @@ namespace SecurityTravelApp.Views
         public void updateTXT()
         {
             MsgTXT.Text = I18n.GetText(AppTextID.MESSAGES);
+            NavigationBar.updateTXT();
+            EmptyTXT.Text = I18n.GetText(AppTextID.EMPTY);
         }
 
         private async void reduceMsgComposer()
@@ -186,13 +191,22 @@ namespace SecurityTravelApp.Views
 
         private void pupulateMessages(List<Message> pList)
         {
-            foreach (var msg in pList)
+
+            if (pList.Count == 0)
             {
-                MessageComp alertComp = new MessageComp(msg);
-                MessageContainer.Children.Add(alertComp);
+                EmptyInfo.IsVisible = true;
             }
-            // adding spacer to be able to scroll up the last elements
-            MessageContainer.Children.Add(new BoxView() { HeightRequest = 60 });
+            else
+            {
+                foreach (var msg in pList)
+                {
+                    MessageComp alertComp = new MessageComp(msg);
+                    MessageContainer.Children.Add(alertComp);
+                }
+                // adding spacer to be able to scroll up the last elements
+                MessageContainer.Children.Add(new BoxView() { HeightRequest = 60 });
+            }
+
         }
 
 

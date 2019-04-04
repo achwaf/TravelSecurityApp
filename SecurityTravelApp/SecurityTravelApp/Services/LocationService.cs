@@ -18,7 +18,7 @@ namespace SecurityTravelApp.Services
         private const int INTERVALTIME = 1000 * 4;
         private const int INTERVALTIMEFIRSTGET = 0;
         private const int TIMEVALIDITY = 1000 * 30;
-        private const int GETLOCATIONATTEMPTS = 1;
+        private const int GETLOCATIONATTEMPTS = 3;
 
         private ILocationHelper locationHelper;
         private Geoposition currentGeoposition;

@@ -1,6 +1,7 @@
 ﻿using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using SecurityTravelApp.Models;
+using SecurityTravelApp.Utils;
 using SecurityTravelApp.Views;
 using SecurityTravelApp.Views.ViewsUtils;
 using System;
@@ -199,9 +200,9 @@ namespace SecurityTravelApp.Services
             navItem.carriesNotif = true;
             navItem.numberOfNotif += pIncrement;
 
-            if (AppReference.MainPage is UpdatablePage)
+            if (AppReference.MainPage is Updatable)
             {
-                UpdatablePage updatblePage = (UpdatablePage)AppReference.MainPage;
+                Updatable updatblePage = (Updatable)AppReference.MainPage;
                 updatblePage.update(new NavigationParams() { navigationUpdateTarget = pType, NavigationBarOnly = true });
             }
 
@@ -212,13 +213,24 @@ namespace SecurityTravelApp.Services
             Page targetPage = lookUpPage(pType);
             if (targetPage == null)
             {
-                targetPage = (Page)Activator.CreateInstance(TypeOfNavigationTarget(pType), pSrvFactory, pParamAfterNav);
+                targetPage = (Page)Activator.CreateInstance(TypeOfNavigationTarget(pType), pSrvFactory, pParamAfterNav);// if the page is I18nable , update the text
+
             }
             else
             {
-                // pages should implement Updatable Page to allow UI updates
-                UpdatablePage updatblePage = (UpdatablePage)targetPage;
-                updatblePage.update(new NavigationParams() { navigationTarget = pType, NavigationBarOnly = false });
+                // if page is Updatable, update the view
+                if (targetPage is Updatable)
+                {
+                    Updatable updatblePage = (Updatable)targetPage;
+                    updatblePage.update(new NavigationParams() { navigationTarget = pType, NavigationBarOnly = false });
+                }
+
+                // if the page is I18nable , update the text
+                if (targetPage is I18nable)
+                {
+                    I18nable i18nablePage = (I18nable)targetPage;
+                    i18nablePage.updateTXT();
+                }
             }
             navigateToAndSave(targetPage, pType);
         }
@@ -268,19 +280,19 @@ namespace SecurityTravelApp.Services
 
         private void fillWithData()
         {
-            navigationItems.Add(createNavigationItem(2, "Home", NavigationItemTarget.Home, LineAwesomeIcons.Home, false, NavigationItemNotifType.Dot));
-            navigationItems.Add(createNavigationItem(4, "Messages", NavigationItemTarget.Messages, LineAwesomeIcons.Messages, false));
-            navigationItems.Add(createNavigationItem(3, "Warnings", NavigationItemTarget.Warnings, LineAwesomeIcons.Warnings, false, NavigationItemNotifType.Numerical, NavigationItemState.Current));
-            navigationItems.Add(createNavigationItem(5, "Docs", NavigationItemTarget.Docs, LineAwesomeIcons.Docs, false, NavigationItemNotifType.Numerical, NavigationItemState.Shaded));
+            navigationItems.Add(createNavigationItem(2, AppTextID.HOME, NavigationItemTarget.Home, LineAwesomeIcons.Home, false, NavigationItemNotifType.Dot));
+            navigationItems.Add(createNavigationItem(4, AppTextID.MESSAGES, NavigationItemTarget.Messages, LineAwesomeIcons.Messages, false));
+            navigationItems.Add(createNavigationItem(3, AppTextID.WARNINGS, NavigationItemTarget.Warnings, LineAwesomeIcons.Warnings, false, NavigationItemNotifType.Numerical, NavigationItemState.Current));
+            navigationItems.Add(createNavigationItem(5, AppTextID.DOCS, NavigationItemTarget.Docs, LineAwesomeIcons.Docs, false, NavigationItemNotifType.Numerical, NavigationItemState.Shaded));
         }
 
 
-        private NavigationItem createNavigationItem(int pId, String pText, NavigationItemTarget pTarget, String pSolidIcon, Boolean pCarriesNotif = true, NavigationItemNotifType pType = NavigationItemNotifType.Numerical, NavigationItemState pState = NavigationItemState.Shaded, int pNumberNotif = 0)
+        private NavigationItem createNavigationItem(int pId, AppTextID pText, NavigationItemTarget pTarget, String pSolidIcon, Boolean pCarriesNotif = true, NavigationItemNotifType pType = NavigationItemNotifType.Numerical, NavigationItemState pState = NavigationItemState.Shaded, int pNumberNotif = 0)
         {
             return new NavigationItem
             {
                 id = pId,
-                text = pText,
+                textId = pText,
                 font = NavigationItemFont.FASolid,
                 icon = pSolidIcon,
                 carriesNotif = pCarriesNotif,

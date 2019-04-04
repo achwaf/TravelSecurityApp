@@ -11,7 +11,7 @@ namespace SecurityTravelApp.Models
     {
         public Guid ID { get; set; }
         public String _text;
-        public DateTime _dateSent;
+        public DateTime _dateSent = DateTime.MaxValue; // maxvalue chosen to be default to get corrected ordered list by dateSent
         public Boolean _isSent;
 
 
@@ -63,7 +63,7 @@ namespace SecurityTravelApp.Models
         {
             get
             {
-                if (_dateSent != DateTime.MinValue)
+                if (_dateSent != DateTime.MaxValue)
                 {
                     return _dateSent.ToShortDateString();
                 }
@@ -75,7 +75,7 @@ namespace SecurityTravelApp.Models
         {
             get
             {
-                if (_dateSent != DateTime.MinValue)
+                if (_dateSent != DateTime.MaxValue)
                 {
                     return _dateSent.ToShortTimeString();
                 }

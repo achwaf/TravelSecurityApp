@@ -13,7 +13,7 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoginPage : ContentPage, UpdatablePage , I18nable
+    public partial class LoginPage : ContentPage, Updatable, I18nable
     {
 
         AppManagementService appMngSrv;
@@ -56,6 +56,10 @@ namespace SecurityTravelApp.Views
                 LocalDataService.setUserLoggedInFlag(true);
                 appMngSrv.navigateTo(NavigationItemTarget.Home, pSrvFactory, null);
             };
+
+            // Text
+            updateTXT();
+
         }
 
 

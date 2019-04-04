@@ -13,7 +13,7 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class NavigationItemComp : ContentView
+    public partial class NavigationItemComp : ContentView, I18nable
     {
 
 
@@ -97,5 +97,9 @@ namespace SecurityTravelApp.Views
 
         }
 
+        public void updateTXT()
+        {
+            labelItem.Text = Item.text;
+        }
     }
 }

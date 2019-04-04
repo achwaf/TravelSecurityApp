@@ -4,8 +4,9 @@ using System.Text;
 
 namespace SecurityTravelApp.Models
 {
-    public class Alert
+    public class Alert : Matchable
     {
+        public Guid ID { get; set; }
         public String title;
         public String region;
         public String text;
@@ -14,7 +15,12 @@ namespace SecurityTravelApp.Models
         public DateTime dateSeen;
         public AlertType type;
 
-        public Alert(AlertType pType, String pRegion, String pTitle, String pText, String pRecieved, String pSeen)
+        public Alert()
+        {
+            ID = Guid.NewGuid();
+        }
+
+        public Alert(AlertType pType, String pRegion, String pTitle, String pText, String pRecieved, String pSeen) : this()
         {
             title = pTitle;
             type = pType;
@@ -31,8 +37,6 @@ namespace SecurityTravelApp.Models
                 isSeen = false;
             }
         }
-
-        public Alert() { }
 
     }
 

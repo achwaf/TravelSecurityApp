@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SecurityTravelApp.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -10,7 +11,7 @@ namespace SecurityTravelApp.Views.ViewsUtils
     public class NavigationItem : INotifyPropertyChanged
     {
         public int id;
-        private String _text;
+        public AppTextID textId;
         private String _font;
         private String _icon;
         private NavigationItemState _state;
@@ -22,7 +23,13 @@ namespace SecurityTravelApp.Views.ViewsUtils
 
 
         public NavigationItemTarget target { get; set; }
-        public String text { get; set; }
+        public String text
+        {
+            get
+            {
+                return I18n.GetText(textId);
+            }
+        }
         public String font { get; set; }
         public String icon { get; set; }
         public NavigationItemNotifType notifType { get; set; }

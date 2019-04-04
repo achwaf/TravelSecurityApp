@@ -1,5 +1,6 @@
 ﻿using SecurityTravelApp.Models;
 using SecurityTravelApp.Services;
+using SecurityTravelApp.Services.LocalDataServiceUtils.entities;
 using SecurityTravelApp.Utils;
 using SecurityTravelApp.Views.ViewsUtils;
 using System;
@@ -14,7 +15,7 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AlertsPage : ContentPage, UpdatablePage, I18nable
+    public partial class AlertsPage : ContentPage, Updatable, I18nable
     {
         LocalDataService localDataSrv;
 
@@ -25,18 +26,35 @@ namespace SecurityTravelApp.Views
 
             localDataSrv = (LocalDataService)pSrvFactory.getService(ServiceType.LocalData);
 
+            // subscribe to alert seen events 
+            MessagingCenter.Subscribe<AlertComp, Alert>(this, "ALERTSEEN", async (sender, alert) =>
+                {
+                    AlertDB alertDB = await localDataSrv.getAlertDB(alert);
+                    alertDB.DateSeen = alert.dateSeen;
+                    alertDB.IsSeen = alert.isSeen;
+                    localDataSrv.updateToDB(alertDB);
+                });
+
             populate();
+            updateTXT();
         }
 
         private void populateAlerts(List<Alert> pAlerts)
         {
-            foreach (var alert in pAlerts)
+            if (pAlerts.Count == 0)
             {
-                AlertComp alertComp = new AlertComp(alert);
-                AlertsContainer.Children.Add(alertComp);
+                EmptyInfo.IsVisible = true;
             }
-            // adding spacer to be able to scroll up the last elements
-            AlertsContainer.Children.Add(new BoxView() { HeightRequest = 60 });
+            else
+            {
+                foreach (var alert in pAlerts)
+                {
+                    AlertComp alertComp = new AlertComp(alert);
+                    AlertsContainer.Children.Add(alertComp);
+                }
+                // adding spacer to be able to scroll up the last elements
+                AlertsContainer.Children.Add(new BoxView() { HeightRequest = 60 });
+            }
         }
 
         private async void populate()
@@ -55,9 +73,7 @@ namespace SecurityTravelApp.Views
         {
             AlertTXT.Text = I18n.GetText(AppTextID.ALERTS);
             EmptyTXT.Text = I18n.GetText(AppTextID.EMPTY);
-
-            
-
+            NavigationBar.updateTXT();
         }
 
         public void update(NavigationParams pParam)
