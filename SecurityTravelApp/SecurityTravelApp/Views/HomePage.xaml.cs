@@ -22,6 +22,7 @@ namespace SecurityTravelApp.Views
         LocationService locationSrv;
         AudioService audioSrv;
         LocalDataService localDataSrv;
+        LocalNotifService localNotifSrv;
         private double BounceElevation = 50;
         private Animation waitingAnimation;
         private Boolean continueWaitingAnimation = false;
@@ -44,6 +45,7 @@ namespace SecurityTravelApp.Views
             locationSrv = (LocationService)pSrvFactory.getService(ServiceType.Location);
             audioSrv = (AudioService)pSrvFactory.getService(ServiceType.Audio);
             localDataSrv = (LocalDataService)pSrvFactory.getService(ServiceType.LocalData);
+            localNotifSrv = (LocalNotifService)pSrvFactory.getService(ServiceType.LocalNotif);
 
             // getting values from xaml
             LastCheckinValueOpacity = Utilities.getOnPlatformValue<Double>(this.Resources["PositionInfoValueOpacity"]);
@@ -266,6 +268,10 @@ namespace SecurityTravelApp.Views
             // continue tracking if yes
             if (LocalDataService.getUserTrackingFlag())
             {
+                // notify user
+                localNotifSrv.showNotifTrackingOn();
+
+
                 // launch geoposition updates in foreground whether  the GPS is On or Off
                 locationSrv.disableBackgroundLocationUpdates();
                 locationSrv.trackUserGeopositionInForeGround();

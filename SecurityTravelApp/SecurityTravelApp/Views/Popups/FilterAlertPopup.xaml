@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
+             xmlns:Pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             IsAnimationEnabled="False"
+             CloseWhenBackgroundIsClicked="True"
+             x:Class="SecurityTravelApp.Views.Popups.FilterAlertPopup">
+    <Pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <OnPlatform x:Key="DecorationWidth" x:TypeArguments="GridLength" Default="100" />
+            <OnPlatform x:Key="AlertHeight" x:TypeArguments="x:Double" Default="100" />
+            <OnPlatform x:Key="AlertCornerRadius" x:TypeArguments="CornerRadius" Default="10" />
+            <OnPlatform x:Key="DecorationIconMargin" x:TypeArguments="Thickness" Default="0,5,5,0" />
+        </ResourceDictionary>
+    </Pages:PopupPage.Resources>
+    <!--CONTENT-->
+    <Grid  x:Name="container" VerticalOptions="Fill" HorizontalOptions="Fill">
+        <Frame VerticalOptions="Start" HorizontalOptions="End" Padding="0" Margin="30" CornerRadius="5" BackgroundColor="White">
+            <Grid x:Name="FrameBackground" ColumnSpacing="0" RowSpacing="0">
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Text="Display" TextColor="DimGray" />
+                <StackLayout Grid.Row="1" Orientation="Horizontal">
+                    <AbsoluteLayout IsClippedToBounds="False" Grid.RowSpan="3" WidthRequest="60" HeightRequest="60"
+                                    VerticalOptions="Start" HorizontalOptions="Start" Margin="{StaticResource DecorationIconMargin}">
+                        <ffimageloadingsvg:SvgCachedImage  Aspect="AspectFill"
+                                              Source="resource://SecurityTravelApp.Assets.CriticShadow.svg" 
+                                                          AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                          AbsoluteLayout.LayoutBounds="1,0,150,150"/>
+                    </AbsoluteLayout>
+                    <Label Text="Critic" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Start"/>
+                </StackLayout>
+                <StackLayout Grid.Row="2" Orientation="Horizontal">
+                    <AbsoluteLayout IsClippedToBounds="False" Grid.RowSpan="3" WidthRequest="60" HeightRequest="60"
+                                    VerticalOptions="Start" HorizontalOptions="Start" Margin="{StaticResource DecorationIconMargin}">
+                        <ffimageloadingsvg:SvgCachedImage  Aspect="AspectFill"
+                                              Source="resource://SecurityTravelApp.Assets.WarningShadow.svg" 
+                                                          AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                          AbsoluteLayout.LayoutBounds="1,0,150,150"/>
+                    </AbsoluteLayout>
+                    <Label Text="Important" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Start"/>
+
+                </StackLayout>
+                <StackLayout Grid.Row="3" Orientation="Horizontal">
+                    <AbsoluteLayout IsClippedToBounds="False" Grid.RowSpan="3" WidthRequest="60" HeightRequest="60"
+                                    VerticalOptions="Start" HorizontalOptions="Start" Margin="{StaticResource DecorationIconMargin}">
+                        <ffimageloadingsvg:SvgCachedImage Aspect="AspectFill"
+                                              Source="resource://SecurityTravelApp.Assets.InfoShadow.svg" 
+                                                          AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                          AbsoluteLayout.LayoutBounds="1,0,150,150"/>
+                    </AbsoluteLayout>
+                    <Label Text="Info" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Start"/>
+
+                </StackLayout>
+            </Grid>
+        </Frame>
+    </Grid>
+</Pages:PopupPage>

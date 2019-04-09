@@ -23,6 +23,7 @@ namespace SecurityTravelApp.Views
         LocalDataService localDataSrv;
         AudioService audioSrv;
         LocationService locationSrv;
+        LocalNotifService localNotifSrv;
         CallService callSrv;
 
         public PopupTestPage(ServiceFactory pSrvFactory, NavigationParams pParam)
@@ -33,6 +34,7 @@ namespace SecurityTravelApp.Views
             locationSrv = (LocationService)pSrvFactory.getService(ServiceType.Location);
             audioSrv = (AudioService)pSrvFactory.getService(ServiceType.Audio);
             callSrv = (CallService)pSrvFactory.getService(ServiceType.Call);
+            localNotifSrv = (LocalNotifService)pSrvFactory.getService(ServiceType.LocalNotif);
 
         }
 
@@ -72,13 +74,16 @@ namespace SecurityTravelApp.Views
         private void Button4_Clicked(object sender, EventArgs e)
         {
             LocalDataService.setUserTrackingFlag(true);
+            localNotifSrv.showNotifTrackingOn();
             locationSrv.trackUserGeopositionInBackground();
         }
 
         private void Button5_Clicked(object sender, EventArgs e)
         {
             LocalDataService.setUserTrackingFlag(false);
+            localNotifSrv.showNotifTrackingOff();
             locationSrv.stopTrackingUserGeoposition();
+            locationSrv.disableBackgroundLocationUpdates();
         }
     }
 }

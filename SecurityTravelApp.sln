@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityTravelApp.iOS", "Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityTravelApp.UWP", "SecurityTravelApp\SecurityTravelApp.UWP\SecurityTravelApp.UWP.csproj", "{BB4EDCBA-870F-4681-8C6B-C7058D82FABB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityTravelApp", "SecurityTravelApp\SecurityTravelApp\SecurityTravelApp.csproj", "{21464057-5454-4C4D-999D-807B5883EEEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityTravelApp", "SecurityTravelApp\SecurityTravelApp\SecurityTravelApp.csproj", "{21464057-5454-4C4D-999D-807B5883EEEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

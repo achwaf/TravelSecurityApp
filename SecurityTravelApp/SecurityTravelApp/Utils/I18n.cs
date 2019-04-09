@@ -9,7 +9,7 @@ namespace SecurityTravelApp.Utils
         private Dictionary<AppLanguage, Dictionary<AppTextID, String>> translation = new Dictionary<AppLanguage, Dictionary<AppTextID, String>>();
         private Dictionary<AppTextID, String> dictFR;
         private Dictionary<AppTextID, String> dictEN;
-        private static AppLanguage selectedLanguage;
+        private static AppLanguage selectedLanguage = AppLanguage.Empty;
         private static I18n instance;
 
 
@@ -75,6 +75,9 @@ namespace SecurityTravelApp.Utils
             dictFR.Add(AppTextID.HOME, "Accueil");
             dictFR.Add(AppTextID.DOCS, "Docs");
             dictFR.Add(AppTextID.WARNINGS, "Alertes");
+            dictFR.Add(AppTextID.TRACKING_ONGOING, "Suivi en cours...");
+            dictFR.Add(AppTextID.TRACKING_STOPPED, "Suivi arrêté");
+            dictFR.Add(AppTextID.AT, "à");
 
 
 
@@ -101,6 +104,9 @@ namespace SecurityTravelApp.Utils
             dictEN.Add(AppTextID.HOME, "Home");
             dictEN.Add(AppTextID.DOCS, "Docs");
             dictEN.Add(AppTextID.WARNINGS, "Warnings");
+            dictEN.Add(AppTextID.TRACKING_ONGOING, "Tracking ongoing...");
+            dictEN.Add(AppTextID.TRACKING_STOPPED, "Tracking stopped");
+            dictEN.Add(AppTextID.AT, "at");
         }
     }
 
@@ -126,7 +132,10 @@ namespace SecurityTravelApp.Utils
         GPS_TAP_INDICATION,
         HOME,
         DOCS,
-        WARNINGS
+        WARNINGS,
+        TRACKING_ONGOING,
+        TRACKING_STOPPED,
+        AT
     }
 
     public enum AppLanguage

@@ -79,6 +79,7 @@
     <Compile Include="AudioRecorder_Droid.cs" />
     <Compile Include="BorderlessEditorRenderer.cs" />
     <Compile Include="BorderlessEntryRenderer.cs" />
+    <Compile Include="LocalNotifHelper_Droid.cs" />
     <Compile Include="LocationHelper_Droid.cs" />
     <Compile Include="LocationUpdateJobService.cs" />
     <Compile Include="LocationUpdatesBroadcastReceiver.cs" />

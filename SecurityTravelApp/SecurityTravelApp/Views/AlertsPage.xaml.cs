@@ -1,7 +1,9 @@
-﻿using SecurityTravelApp.Models;
+﻿using Rg.Plugins.Popup.Services;
+using SecurityTravelApp.Models;
 using SecurityTravelApp.Services;
 using SecurityTravelApp.Services.LocalDataServiceUtils.entities;
 using SecurityTravelApp.Utils;
+using SecurityTravelApp.Views.Popups;
 using SecurityTravelApp.Views.ViewsUtils;
 using System;
 using System.Collections.Generic;
@@ -34,6 +36,16 @@ namespace SecurityTravelApp.Views
                     alertDB.IsSeen = alert.isSeen;
                     localDataSrv.updateToDB(alertDB);
                 });
+
+            // tap gesture recognizers
+            var tapGestureRecognizerFilterIcon = new TapGestureRecognizer();
+            FilterIcon.GestureRecognizers.Add(tapGestureRecognizerFilterIcon);
+
+            // setting the handler to FilterIcon
+            tapGestureRecognizerFilterIcon.Tapped += (s, e) =>
+            {
+                PopupNavigation.Instance.PushAsync(new FilterAlertPopup(), false);
+            };
 
             populate();
             updateTXT();

@@ -36,5 +36,13 @@ namespace SecurityTravelApp.UWP
             // nothing
             return null;
         }
+
+        public void disableBackgroundLocationUpdates()
+        {
+        }
+
+        public void activateBackgroundLocationUpdates(int IntervalTime)
+        {
+        }
     }
 }

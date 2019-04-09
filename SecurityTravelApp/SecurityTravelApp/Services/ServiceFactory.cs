@@ -62,6 +62,9 @@ namespace SecurityTravelApp.Services
                 case ServiceType.Audio:
                     vService = new AudioService();
                     break;
+                case ServiceType.LocalNotif:
+                    vService = new LocalNotifService();
+                    break;
             }
 
             return vService;
@@ -78,6 +81,7 @@ namespace SecurityTravelApp.Services
         ServerData,
         Call,
         Audio,
-        AppManagement
+        AppManagement,
+        LocalNotif
     }
 }
