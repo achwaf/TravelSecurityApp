@@ -27,7 +27,7 @@
     <!--CONTENT-->
     <ContentPage.Content>
         <AbsoluteLayout x:Name="container">
-            <BoxView x:Name="BackgroundContainer"
+            <BoxView x:Name="BackgroundContainer" IsVisible="False"
                 BackgroundColor="Black" Opacity=".01"
                 AbsoluteLayout.LayoutFlags = "All"
                 AbsoluteLayout.LayoutBounds = "0,0,1,1"/>

@@ -68,6 +68,7 @@ namespace SecurityTravelApp.Utils
             dictFR.Add(AppTextID.NEW, "Nouveau");
             dictFR.Add(AppTextID.ALERTS, "Alertes");
             dictFR.Add(AppTextID.EMPTY, "Vide");
+            dictFR.Add(AppTextID.FILTER_EMPTY, "Les données sont filtrées, vérifiez le filtre.");
             dictFR.Add(AppTextID.WAITING_FOR_TRANSFER, "En attente d'envoi");
             dictFR.Add(AppTextID.MESSAGES, "Messages");
             dictFR.Add(AppTextID.LAST_CHECKIN, "Dernier Chekin");
@@ -97,6 +98,7 @@ namespace SecurityTravelApp.Utils
             dictEN.Add(AppTextID.NEW, "New");
             dictEN.Add(AppTextID.ALERTS, "Alerts");
             dictEN.Add(AppTextID.EMPTY, "Empty");
+            dictEN.Add(AppTextID.FILTER_EMPTY, "Data are filtered. Check the Filter.");
             dictEN.Add(AppTextID.WAITING_FOR_TRANSFER, "Waiting for transfer");
             dictEN.Add(AppTextID.MESSAGES, "Messages");
             dictEN.Add(AppTextID.LAST_CHECKIN, "Last Checkin");
@@ -126,6 +128,7 @@ namespace SecurityTravelApp.Utils
         ALERTS,
         NEW,
         EMPTY,
+        FILTER_EMPTY,
         WAITING_FOR_TRANSFER,
         MESSAGES,
         LAST_CHECKIN,

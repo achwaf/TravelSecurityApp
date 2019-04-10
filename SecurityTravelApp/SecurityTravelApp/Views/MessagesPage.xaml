@@ -36,15 +36,6 @@
                                 HorizontalTextAlignment="Center" 
                                 VerticalOptions="Center"
                                 HorizontalOptions="End"/>
-                    <Label x:Name="CheckIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Check}"
-                                FontFamily="{StaticResource LineAwesome}"
-                                TextColor="LightBlue"
-                                FontSize="25"
-                                Margin="0,2,0,0"
-                                VerticalTextAlignment="Center"
-                                HorizontalTextAlignment="Center" 
-                                VerticalOptions="Center"
-                                HorizontalOptions="End"/>
                     <Label x:Name="AddIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Plus}"
                                 FontFamily="{StaticResource LineAwesome}"
                                 TextColor="LightBlue"
@@ -114,9 +105,9 @@
                                  Margin="5"
                                  />
                         <viewUtils:BorderlessEditor x:Name="messageEditor"
-                                                    Grid.Column="0" 
-                                                    VerticalOptions="Fill" 
-                                                    HorizontalOptions="Fill"
+                                                    Grid.Column="0"
+                                                    VerticalOptions="Fill"
+                                                    HorizontalOptions="Center"
                                                     TextColor="Gray"
                                                     Margin="20"/>
                         <Grid  Grid.Column="1" Margin="0,5,5,5"

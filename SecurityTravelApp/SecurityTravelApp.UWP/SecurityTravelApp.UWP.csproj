@@ -108,11 +108,13 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="critic.png" />
     <Content Include="empty.png" />
     <Content Include="EN.png" />
     <Content Include="flightTravel.png" />
     <Content Include="FR.png" />
     <Content Include="Headquarter.png" />
+    <Content Include="Info.png" />
     <Content Include="OCPLogo.png" />
     <Content Include="OCPOffice.png" />
     <Content Include="Properties\Default.rd.xml" />
@@ -143,6 +145,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="warning.png" />
     <Content Include="WelcomeLogo1.png" />
     <Content Include="WelcomeLogo2.png" />
     <Content Include="WorldMap.png" />

@@ -35,9 +35,6 @@ namespace SecurityTravelApp.Views
             var tapGestureRecognizerAddIcon = new TapGestureRecognizer();
             AddIcon.GestureRecognizers.Add(tapGestureRecognizerAddIcon);
 
-            var tapGestureRecognizerCheck = new TapGestureRecognizer();
-            CheckIcon.GestureRecognizers.Add(tapGestureRecognizerCheck);
-
             var tapGestureRecognizerSearch = new TapGestureRecognizer();
             SearchIcon.GestureRecognizers.Add(tapGestureRecognizerSearch);
 
@@ -79,6 +76,9 @@ namespace SecurityTravelApp.Views
                 MessagingComp.FadeTo(1, 100);
                 MessagingComp.TranslateTo(0, 0, 500, Easing.CubicOut);
             };
+
+
+            MessagingComp.SizeChanged += MessagingComp_SizeChanged;
 
 
 
@@ -135,6 +135,11 @@ namespace SecurityTravelApp.Views
                         messageEditor.Text = pMessage;
                     });
 
+        }
+
+        private void MessagingComp_SizeChanged(object sender, EventArgs e)
+        {
+            messageEditor.WidthRequest = MessagingComp.Width - 60;
         }
 
         public void updateTXT()

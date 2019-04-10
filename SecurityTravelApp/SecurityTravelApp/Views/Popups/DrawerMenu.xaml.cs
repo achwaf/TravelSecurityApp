@@ -35,6 +35,7 @@ namespace SecurityTravelApp.Views.Popups
             // correct the behavior of backgroud tapping in android
             if (Device.RuntimePlatform.Equals(Device.Android))
             {
+                BackgroundContainer.IsVisible = true;
                 var tapGestureRecognizerContainer = new TapGestureRecognizer();
                 tapGestureRecognizerContainer.Tapped += async (s, e) =>
                 {

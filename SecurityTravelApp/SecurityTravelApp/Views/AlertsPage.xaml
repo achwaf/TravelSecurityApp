@@ -25,27 +25,8 @@
                            VerticalOptions="Center"
                            HorizontalTextAlignment="Start"
                            VerticalTextAlignment="Center" FontSize="30" TextColor="DimGray"/>
-                    <Label x:Name="SearchIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Search}"
-                                FontFamily="{StaticResource LineAwesome}"
-                                TextColor="LightBlue"
-                                FontSize="25"
-                                Margin="0,2,0,0"
-                                VerticalTextAlignment="Center"
-                                HorizontalTextAlignment="Center" 
-                                VerticalOptions="Center"
-                                HorizontalOptions="End"/>
-                    <Label x:Name="CheckIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Check}"
-                                FontFamily="{StaticResource LineAwesome}"
-                                TextColor="LightBlue"
-                                FontSize="25"
-                                Margin="0,2,0,0"
-                                VerticalTextAlignment="Center"
-                                HorizontalTextAlignment="Center" 
-                                VerticalOptions="Center"
-                                HorizontalOptions="End"/>
                     <Label x:Name="FilterIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Filter}"
                                 FontFamily="{StaticResource LineAwesome}"
-                                TextColor="LightBlue"
                                 FontSize="25"
                                 Margin="0,2,0,0"
                                 VerticalTextAlignment="Center"
@@ -53,9 +34,18 @@
                                 VerticalOptions="Center"
                                 HorizontalOptions="End"/>
                 </StackLayout>
-                <Grid x:Name="EmptyInfo" IsVisible="false" Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill" Margin="0,0,0,70">
+                <Grid x:Name="EmptyInfo" IsVisible="false" Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Fill" Margin="0,0,0,70">
                     <Image Source="empty.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="80" WidthRequest="80" Opacity=".15"/>
                     <Label x:Name="EmptyTXT" FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" Opacity=".15"/>
+                </Grid>
+                <Grid x:Name="EmptyFilterInfo" IsVisible="false" Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Fill" Margin="0,0,0,70">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="empty.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="80" WidthRequest="80" Opacity=".15"/>
+                    <Label x:Name="EmptyTXT2" FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" Opacity=".15"/>
+                    <Label x:Name="FilterEmptyTXT" Grid.Row="1" FontSize="13" TextColor="Red" VerticalOptions="Center" HorizontalOptions="Center" Opacity=".15"/>
                 </Grid>
                 <ScrollView  Grid.Row="1" Margin="{StaticResource UpFrontViewMargin}">
                     <StackLayout x:Name="AlertsContainer" Orientation="Vertical" HorizontalOptions="Fill" Spacing="10"

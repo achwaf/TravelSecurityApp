@@ -20,6 +20,13 @@ namespace SecurityTravelApp.Views
     public partial class AlertsPage : ContentPage, Updatable, I18nable
     {
         LocalDataService localDataSrv;
+        private Boolean IsCriticFilterSet = true;
+        private Boolean IsWarningFilterSet = true;
+        private Boolean IsInfoFilterSet = true;
+        private List<Alert> listAlerts;
+
+        private Color FilterOnColor = Color.FromHex("#D12A1A");
+        private Color FilterOffColor = Color.FromHex("#C8C8C8");
 
         public AlertsPage(ServiceFactory pSrvFactory, NavigationParams pParam)
         {
@@ -37,6 +44,26 @@ namespace SecurityTravelApp.Views
                     localDataSrv.updateToDB(alertDB);
                 });
 
+            // subscribe to alert filter events 
+            MessagingCenter.Subscribe<FilterAlertPopup, FilterAlertMessage>(this, "ALERTFILTER", (sender, message) =>
+                {
+                    if (message.Filter == AlertType.Critical)
+                    {
+                        IsCriticFilterSet = message.IsSet;
+                    }
+                    else if (message.Filter == AlertType.Important)
+                    {
+                        IsWarningFilterSet = message.IsSet;
+                    }
+                    else if (message.Filter == AlertType.Normal)
+                    {
+                        IsInfoFilterSet = message.IsSet;
+                    }
+                    filterAlerts();
+                });
+
+
+
             // tap gesture recognizers
             var tapGestureRecognizerFilterIcon = new TapGestureRecognizer();
             FilterIcon.GestureRecognizers.Add(tapGestureRecognizerFilterIcon);
@@ -44,7 +71,7 @@ namespace SecurityTravelApp.Views
             // setting the handler to FilterIcon
             tapGestureRecognizerFilterIcon.Tapped += (s, e) =>
             {
-                PopupNavigation.Instance.PushAsync(new FilterAlertPopup(), false);
+                PopupNavigation.Instance.PushAsync(new FilterAlertPopup(IsCriticFilterSet, IsWarningFilterSet, IsInfoFilterSet), false);
             };
 
             populate();
@@ -69,6 +96,49 @@ namespace SecurityTravelApp.Views
             }
         }
 
+        private void filterAlerts()
+        {
+            if(IsCriticFilterSet && IsWarningFilterSet && IsInfoFilterSet)
+            {
+                FilterIcon.TextColor = FilterOffColor;
+            }
+            else
+            {
+                FilterIcon.TextColor = FilterOnColor;
+            }
+            int notVisibleCounter = 0;
+            for (int i = 0; i < listAlerts.Count; i++)
+            {
+                
+                var alert = listAlerts[i];
+                if (alert.type == AlertType.Critical && IsCriticFilterSet)
+                {
+                    AlertsContainer.Children[i].IsVisible = true;
+                }
+                else if (alert.type == AlertType.Important && IsWarningFilterSet)
+                {
+                    AlertsContainer.Children[i].IsVisible = true;
+                }
+                else if (alert.type == AlertType.Normal && IsInfoFilterSet)
+                {
+                    AlertsContainer.Children[i].IsVisible = true;
+                }
+                else
+                {
+                    AlertsContainer.Children[i].IsVisible = false;
+                    notVisibleCounter++;
+                }
+            }
+            if (notVisibleCounter < listAlerts.Count)
+            {
+                EmptyFilterInfo.IsVisible = false;
+            }
+            else
+            {
+                EmptyFilterInfo.IsVisible = true;
+            }
+        }
+
         private async void populate()
         {
             // clear 
@@ -77,14 +147,17 @@ namespace SecurityTravelApp.Views
             // get data from server
 
             // get data locally
-            List<Alert> listAlerts = await localDataSrv.getListAlert();
+            listAlerts = await localDataSrv.getListAlert();
             populateAlerts(listAlerts);
+            filterAlerts();
         }
 
         public void updateTXT()
         {
             AlertTXT.Text = I18n.GetText(AppTextID.ALERTS);
             EmptyTXT.Text = I18n.GetText(AppTextID.EMPTY);
+            EmptyTXT2.Text = I18n.GetText(AppTextID.EMPTY);
+            FilterEmptyTXT.Text = I18n.GetText(AppTextID.FILTER_EMPTY);
             NavigationBar.updateTXT();
         }
 
