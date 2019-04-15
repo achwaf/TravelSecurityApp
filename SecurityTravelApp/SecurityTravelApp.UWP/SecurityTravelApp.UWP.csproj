@@ -108,6 +108,10 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bitmap.png" />
+    <Content Include="bitmap2.png" />
+    <Content Include="bitmap2Light.png" />
+    <Content Include="bitmapLight.png" />
     <Content Include="critic.png" />
     <Content Include="empty.png" />
     <Content Include="EN.png" />

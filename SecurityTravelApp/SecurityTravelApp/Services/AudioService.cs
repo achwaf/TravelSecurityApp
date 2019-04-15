@@ -20,6 +20,8 @@ namespace SecurityTravelApp.Services
 
         }
 
+       
+
         public void config()
         {
 
@@ -36,7 +38,7 @@ namespace SecurityTravelApp.Services
                 if (audioPath != null)
                 {
                     // stop the recording after a few seconds
-                    Device.StartTimer(TimeSpan.FromSeconds(20), () =>
+                    Device.StartTimer(TimeSpan.FromSeconds(60), () =>
                     {
                         recorder.StopRecording();
                         return true;

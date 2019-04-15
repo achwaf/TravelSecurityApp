@@ -159,7 +159,7 @@ namespace SecurityTravelApp.Views
             MessagingComp.IsVisible = false;
         }
 
-        private async void MessageEditor_TextChanged(object sender, TextChangedEventArgs e)
+        private void MessageEditor_TextChanged(object sender, TextChangedEventArgs e)
         {
             // send button effect
             if (String.IsNullOrEmpty(messageEditor.Text))

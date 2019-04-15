@@ -9,6 +9,7 @@
             <Button Text="launch sync" Clicked="Button3_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
             <Button Text="track user" Clicked="Button4_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
             <Button Text="stop tracking user" Clicked="Button5_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
+            <Button Text="popup Alerte notif" Clicked="Button6_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

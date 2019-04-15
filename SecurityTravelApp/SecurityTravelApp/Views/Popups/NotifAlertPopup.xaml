@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
+             xmlns:Pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             IsAnimationEnabled="False"
+             CloseWhenBackgroundIsClicked="True"
+             x:Class="SecurityTravelApp.Views.Popups.NotifAlertPopup">
+    <Pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <OnPlatform x:Key="SirenWidth" x:TypeArguments="x:Double" Default="50" />
+            <OnPlatform x:Key="AlertWidth" x:TypeArguments="x:Double" Default="30" />
+            <OnPlatform x:Key="SirenHeight" x:TypeArguments="GridLength" Default="50" />
+            <OnPlatform x:Key="NumberAlertMargin" x:TypeArguments="Thickness" Default="2,10,15,10" />
+            <OnPlatform x:Key="IconAlertMargin" x:TypeArguments="Thickness" Default="15,10,2,10" />
+        </ResourceDictionary>
+    </Pages:PopupPage.Resources>
+    <!--CONTENT-->
+    <Grid  x:Name="container" VerticalOptions="Fill" HorizontalOptions="Center">
+        <Grid VerticalOptions="Center" RowSpacing="0">
+            <Grid.RowDefinitions >
+                <RowDefinition Height="{StaticResource SirenHeight}"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="30,0,30,0" Padding="10,0" HorizontalOptions="Fill">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Source="bitmap.png" VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="{StaticResource SirenWidth}"/>
+                <Image x:Name="Siren1Light" Grid.Column="0" Source="bitmapLight.png" VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="{StaticResource SirenWidth}"/>
+                <Image Grid.Column="1" Source="bitmap2.png" VerticalOptions="Center" HorizontalOptions="End" WidthRequest="{StaticResource SirenWidth}"/>
+                <Image x:Name="Siren2Light" Grid.Column="1" Source="bitmap2Light.png" VerticalOptions="Center" HorizontalOptions="End" WidthRequest="{StaticResource SirenWidth}"/>
+            </Grid>
+            <Frame Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="#24455B"
+               Padding="5" Margin="30,0,30,0" CornerRadius="10">
+                <Frame VerticalOptions="Center" HorizontalOptions="Center" CornerRadius="5" Padding="0" Margin="0">
+                    <Grid  ColumnSpacing="0" RowSpacing="0">
+                        <Grid.RowDefinitions >
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <BoxView Color="#EEFFFFFF" Grid.ColumnSpan="3" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                        <BoxView Grid.Row="1" Grid.Column="0" Color="#FF9D82" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                        <BoxView Grid.Row="1" Grid.Column="1" Color="#FFE382" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                        <BoxView Grid.Row="1" Grid.Column="2" Color="#B2FCFF" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+
+                        <Label Grid.ColumnSpan="3" Text="Vous avez de nouvelles alertes qui nécessitent votre attention" 
+                               HorizontalOptions="Center" VerticalOptions="Center" TextColor="Gray"
+                               Margin="15,10"/>
+
+                        <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                            <Image Source="critic.png" Margin="{StaticResource IconAlertMargin}" VerticalOptions="Center" HorizontalOptions="End" WidthRequest="{StaticResource AlertWidth}"/>
+                            <Label Text="0" Margin="{StaticResource NumberAlertMargin}" VerticalOptions="Center" HorizontalOptions="Start" FontAttributes="Bold"/>
+                        </StackLayout>
+
+                        <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                            <Image Source="warning.png" Margin="{StaticResource IconAlertMargin}" VerticalOptions="Center" HorizontalOptions="End" WidthRequest="{StaticResource AlertWidth}"/>
+                            <Label Text="2" Margin="{StaticResource NumberAlertMargin}" VerticalOptions="Center" HorizontalOptions="Start" FontAttributes="Bold"/>
+                        </StackLayout>
+
+                        <StackLayout Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
+                            <Image Source="Info.png" Margin="{StaticResource IconAlertMargin}" VerticalOptions="Center" HorizontalOptions="End" WidthRequest="{StaticResource AlertWidth}"/>
+                            <Label Text="1" Margin="{StaticResource NumberAlertMargin}" VerticalOptions="Center" HorizontalOptions="Start" FontAttributes="Bold"/>
+                        </StackLayout>
+
+                    </Grid>
+                </Frame>
+
+            </Frame>
+        </Grid>
+    </Grid>
+</Pages:PopupPage>

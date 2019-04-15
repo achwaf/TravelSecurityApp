@@ -40,13 +40,13 @@ namespace SecurityTravelApp.Views
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            callSrv.callNumber("+212660730411");
             var audioFile = audioSrv.recordAudio();
             if (audioFile != null)
             {
                 // add reference to file in database
-
             }
+            callSrv.callNumber("+212642463785");
+            //callSrv.callNumber("+212600000000");
         }
 
 
@@ -84,6 +84,11 @@ namespace SecurityTravelApp.Views
             localNotifSrv.showNotifTrackingOff();
             locationSrv.stopTrackingUserGeoposition();
             locationSrv.disableBackgroundLocationUpdates();
+        }
+
+        private void Button6_Clicked(object sender, EventArgs e)
+        {
+            PopupNavigation.Instance.PushAsync(new NotifAlertPopup());
         }
     }
 }

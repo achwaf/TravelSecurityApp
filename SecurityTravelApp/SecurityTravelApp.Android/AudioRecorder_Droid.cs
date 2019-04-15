@@ -25,12 +25,13 @@ namespace SecurityTravelApp.Droid
         MediaRecorder _recorder;
         MediaPlayer _player;
         //string path = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "test");
-        private static String Storage = Android.OS.Environment.DirectoryMusic;
+        private static String Storage = Android.OS.Environment.DirectoryDocuments;
+        private static String AudioFolder = "TravelSecurity";
         private String audioPath;
 
         public AudioRecorder_Droid()
         {
-
+            checkFolderExists(Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Storage).AbsolutePath, AudioFolder));
             _recorder = new MediaRecorder();
             _player = new MediaPlayer();
 
@@ -38,6 +39,14 @@ namespace SecurityTravelApp.Droid
             {
                 _player.Reset();
             };
+        }
+
+        private void checkFolderExists(String pPath)
+        {
+            if (!Directory.Exists(pPath))
+            {
+                Directory.CreateDirectory(pPath);
+            }
         }
 
         public String StartRecording()
@@ -48,7 +57,7 @@ namespace SecurityTravelApp.Droid
             {
                 // setting the file name with current date
                 String fileName = "SOS_" + DateTime.Now.ToString(Constantes.DATEFORMAT_RECORD_AUDIO) + Constantes.RECORD_AUDIO_FILE_EXTENSION;
-                audioPath = Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Storage).AbsolutePath, fileName);
+                audioPath = Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Storage).AbsolutePath, AudioFolder, fileName);
 
 
                 _recorder.SetAudioSource(AudioSource.Mic);

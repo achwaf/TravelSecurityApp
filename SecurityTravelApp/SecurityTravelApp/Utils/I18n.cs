@@ -15,8 +15,7 @@ namespace SecurityTravelApp.Utils
 
         public static void SelectLang(AppLanguage pLang)
         {
-            //selectedLanguage = pLang;
-            selectedLanguage = AppLanguage.EN;
+            selectedLanguage = pLang;
         }
 
         public static AppLanguage SelectedLang()
