@@ -64,6 +64,7 @@ namespace SecurityTravelApp.Utils
             dictFR.Add(AppTextID.SEEN, "Vu");
             dictFR.Add(AppTextID.LOGOUT, "Se déconnecter");
             dictFR.Add(AppTextID.RECORDED_AUDIO, "Audios enregistrés");
+            dictFR.Add(AppTextID.FREE_SPACE, "Suppr. anciennes données");
             dictFR.Add(AppTextID.NEW, "Nouveau");
             dictFR.Add(AppTextID.ALERTS, "Alertes");
             dictFR.Add(AppTextID.EMPTY, "Vide");
@@ -94,6 +95,7 @@ namespace SecurityTravelApp.Utils
             dictEN.Add(AppTextID.SEEN, "Seen");
             dictEN.Add(AppTextID.LOGOUT, "Log out");
             dictEN.Add(AppTextID.RECORDED_AUDIO, "Recorded audios");
+            dictEN.Add(AppTextID.FREE_SPACE, "Clear old data");
             dictEN.Add(AppTextID.NEW, "New");
             dictEN.Add(AppTextID.ALERTS, "Alerts");
             dictEN.Add(AppTextID.EMPTY, "Empty");
@@ -124,6 +126,7 @@ namespace SecurityTravelApp.Utils
         SEEN,
         LOGOUT,
         RECORDED_AUDIO,
+        FREE_SPACE,
         ALERTS,
         NEW,
         EMPTY,

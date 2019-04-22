@@ -433,12 +433,20 @@ namespace SecurityTravelApp.Services
         private List<Message> getMessages()
         {
             List<Message> listeMessages = new List<Message>();
-
-
             listeMessages.Add(new Message("Bonjour, je viens d'arriver à l'Aéroport", false, ""));
             listeMessages.Add(new Message("j'ai besoin de connaitre les emplacements d'accès rapide", true, "2019/03/19 05:01:33"));
             listeMessages.Add(new Message("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", true, "2019/02/27 14:31:04"));
 
+            return listeMessages;
+        }
+
+        public List<Message> getTestMessages()
+        {
+            List<Message> listeMessages = new List<Message>();
+            for (int i = 1; i <= 80; i++)
+            {
+                listeMessages.Add(new Message("message test number " + i, true, "2019/03/19 05:01:33"));
+            }
             return listeMessages;
         }
 

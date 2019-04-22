@@ -79,12 +79,12 @@ namespace SecurityTravelApp.Views.Popups
         {
             if (pIsSet)
             {
-                pFilter.FadeTo(.3, 100);
+                pFilter.FadeTo(.3, 80);
                 pIsSet = false;
             }
             else
             {
-                pFilter.FadeTo(1, 100);
+                pFilter.FadeTo(1, 80);
                 pIsSet = true;
             }
         }
@@ -93,11 +93,11 @@ namespace SecurityTravelApp.Views.Popups
         {
             if (pIsSet)
             {
-                pFilter.FadeTo(1, 100);
+                pFilter.FadeTo(1, 80);
             }
             else
             {
-                pFilter.FadeTo(.3, 100);
+                pFilter.FadeTo(.3, 80);
             }
         }
 

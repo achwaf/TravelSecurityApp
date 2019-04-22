@@ -66,12 +66,14 @@ namespace SecurityTravelApp.Views
 
             // tap gesture recognizers
             var tapGestureRecognizerFilterIcon = new TapGestureRecognizer();
-            FilterIcon.GestureRecognizers.Add(tapGestureRecognizerFilterIcon);
+            FilterTap.GestureRecognizers.Add(tapGestureRecognizerFilterIcon);
 
             // setting the handler to FilterIcon
-            tapGestureRecognizerFilterIcon.Tapped += (s, e) =>
+            tapGestureRecognizerFilterIcon.Tapped += async (s, e) =>
             {
+                await FilterTap.FadeTo(.1, 100);
                 PopupNavigation.Instance.PushAsync(new FilterAlertPopup(IsCriticFilterSet, IsWarningFilterSet, IsInfoFilterSet), false);
+                FilterTap.FadeTo(.01, 100);
             };
 
             populate();
@@ -98,7 +100,7 @@ namespace SecurityTravelApp.Views
 
         private void filterAlerts()
         {
-            if(IsCriticFilterSet && IsWarningFilterSet && IsInfoFilterSet)
+            if (IsCriticFilterSet && IsWarningFilterSet && IsInfoFilterSet)
             {
                 FilterIcon.TextColor = FilterOffColor;
             }
@@ -109,7 +111,7 @@ namespace SecurityTravelApp.Views
             int notVisibleCounter = 0;
             for (int i = 0; i < listAlerts.Count; i++)
             {
-                
+
                 var alert = listAlerts[i];
                 if (alert.type == AlertType.Critical && IsCriticFilterSet)
                 {

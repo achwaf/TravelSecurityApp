@@ -31,6 +31,7 @@ namespace SecurityTravelApp.Views.ViewsUtils
         public static readonly string Upload = "\uf362";
         public static readonly string Clock = "\uf18f";
         public static readonly string AngleDown = "\uf110";
+        public static readonly string AngleRight = "\uf112";
         public static readonly string Hourglass = "\uf23a";
         public static readonly string Refresh = "\uf2d5";
         public static readonly string Exclamation = "\uf1cd";
@@ -42,6 +43,7 @@ namespace SecurityTravelApp.Views.ViewsUtils
         public static readonly string Calendar = "\uf15c";
         public static readonly string LeftCircle = "\uf11a";
         public static readonly string Microphone = "\uf28c";
+        public static readonly string Recycle = "\uf2d2";
 
     }
 

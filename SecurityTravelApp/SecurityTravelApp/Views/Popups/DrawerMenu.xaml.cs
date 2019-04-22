@@ -92,6 +92,7 @@ namespace SecurityTravelApp.Views.Popups
         {
             LogoutTXT.Text = I18n.GetText(AppTextID.LOGOUT, SelectedLang);
             RecordedTXT.Text = I18n.GetText(AppTextID.RECORDED_AUDIO, SelectedLang);
+            ClearTXT.Text = I18n.GetText(AppTextID.FREE_SPACE, SelectedLang);
         }
 
         private void updateLangVisuals(AppLanguage pLang)
