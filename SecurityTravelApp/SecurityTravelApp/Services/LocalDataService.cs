@@ -91,6 +91,7 @@ namespace SecurityTravelApp.Services
                 database.CreateTableAsync<AlertDB>();
                 database.CreateTableAsync<LocationDB>();
                 database.CreateTableAsync<AudioRecordDB>();
+                database.CreateTableAsync<DocDB>();
             }
         }
 
@@ -100,6 +101,7 @@ namespace SecurityTravelApp.Services
             await database.DeleteAllAsync<AlertDB>();
             await database.DeleteAllAsync<LocationDB>();
             await database.DeleteAllAsync<AudioRecordDB>();
+            await database.DeleteAllAsync<DocDB>();
 
             return true;
         }
@@ -223,6 +225,7 @@ namespace SecurityTravelApp.Services
                 ID = pAudioRecord.ID,
                 AudioFile = pAudioRecord.audioFile,
                 DateSent = pAudioRecord.dateSent,
+                DateRecorded = pAudioRecord.dateRecorded,
                 IsSent = pAudioRecord.isSent,
                 AudioLabel = pAudioRecord.audioLabel
             };
@@ -246,6 +249,7 @@ namespace SecurityTravelApp.Services
                         ID = audioDB.ID,
                         audioFile = audioDB.AudioFile,
                         dateSent = audioDB.DateSent,
+                        dateRecorded = audioDB.DateRecorded,
                         isSent = audioDB.IsSent,
                         audioLabel = audioDB.AudioLabel
                     };
@@ -269,6 +273,7 @@ namespace SecurityTravelApp.Services
                         ID = audioDB.ID,
                         audioFile = audioDB.AudioFile,
                         dateSent = audioDB.DateSent,
+                        dateRecorded = audioDB.DateRecorded,
                         isSent = audioDB.IsSent,
                         audioLabel = audioDB.AudioLabel
                     };
@@ -354,6 +359,7 @@ namespace SecurityTravelApp.Services
             return vListAlert;
         }
 
+
         public async Task<Boolean> saveMessage(Message pMessage)
         {
             MessageDB message = new MessageDB()
@@ -408,6 +414,87 @@ namespace SecurityTravelApp.Services
                 }
             }
             return vListMsg;
+        }
+
+
+        public async Task<int> getListAlertCount()
+        {
+            var count = await database.Table<AlertDB>().CountAsync();
+            return count;
+        }
+
+        public async Task<int> getListMsgCount()
+        {
+            var count = await database.Table<MessageDB>().CountAsync();
+            return count;
+        }
+
+        public async Task<int> getListLocationCount()
+        {
+            var count = await database.Table<LocationDB>().CountAsync();
+            return count;
+        }
+
+        public async Task<int> getListDocCount()
+        {
+            var count = await database.Table<DocDB>().CountAsync();
+            return count;
+        }
+
+        public async Task<int> getListAudioCount()
+        {
+            var count = await database.Table<AudioRecordDB>().CountAsync();
+            return count;
+        }
+
+
+        public async Task<int> getCountAlertOlderThan(DateTime pDate)
+        {
+            var count = await database.Table<AlertDB>().CountAsync(x => x.DateReceived < pDate);
+            return count;
+        }
+
+        public async Task<int> getCountMsgOlderThan(DateTime pDate)
+        {
+            var count = await database.Table<MessageDB>().CountAsync(x => x.DateSent < pDate);
+            return count;
+        }
+
+        public async Task<int> getCountLocationOlderThan(DateTime pDate)
+        {
+            var count = await database.Table<LocationDB>().CountAsync();
+            return count;
+        }
+
+        public async Task<int> getCountDocOlderThan(DateTime pDate)
+        {
+            var count = await database.Table<DocDB>().CountAsync(x => x.DateReceived < pDate);
+            return count;
+        }
+
+        public async Task<int> getCountAudioOlderThan(DateTime pDate)
+        {
+            var count = await database.Table<AudioRecordDB>().CountAsync(x => x.DateSent < pDate);
+            return count;
+        }
+
+        public async Task<Boolean> deleteDataOlderThan(DateTime pLimitDate)
+        {
+            int nbMsgDeleted, nbAlertDeleted, nbLocaDeleted, nbAudioDeleted;
+            try
+            {
+
+                nbMsgDeleted = await database.Table<MessageDB>().DeleteAsync(x => x.DateSent < pLimitDate);
+                nbAlertDeleted = await database.Table<AlertDB>().DeleteAsync(x => x.DateReceived < pLimitDate);
+                nbLocaDeleted = await database.Table<LocationDB>().DeleteAsync(x => x.DateSent < pLimitDate);
+                nbAudioDeleted = await database.Table<AudioRecordDB>().DeleteAsync(x => x.DateSent < pLimitDate);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+            return true;
         }
 
 

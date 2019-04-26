@@ -66,6 +66,13 @@ namespace SecurityTravelApp.Views
             });
 
 
+            // subscribe to Clear data event
+            MessagingCenter.Subscribe<DrawerMenu>(this, "CLEAROLDDATA", (sender) =>
+            {
+                // display popup clear old data
+                PopupNavigation.Instance.PushAsync(new DeleteOldDataPopup(pSrvFactory));
+            });
+
             // subscribe to Lougout event
             MessagingCenter.Subscribe<DrawerMenu>(this, "USERLOGOUT", (sender) =>
             {
@@ -102,7 +109,6 @@ namespace SecurityTravelApp.Views
             {
                 performSOSProcedure();
             });
-
 
             // add tap gesture recognizer 
             var tapGestureRecognizerMapMarker = new TapGestureRecognizer();
@@ -142,7 +148,9 @@ namespace SecurityTravelApp.Views
             // setting the handler to Side  Buton
             tapGestureRecognizerSideButton.Tapped += (s, e) =>
             {
+                SideButton.IsEnabled = false;
                 PopupNavigation.Instance.PushAsync(new DrawerMenu(), false);
+                SideButton.IsEnabled = true;
             };
 
             // animation waiting for GPS

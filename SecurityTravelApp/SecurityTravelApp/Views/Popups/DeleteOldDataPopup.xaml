@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Pages:PopupPage  xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
+             xmlns:Pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             IsAnimationEnabled="False"
+             CloseWhenBackgroundIsClicked="True"
+             x:Class="SecurityTravelApp.Views.Popups.DeleteOldDataPopup">
+    <Pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <OnPlatform x:Key="DecorationWidth" x:TypeArguments="GridLength" Default="100" />
+            <OnPlatform x:Key="AlertHeight" x:TypeArguments="x:Double" Default="100" />
+            <OnPlatform x:Key="AlertCornerRadius" x:TypeArguments="CornerRadius" Default="10" />
+            <OnPlatform x:Key="DecorationIconMargin" x:TypeArguments="Thickness" Default="0,5,5,0" />
+        </ResourceDictionary>
+    </Pages:PopupPage.Resources>
+    <!--CONTENT-->
+    <Grid  x:Name="container" VerticalOptions="Fill" HorizontalOptions="Fill">
+        <Frame VerticalOptions="Center" HorizontalOptions="Fill" Padding="0" Margin="30" CornerRadius="5" BackgroundColor="White">
+            <Grid x:Name="FrameBackground" ColumnSpacing="0" RowSpacing="0">
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions >
+                    <ColumnDefinition Width="50" />
+                </Grid.ColumnDefinitions>
+
+                <BoxView x:Name="TagBg" Color="Red" Grid.RowSpan="5" VerticalOptions="Fill" HorizontalOptions="Fill" Opacity=".2"/>
+                <Label x:Name="TagIcon" Grid.RowSpan="5" Text="{x:Static viewUtils:LineAwesomeIcons.Trash}"
+                        FontFamily="{StaticResource LineAwesome}"
+                        FontSize="35" TextColor="DarkRed"
+                        Margin="0,2,0,0"
+                        VerticalTextAlignment="Center"
+                        HorizontalTextAlignment="Center" 
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"/>
+                <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="10">
+                    <Label FontAttributes="Bold" Text="Delete data older than " VerticalOptions="Center" VerticalTextAlignment="Center"/>
+                    <Picker x:Name="TimePicker" Margin="10,0,10,0" ItemDisplayBinding="{Binding text}" HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+
+                <Label Grid.Row="1" Grid.Column="1" Margin="10,0,10,10"
+                       Text="Data to delete : "/>
+                <Grid Grid.Row="2" Grid.Column="1" Margin="20,0,20,0" RowSpacing="2">
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <StackLayout Grid.Row="0" Orientation="Horizontal" HorizontalOptions="Fill">
+                        <Label Text="{x:Static viewUtils:LineAwesomeIcons.MapMarker}"
+                                FontFamily="{StaticResource LineAwesome}"
+                                FontSize="25" TextColor="Gray"
+                                Margin="0,2,0,0"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"/>
+                        <Label Text="Locations" TextColor="Gray" HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                        <Label x:Name="LocationsToDelete" Text="1200" TextColor="Gray" Margin="10,0,0,0" FontAttributes="Bold"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                        <Label x:Name="TotalLocations" Text="/1400" TextColor="Gray" Margin="0,0,10,0"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                    </StackLayout>
+                    <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Fill">
+                        <Label Text="{x:Static viewUtils:LineAwesomeIcons.Messages}"
+                                FontFamily="{StaticResource LineAwesome}"
+                                FontSize="25" TextColor="Gray"
+                                Margin="0,2,0,0"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"/>
+                        <Label Text="Messages" TextColor="Gray" HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                        <Label x:Name="MessagesToDelete" Text="20" TextColor="Gray" Margin="10,0,0,0" FontAttributes="Bold"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                        <Label x:Name="TotalMessages" Text="/112" TextColor="Gray" Margin="0,0,10,0"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                    </StackLayout>
+                    <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="Fill">
+                        <Label Text="{x:Static viewUtils:LineAwesomeIcons.Warnings}"
+                                FontFamily="{StaticResource LineAwesome}"
+                                FontSize="25" TextColor="Gray"
+                                Margin="0,2,0,0"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"/>
+                        <Label Text="Alertes" TextColor="Gray" HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                        <Label x:Name="AlertesToDelete" Text="2" TextColor="Gray" Margin="10,0,0,0" FontAttributes="Bold"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                        <Label x:Name="TotalAlertes" Text="/35" TextColor="Gray" Margin="0,0,10,0"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                    </StackLayout>
+                    <StackLayout Grid.Row="3" Orientation="Horizontal" HorizontalOptions="Fill">
+                        <Label Text="{x:Static viewUtils:LineAwesomeIcons.Docs}"
+                                FontFamily="{StaticResource LineAwesome}"
+                                FontSize="25" TextColor="Gray"
+                                Margin="0,2,0,0"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"/>
+                        <Label Text="Documents" TextColor="Gray" HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                        <Label x:Name="DocsToDelete" Text="10" TextColor="Gray" Margin="10,0,0,0" FontAttributes="Bold"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                        <Label x:Name="TotalDocs" Text="/62" TextColor="Gray" Margin="0,0,10,0"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="4" Orientation="Horizontal" HorizontalOptions="Fill">
+                        <Label Text="{x:Static viewUtils:LineAwesomeIcons.Microphone}"
+                                FontFamily="{StaticResource LineAwesome}"
+                                FontSize="25" TextColor="Gray"
+                                Margin="0,2,0,0"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"/>
+                        <Label Text="Audios" TextColor="Gray" HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                        <Label x:Name="AudiosToDelete" Text="10" TextColor="Gray" Margin="10,0,0,0" FontAttributes="Bold"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                        <Label x:Name="TotalAudios" Text="/62" TextColor="Gray" Margin="0,0,10,0"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                    </StackLayout>
+                </Grid>
+                <StackLayout Grid.Row="3" Grid.Column="1" Margin="0,0,10,10"
+                             Orientation="Horizontal" FlowDirection="RightToLeft" HorizontalOptions="Fill">
+                    <Label x:Name="ButtonAction" FontAttributes="Bold" TextColor="LightBlue" Margin="10"
+                           VerticalOptions="Center"/>
+                    <Label x:Name="ConfirmTxt" TextColor="Gray" Margin="10" IsVisible="False"
+                           VerticalOptions="Center"/>
+                </StackLayout>
+            </Grid>
+        </Frame>
+    </Grid>
+</Pages:PopupPage>

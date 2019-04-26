@@ -10,6 +10,7 @@ namespace SecurityTravelApp.Models
         public String audioFile;
         public Boolean isSent;
         public DateTime dateSent;
+        public DateTime dateRecorded;
         public String audioLabel;
 
         public AudioRecord() { ID = Guid.NewGuid(); }

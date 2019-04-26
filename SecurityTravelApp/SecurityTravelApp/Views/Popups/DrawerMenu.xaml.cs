@@ -61,6 +61,15 @@ namespace SecurityTravelApp.Views.Popups
             };
             LogoutAction.GestureRecognizers.Add(tapGestureRecognizerLogout);
 
+            // add tap_handler to clear action
+            var tapGestureRecognizerClear = new TapGestureRecognizer();
+            tapGestureRecognizerClear.Tapped += async (s, e) =>
+            {
+                await closeAppMenu();
+                MessagingCenter.Send<DrawerMenu>(this, "CLEAROLDDATA");
+            };
+            ClearAction.GestureRecognizers.Add(tapGestureRecognizerClear);
+
             // add tap_handler to FR action
             var tapGestureRecognizerSelectFR = new TapGestureRecognizer();
             tapGestureRecognizerSelectFR.Tapped += async (s, e) =>

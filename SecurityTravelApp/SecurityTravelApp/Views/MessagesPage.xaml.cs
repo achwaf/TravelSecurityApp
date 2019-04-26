@@ -435,7 +435,8 @@ namespace SecurityTravelApp.Views
 
         private async void populate()
         {
-
+            // clear 
+            MessageContainer.Children.Clear();
 
             // pupulate the stored messages
             listMessages = await localDataSrv.getListMessage(); // get the stored messages
@@ -453,6 +454,8 @@ namespace SecurityTravelApp.Views
             {
                 // probably update only sent status of messages
                 // maybe update directly in the list , or compare between database retrieved one and the current one
+                // or at final thought, better populate from scratch since suppression was added
+                populate();
 
             }
         }

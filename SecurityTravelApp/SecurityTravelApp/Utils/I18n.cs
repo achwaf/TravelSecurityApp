@@ -62,6 +62,8 @@ namespace SecurityTravelApp.Utils
             dictFR.Add(AppTextID.LOGIN, "Se connecter");
             dictFR.Add(AppTextID.RECIEVED, "Reçu");
             dictFR.Add(AppTextID.SEEN, "Vu");
+            dictFR.Add(AppTextID.CONFIRM, "Confirmer");
+            dictFR.Add(AppTextID.CLEANING, "Suppression...");
             dictFR.Add(AppTextID.LOGOUT, "Se déconnecter");
             dictFR.Add(AppTextID.RECORDED_AUDIO, "Audios enregistrés");
             dictFR.Add(AppTextID.FREE_SPACE, "Suppr. anciennes données");
@@ -79,6 +81,13 @@ namespace SecurityTravelApp.Utils
             dictFR.Add(AppTextID.TRACKING_ONGOING, "Suivi en cours...");
             dictFR.Add(AppTextID.TRACKING_STOPPED, "Suivi arrêté");
             dictFR.Add(AppTextID.AT, "à");
+            dictFR.Add(AppTextID.DELETE, "Supprimer");
+            dictFR.Add(AppTextID.AREYOUSURE, "Etes-vous sûr?");
+            dictFR.Add(AppTextID._2WEEKS, "2 Semaines");
+            dictFR.Add(AppTextID._1MONTH, "1 Mois");
+            dictFR.Add(AppTextID._3MONTHS, "3 Mois");
+            dictFR.Add(AppTextID._6MONTHS, "6 Mois");
+            dictFR.Add(AppTextID._1YEAR, "1 An");
 
 
 
@@ -93,6 +102,8 @@ namespace SecurityTravelApp.Utils
             dictEN.Add(AppTextID.LOGIN, "Log in");
             dictEN.Add(AppTextID.RECIEVED, "Recieved");
             dictEN.Add(AppTextID.SEEN, "Seen");
+            dictEN.Add(AppTextID.CONFIRM, "Confirm");
+            dictEN.Add(AppTextID.CLEANING, "Deleting...");
             dictEN.Add(AppTextID.LOGOUT, "Log out");
             dictEN.Add(AppTextID.RECORDED_AUDIO, "Recorded audios");
             dictEN.Add(AppTextID.FREE_SPACE, "Clear old data");
@@ -110,6 +121,13 @@ namespace SecurityTravelApp.Utils
             dictEN.Add(AppTextID.TRACKING_ONGOING, "Tracking ongoing...");
             dictEN.Add(AppTextID.TRACKING_STOPPED, "Tracking stopped");
             dictEN.Add(AppTextID.AT, "at");
+            dictEN.Add(AppTextID.DELETE, "Delete");
+            dictEN.Add(AppTextID.AREYOUSURE, "Are you sure?");
+            dictEN.Add(AppTextID._2WEEKS, "2 Weeks");
+            dictEN.Add(AppTextID._1MONTH, "1 Month");
+            dictEN.Add(AppTextID._3MONTHS, "3 Months");
+            dictEN.Add(AppTextID._6MONTHS, "6 Months");
+            dictEN.Add(AppTextID._1YEAR, "1 Year");
         }
     }
 
@@ -124,6 +142,8 @@ namespace SecurityTravelApp.Utils
         LOGIN,
         RECIEVED,
         SEEN,
+        CONFIRM,
+        CLEANING,
         LOGOUT,
         RECORDED_AUDIO,
         FREE_SPACE,
@@ -140,7 +160,14 @@ namespace SecurityTravelApp.Utils
         WARNINGS,
         TRACKING_ONGOING,
         TRACKING_STOPPED,
-        AT
+        AT,
+        DELETE,
+        AREYOUSURE,
+        _2WEEKS,
+        _1MONTH,
+        _3MONTHS,
+        _6MONTHS,
+        _1YEAR
     }
 
     public enum AppLanguage

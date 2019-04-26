@@ -57,7 +57,7 @@
                            WidthRequest="{StaticResource ActionIconWidthSize}"/>
                         <Label x:Name="LogoutTXT" VerticalOptions="Center" TextColor="DimGray"/>
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal" Spacing="0">
+                    <StackLayout x:Name="RecordedAction"  Orientation="Horizontal" Spacing="0">
                         <Label Text="{x:Static viewUtils:LineAwesomeIcons.Microphone}"
                            VerticalTextAlignment="Center"
                            HorizontalTextAlignment="Center"
@@ -67,7 +67,7 @@
                            WidthRequest="{StaticResource ActionIconWidthSize}"/>
                         <Label x:Name="RecordedTXT" VerticalOptions="Center" TextColor="DimGray"/>
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal" Spacing="0">
+                    <StackLayout x:Name="ClearAction"  Orientation="Horizontal" Spacing="0">
                         <Label Text="{x:Static viewUtils:LineAwesomeIcons.Recycle}"
                            VerticalTextAlignment="Center"
                            HorizontalTextAlignment="Center"

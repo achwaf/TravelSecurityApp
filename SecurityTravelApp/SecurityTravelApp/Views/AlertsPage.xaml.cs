@@ -131,7 +131,7 @@ namespace SecurityTravelApp.Views
                     notVisibleCounter++;
                 }
             }
-            if (notVisibleCounter < listAlerts.Count)
+            if (notVisibleCounter < listAlerts.Count || listAlerts.Count == 0)
             {
                 EmptyFilterInfo.IsVisible = false;
             }

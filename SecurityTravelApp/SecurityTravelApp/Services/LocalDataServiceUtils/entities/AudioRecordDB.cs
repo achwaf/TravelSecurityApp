@@ -12,6 +12,7 @@ namespace SecurityTravelApp.Services.LocalDataServiceUtils.entities
         public String AudioFile { get; set; }
         public Boolean IsSent { get; set; }
         public DateTime DateSent { get; set; }
+        public DateTime DateRecorded { get; set; }
         public String AudioLabel { get; set; }
         public Boolean IsSendable { get; set; }
     }
