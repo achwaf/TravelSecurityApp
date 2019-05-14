@@ -483,7 +483,6 @@ namespace SecurityTravelApp.Services
             int nbMsgDeleted, nbAlertDeleted, nbLocaDeleted, nbAudioDeleted;
             try
             {
-
                 nbMsgDeleted = await database.Table<MessageDB>().DeleteAsync(x => x.DateSent < pLimitDate);
                 nbAlertDeleted = await database.Table<AlertDB>().DeleteAsync(x => x.DateReceived < pLimitDate);
                 nbLocaDeleted = await database.Table<LocationDB>().DeleteAsync(x => x.DateSent < pLimitDate);

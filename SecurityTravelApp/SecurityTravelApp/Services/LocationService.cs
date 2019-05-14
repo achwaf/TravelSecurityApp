@@ -14,7 +14,7 @@ namespace SecurityTravelApp.Services
     {
 
         const ServiceType TYPE = ServiceType.Location;
-        private const int STALETIME = 1000 * 60 * 2;
+        private const int STALETIME = 1000 * 60 * 2; // 120 seconds
         private const int INTERVALTIME = 1000 * 4;
         private const int INTERVALTIMEFIRSTGET = 0;
         private const int TIMEVALIDITY = 1000 * 30;
