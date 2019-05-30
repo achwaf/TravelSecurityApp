@@ -36,6 +36,16 @@ namespace SecurityTravelApp.Views
             callSrv = (CallService)pSrvFactory.getService(ServiceType.Call);
             localNotifSrv = (LocalNotifService)pSrvFactory.getService(ServiceType.LocalNotif);
 
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            testRoundnessIOS.GestureRecognizers.Add(tapGestureRecognizer);
+
+            tapGestureRecognizer.Tapped += async (s, e) =>
+            {
+                System.Diagnostics.Debug.WriteLine("IOS TEST");
+                await testRoundnessIOS.FadeTo(.1, 100);
+            };
+
+
         }
 
         private void Button_Clicked(object sender, EventArgs e)

@@ -87,9 +87,15 @@ namespace SecurityTravelApp.Views
                 MessagingComp.IsVisible = false;
             };
 
+            // test tap event in IOS
+            var tapGestureRecognizerIOS = new TapGestureRecognizer();
+            testRoundnessIOS.GestureRecognizers.Add(tapGestureRecognizerIOS);
+
+
             // setting the handler to AddIcon
             tapGestureRecognizerAddIcon.Tapped += async (s, e) =>
             {
+                System.Diagnostics.Debug.WriteLine("IOS TEST TAP");
                 await AddOrCloseTap.FadeTo(.1, 100);
 
                 if (SearchEntry.IsVisible)

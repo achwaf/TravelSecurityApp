@@ -1,6 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true"
              x:Class="SecurityTravelApp.Views.PopupTestPage">
     <ContentPage.Content>
         <StackLayout Spacing="10" Margin="10" VerticalOptions="Center">
@@ -10,6 +12,8 @@
             <Button Text="track user" Clicked="Button4_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
             <Button Text="stop tracking user" Clicked="Button5_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
             <Button Text="popup Alerte notif" Clicked="Button6_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
+            <BoxView x:Name="testRoundnessIOS" HeightRequest="50" WidthRequest="50" CornerRadius="25"
+                                 Color="LightGray" VerticalOptions="Center" HorizontalOptions="Center"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -1,8 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:comp="clr-namespace:SecurityTravelApp.Views"
              xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true"
              x:Class="SecurityTravelApp.Views.MessagesPage"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="white">
@@ -59,8 +61,8 @@
                                 HorizontalTextAlignment="Center" 
                                 VerticalOptions="Center"
                                 HorizontalOptions="Center"/>
-                    <BoxView x:Name="SearchTap" Grid.Column="1" Color="Black" Opacity=".01" HorizontalOptions="Fill" VerticalOptions="Fill"/>
-                    <BoxView x:Name="AddOrCloseTap" Grid.Column="2" Color="Black" Opacity=".01" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+                    <BoxView x:Name="SearchTap" Grid.Column="1" Color="LightGray" Opacity="1" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+                    <BoxView x:Name="AddOrCloseTap" Grid.Column="2" Color="LightGray" Opacity="1" HorizontalOptions="Fill" VerticalOptions="Fill"/>
                 </Grid>
 
                 <Grid x:Name="EmptyInfo" IsVisible="False" Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill" Margin="0,0,0,70">
