@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace SecurityTravelApp.Services
@@ -26,6 +28,26 @@ namespace SecurityTravelApp.Services
         public void callNumber(String pNumber)
         {
             phoneCaller.makePhoneCall(pNumber);
+        }
+
+        public async Task<Boolean> sendSMSAsync(String pSMS)
+        {
+            try
+            {
+                var message = new SmsMessage(pSMS, new[] { "+212600000000" });
+                await Sms.ComposeAsync(message);
+                return true;
+            }
+            catch (FeatureNotSupportedException ex)
+            {
+                // Sms is not supported on this device.
+                return false;
+            }
+            catch (Exception ex)
+            {
+                // Other error has occurred.
+                return false;
+            }
         }
     }
 }

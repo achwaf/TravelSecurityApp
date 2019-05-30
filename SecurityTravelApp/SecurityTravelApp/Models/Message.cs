@@ -63,11 +63,23 @@ namespace SecurityTravelApp.Models
         {
             get
             {
-                if (_dateSent != DateTime.MaxValue)
+                if (_isSent)
                 {
-                    return _dateSent.ToShortDateString();
+                    return _dateSent.ToShortDateString() + " ";
                 }
-                else return I18n.GetText(AppTextID.WAITING_FOR_TRANSFER);
+                else return "";
+            }
+        }
+
+        public String WaitingString
+        {
+            get
+            {
+                if (!_isSent)
+                {
+                    return I18n.GetText(AppTextID.WAITING_FOR_TRANSFER);
+                }
+                else return "";
             }
         }
 
@@ -75,7 +87,7 @@ namespace SecurityTravelApp.Models
         {
             get
             {
-                if (_dateSent != DateTime.MaxValue)
+                if (_isSent)
                 {
                     return _dateSent.ToShortTimeString();
                 }

@@ -1,4 +1,7 @@
-﻿using SecurityTravelApp.Models;
+﻿using Rg.Plugins.Popup.Services;
+using SecurityTravelApp.Models;
+using SecurityTravelApp.Utils;
+using SecurityTravelApp.Views.Popups;
 using SecurityTravelApp.Views.ViewsUtils;
 using System;
 using System.Collections.Generic;
@@ -18,6 +21,7 @@ namespace SecurityTravelApp.Views
     {
         private Boolean continueFlashAnimation;
         private Animation flashingAnimation;
+        private Animation HidingAnimation;
         private Message theMessage;
 
         public MessageComp(Message pMessage)
@@ -25,15 +29,58 @@ namespace SecurityTravelApp.Views
             InitializeComponent();
             theMessage = pMessage;
             this.BindingContext = theMessage;
-            // setting the taphandler   
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            this.GestureRecognizers.Add(tapGestureRecognizer);
 
-            tapGestureRecognizer.Tapped += async (s, e) =>
+            // setting the taphandler for the MessageComp
+            var tapGestureRecognizer = new TapGestureRecognizer();
+
+            // setting the tapHandler for the SMS action
+            var tapGestureRecognizerSMS = new TapGestureRecognizer();
+
+            if (!pMessage.isSent)
             {
-                await this.FadeTo(.5, 50);
-                this.FadeTo(1, 500);
-            };
+
+
+                this.GestureRecognizers.Add(tapGestureRecognizer);
+                tapGestureRecognizer.Tapped += async (s, e) =>
+                {
+                    if (ActionPanel.IsVisible == true)
+                    {
+                        await this.FadeTo(.5, 50);
+                        ActionPanel.IsVisible = false;
+                        SelectionMask.IsVisible = false;
+                        ViewExtensions.CancelAnimations(ActionPanel);
+                        this.FadeTo(1, 500);
+                    }
+                    else
+                    {
+                        await this.FadeTo(.5, 50);
+                        ActionPanel.Opacity = 1;
+                        ActionPanel.IsVisible = true;
+                        SelectionMask.IsVisible = true;
+                        this.FadeTo(1, 500);
+                        SlowHidingAnimation();
+                    }
+                };
+
+                ActionPanel.GestureRecognizers.Add(tapGestureRecognizerSMS);
+                tapGestureRecognizerSMS.Tapped += async (s, e) =>
+                {
+                    await SendSMSActionMask.FadeTo(.8, 80);
+                    ViewExtensions.CancelAnimations(ActionPanel);
+                    ActionPanel.Opacity = 1;
+
+
+                    // update waiting text to SMS
+                    Waiting.Text = I18n.GetText(AppTextID.WAITING_FOR_TRANSFER_SMS);
+
+                    // send via SMS
+                    MessagingCenter.Send<MessageComp, Message>(this, "MSGSMSTOSEND", pMessage);
+
+                    await SendSMSActionMask.FadeTo(0, 120);
+                    ActionPanel.IsVisible = false;
+                    SelectionMask.IsVisible = false;
+                };
+            }
 
             // animation pending msg to be sent
             flashingAnimation = new Animation();
@@ -52,9 +99,27 @@ namespace SecurityTravelApp.Views
 
         }
 
+        private void SlowHidingAnimation()
+        {
+            // animation to hide the actionPanel after some time 
+            HidingAnimation = new Animation();
+            var fadeoutActionAnimation = new Animation(v =>
+            {
+                ActionPanel.Opacity = v;
+                if (v == 0)
+                {
+                    ActionPanel.IsVisible = false;
+                    SelectionMask.IsVisible = false;
+                }
+            }, 1, 0);
+            HidingAnimation.Add(.75, 1, fadeoutActionAnimation);
+            HidingAnimation.Commit(this, "hiding", 16, 3000);
+        }
+
         public void updateTXT()
         {
             DateSent.Text = theMessage.DateString;
+            Waiting.Text = theMessage.WaitingString;
         }
 
         private void checkAnimationPendingIcon()

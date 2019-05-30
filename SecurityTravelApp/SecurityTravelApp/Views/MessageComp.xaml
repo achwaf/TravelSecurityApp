@@ -11,7 +11,7 @@
         </ResourceDictionary>
     </ContentView.Resources>
     <ContentView.Content>
-        <Grid RowSpacing="0" ColumnSpacing="10">
+        <Grid RowSpacing="0" ColumnSpacing="10" Padding="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="*" />
@@ -19,7 +19,10 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+            <BoxView x:Name="SelectionMask" Color="#EEEEEE" IsVisible="false"
+                     Grid.RowSpan="3" Grid.ColumnSpan="2" CornerRadius="15" />
             <Grid Grid.Column="0" Grid.RowSpan="2">
                 <Label x:Name="AlreadySentIcon" IsVisible="{Binding isSent}"
                     Text="{x:Static viewUtils:LineAwesomeIcons.Envelope}"
@@ -40,14 +43,34 @@
                                 VerticalOptions="Center"
                                 HorizontalOptions="Center"/>
             </Grid>
-            <StackLayout Grid.Column="1" Orientation="Horizontal" Opacity=".6">
+            <StackLayout Grid.Column="1" Orientation="Horizontal" Opacity=".6" Spacing="0">
+                <Label  x:Name="Waiting" Text="{Binding WaitingString}" FontSize="12" TextColor="Gray"/>
                 <Label  x:Name="DateSent" Text="{Binding DateString}" FontSize="12" TextColor="Gray"/>
                 <Label x:Name="TimeSent" Text="{Binding TimeString}" FontSize="12"  TextColor="Gray"/>
             </StackLayout>
             <Label x:Name="MessageText" Grid.Column="1" Grid.Row="1"
                    TextColor="Gray"
                 Text="{Binding text}"
-                LineBreakMode="CharacterWrap"     />
+                LineBreakMode="CharacterWrap"/>
+            <Grid x:Name="ActionPanel" Grid.ColumnSpan="2" Grid.Row="2" IsVisible="false" Padding="5">
+                <BoxView x:Name="SendSMSActionMask" CornerRadius="10" Color="#FFFFFF" Opacity="0" />
+                <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                    <Label  Text="Send via SMS" TextColor="DarkGray" FontAttributes="Bold"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"/>
+                    <Label x:Name="SendViaSMSIcon" Text="{x:Static viewUtils:LineAwesomeIcons.Send}"
+                                FontFamily="{StaticResource LineAwesome}"
+                                TextColor="SandyBrown"
+                                FontSize="30"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"/>
+                </StackLayout>
+            </Grid>
+
 
         </Grid>
     </ContentView.Content>

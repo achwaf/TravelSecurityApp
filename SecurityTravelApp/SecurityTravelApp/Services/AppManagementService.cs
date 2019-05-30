@@ -127,11 +127,21 @@ namespace SecurityTravelApp.Services
                     }
                 }
 
-
-
-
                 // messages
+                var listMessages = await localDataSrv.getListMessageForSync();
+                foreach (Message message in listMessages)
+                {
+                    // send the msg to server
 
+                    // if failure to send to server 
+                    AllMessagesAreSync = false;
+
+                    // upond result update the database
+                    var messageDB = await localDataSrv.getMessageDB(message);
+                    messageDB.IsSent = true;
+                    messageDB.DateSent = DateTime.Now;
+                    await localDataSrv.updateToDB(messageDB);
+                }
 
 
                 // if all are sync stop the timer

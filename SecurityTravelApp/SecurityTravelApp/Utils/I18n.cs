@@ -72,8 +72,9 @@ namespace SecurityTravelApp.Utils
             dictFR.Add(AppTextID.EMPTY, "Vide");
             dictFR.Add(AppTextID.FILTER_EMPTY, "Les données sont filtrées, vérifiez le filtre.");
             dictFR.Add(AppTextID.WAITING_FOR_TRANSFER, "En attente d'envoi");
+            dictFR.Add(AppTextID.WAITING_FOR_TRANSFER_SMS, "En attente d'envoi via SMS");
             dictFR.Add(AppTextID.MESSAGES, "Messages");
-            dictFR.Add(AppTextID.LAST_CHECKIN, "Dernier Chekin");
+            dictFR.Add(AppTextID.LAST_CHECKIN, "Dernier Checkin ");
             dictFR.Add(AppTextID.GPS_TAP_INDICATION, "Tapez l'épingle pour envoyer la position.");
             dictFR.Add(AppTextID.HOME, "Accueil");
             dictFR.Add(AppTextID.DOCS, "Docs");
@@ -112,8 +113,9 @@ namespace SecurityTravelApp.Utils
             dictEN.Add(AppTextID.EMPTY, "Empty");
             dictEN.Add(AppTextID.FILTER_EMPTY, "Data are filtered. Check the Filter.");
             dictEN.Add(AppTextID.WAITING_FOR_TRANSFER, "Waiting for transfer");
+            dictEN.Add(AppTextID.WAITING_FOR_TRANSFER_SMS, "Waiting for transfer via SMS");
             dictEN.Add(AppTextID.MESSAGES, "Messages");
-            dictEN.Add(AppTextID.LAST_CHECKIN, "Last Checkin");
+            dictEN.Add(AppTextID.LAST_CHECKIN, "Last Checkin ");
             dictEN.Add(AppTextID.GPS_TAP_INDICATION, "Tap the map marker to send location");
             dictEN.Add(AppTextID.HOME, "Home");
             dictEN.Add(AppTextID.DOCS, "Docs");
@@ -152,6 +154,7 @@ namespace SecurityTravelApp.Utils
         EMPTY,
         FILTER_EMPTY,
         WAITING_FOR_TRANSFER,
+        WAITING_FOR_TRANSFER_SMS,
         MESSAGES,
         LAST_CHECKIN,
         GPS_TAP_INDICATION,

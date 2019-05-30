@@ -1,6 +1,7 @@
 ﻿using SecurityTravelApp.DependencyServices;
 using SecurityTravelApp.Models;
 using SecurityTravelApp.Services;
+using SecurityTravelApp.Services.LocalDataServiceUtils.entities;
 using SecurityTravelApp.Utils;
 using SecurityTravelApp.ViewModels;
 using SecurityTravelApp.Views.ViewsUtils;
@@ -20,6 +21,7 @@ namespace SecurityTravelApp.Views
     public partial class MessagesPage : ContentPage, Updatable, I18nable
     {
         LocalDataService localDataSrv;
+        CallService callSrv;
 
 
         private List<Message> listMessages;
@@ -41,6 +43,7 @@ namespace SecurityTravelApp.Views
             NavigationBar.initializeContent(pSrvFactory, pParam);
 
             localDataSrv = (LocalDataService)pSrvFactory.getService(ServiceType.LocalData);
+            callSrv = (CallService)pSrvFactory.getService(ServiceType.Call);
 
             DimMaskOpacity = Utilities.getOnPlatformValue<double>(Application.Current.Resources["DimMaskOpacity"]);
 
@@ -159,7 +162,6 @@ namespace SecurityTravelApp.Views
                 // flush editor
                 messageEditor.Text = String.Empty;
 
-                // add msg to sqlite
                 // send msg to backend
             };
 
@@ -242,6 +244,25 @@ namespace SecurityTravelApp.Views
                     {
                         // update Text
                         messageEditor.Text = pMessage;
+                    });
+
+
+            // subscribe to MSGSMSTOSEND from MessageComp to send the message via SMS
+            MessagingCenter.Subscribe<MessageComp, Message>(this, "MSGSMSTOSEND", async (sender, pMessage) =>
+                    {
+                        // send SMS
+                        var sentOK = await callSrv.sendSMSAsync(pMessage.text);
+
+                        if (sentOK)
+                        {
+                            // update localdata
+                            MessageDB msgDB = await localDataSrv.getMessageDB(pMessage);
+                            msgDB.DateSent = DateTime.Now;
+                            msgDB.IsSent = true;
+                            await localDataSrv.updateToDB(msgDB);
+                        }
+
+                        populate();
                     });
 
         }

@@ -360,6 +360,13 @@ namespace SecurityTravelApp.Services
         }
 
 
+        public async Task<MessageDB> getMessageDB(Message pMessage)
+        {
+            var message = await database.Table<MessageDB>().FirstAsync(x => x.ID == pMessage.ID);
+            return message;
+        }
+
+
         public async Task<Boolean> saveMessage(Message pMessage)
         {
             MessageDB message = new MessageDB()
@@ -399,6 +406,26 @@ namespace SecurityTravelApp.Services
         {
             // order descend by Date sent it is time of message in milliseconds
             var vList = await database.Table<MessageDB>().OrderByDescending<DateTime>(x => x.DateSent).ToListAsync();
+            var vListMsg = new List<Message>();
+
+            if (vList != null && vList.Count > 0)
+            {
+                foreach (var msg in vList)
+                {
+                    Message message = new Message();
+                    message.text = msg.Text;
+                    message.isSent = msg.IsSent;
+                    message.dateSent = msg.DateSent;
+                    message.ID = msg.ID;
+                    vListMsg.Add(message);
+                }
+            }
+            return vListMsg;
+        }
+
+        public async Task<List<Message>> getListMessageForSync()
+        {
+            var vList = await database.Table<MessageDB>().Where(x => x.IsSendable && !x.IsSent).ToListAsync();
             var vListMsg = new List<Message>();
 
             if (vList != null && vList.Count > 0)
