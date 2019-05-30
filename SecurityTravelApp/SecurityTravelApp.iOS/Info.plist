@@ -40,5 +40,9 @@
 	<array>
 		<string>location</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>line-awesome.ttf</string>
+	</array>
 </dict>
 </plist>

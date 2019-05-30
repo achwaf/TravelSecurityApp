@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SecurityTravelApp.App">
@@ -22,7 +22,7 @@
                 <OnPlatform.Platforms>
                     <On Platform="Android" Value="line-awesome.ttf#LineAwesome" />
                     <On Platform="UWP" Value="/Assets/line-awesome.ttf#LineAwesome" />
-                    <On Platform="iOS" Value="line-awesome.ttf" />
+                    <On Platform="iOS" Value="line-awesome" />
                 </OnPlatform.Platforms>
             </OnPlatform>
 
