@@ -73,7 +73,7 @@ namespace SecurityTravelApp.Views
             {
                 await FilterTap.FadeTo(.1, 100);
                 PopupNavigation.Instance.PushAsync(new FilterAlertPopup(IsCriticFilterSet, IsWarningFilterSet, IsInfoFilterSet), false);
-                FilterTap.FadeTo(.01, 100);
+                FilterTap.FadeTo(.02, 100);
             };
 
             populate();

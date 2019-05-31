@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SecurityTravelApp.Views.Popups.DrawerMenu"
@@ -28,7 +28,7 @@
     <ContentPage.Content>
         <AbsoluteLayout x:Name="container">
             <BoxView x:Name="BackgroundContainer" IsVisible="False"
-                BackgroundColor="Black" Opacity=".01"
+                Color="Black" Opacity=".02"
                 AbsoluteLayout.LayoutFlags = "All"
                 AbsoluteLayout.LayoutBounds = "0,0,1,1"/>
             <Grid x:Name="SideMenu"

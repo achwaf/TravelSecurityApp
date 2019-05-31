@@ -29,8 +29,8 @@ namespace SecurityTravelApp.Views.Popups
         {
             InitializeComponent();
 
-            // correct the behavior of backgroud tapping in android
-            if (Device.RuntimePlatform.Equals(Device.Android))
+            // correct the behavior of backgroud tapping in android and IOS
+            if (Device.RuntimePlatform.Equals(Device.Android) || Device.RuntimePlatform.Equals(Device.iOS))
             {
                 var tapGestureRecognizerContainer = new TapGestureRecognizer();
                 tapGestureRecognizerContainer.Tapped += (s, e) =>

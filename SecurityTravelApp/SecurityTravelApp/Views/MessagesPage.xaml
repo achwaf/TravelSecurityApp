@@ -61,8 +61,8 @@
                                 HorizontalTextAlignment="Center" 
                                 VerticalOptions="Center"
                                 HorizontalOptions="Center"/>
-                    <BoxView x:Name="SearchTap" Grid.Column="1" Color="LightGray" Opacity="1" HorizontalOptions="Fill" VerticalOptions="Fill"/>
-                    <BoxView x:Name="AddOrCloseTap" Grid.Column="2" Color="LightGray" Opacity="1" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+                    <BoxView x:Name="SearchTap" Grid.Column="1" Color="LightGray" Opacity=".02" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+                    <BoxView x:Name="AddOrCloseTap" Grid.Column="2" Color="LightGray" Opacity=".02" HorizontalOptions="Fill" VerticalOptions="Fill"/>
                 </Grid>
 
                 <Grid x:Name="EmptyInfo" IsVisible="False" Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill" Margin="0,0,0,70">

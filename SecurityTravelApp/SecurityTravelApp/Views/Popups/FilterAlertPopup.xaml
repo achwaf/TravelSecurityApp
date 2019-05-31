@@ -17,7 +17,7 @@
     <!--CONTENT-->
     <Grid  x:Name="container" VerticalOptions="Fill" HorizontalOptions="Fill">
         <BoxView x:Name="BackgroundContainer" IsVisible="False"
-                BackgroundColor="Black" Opacity=".01"
+                BackgroundColor="Black" Opacity=".02"
                 VerticalOptions="Fill" HorizontalOptions="Fill" />
         <Frame VerticalOptions="Start" HorizontalOptions="End" Padding="10" Margin="30" CornerRadius="5" BackgroundColor="White" IsClippedToBounds="true">
             <Grid x:Name="FrameBackground" RowSpacing="0">
@@ -34,21 +34,21 @@
                         <Image Source="critic.png" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="20"/>
                         <Label Text="Critic" TextColor="#AC2316" VerticalOptions="Center" HorizontalOptions="Start"/>
                     </StackLayout>
-                    <BoxView x:Name="criticTap" HorizontalOptions="Fill"  VerticalOptions="Center" Color="Black" Opacity=".01"/>
+                    <BoxView x:Name="criticTap" HorizontalOptions="Fill"  VerticalOptions="Center" Color="Black" Opacity=".02"/>
                 </Grid>
                 <Grid Grid.Row="2"  x:Name="warningToggle" Padding="0">
                     <StackLayout Orientation="Horizontal">
                         <Image Source="warning.png" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="20"/>
                         <Label Text="Important" TextColor="#BE9B3D" VerticalOptions="Center" HorizontalOptions="Start"/>
                     </StackLayout>
-                    <BoxView x:Name="warningTap" HorizontalOptions="Fill"  VerticalOptions="Center" Color="Black" Opacity=".01"/>
+                    <BoxView x:Name="warningTap" HorizontalOptions="Fill"  VerticalOptions="Center" Color="Black" Opacity=".02"/>
                 </Grid>
                 <Grid Grid.Row="3"  x:Name="infoToggle" Padding="0">
                     <StackLayout Orientation="Horizontal">
                         <Image Source="Info.png" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="20"/>
                         <Label Text="Info" TextColor="#599CC2" VerticalOptions="Center" HorizontalOptions="Start"/>
                     </StackLayout>
-                    <BoxView x:Name="infoTap" HorizontalOptions="Fill"  VerticalOptions="Center" Color="Black" Opacity=".01"/>
+                    <BoxView x:Name="infoTap" HorizontalOptions="Fill"  VerticalOptions="Center" Color="Black" Opacity=".02"/>
                 </Grid>
             </Grid>
         </Frame>

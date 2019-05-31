@@ -121,7 +121,7 @@ namespace SecurityTravelApp.Views
                 }
 
 
-                AddOrCloseTap.FadeTo(.01, 100);
+                AddOrCloseTap.FadeTo(.02, 100);
             };
 
             // setting the handler to SearchIcon
@@ -137,7 +137,7 @@ namespace SecurityTravelApp.Views
                 SearchTap.IsEnabled = false;
                 AddIcon.Text = LineAwesomeIcons.AngleRight;
                 SearchEntry.Focus();
-                SearchTap.FadeTo(.01, 100);
+                SearchTap.FadeTo(.02, 100);
             };
 
 

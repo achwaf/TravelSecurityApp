@@ -38,7 +38,7 @@
                                 HorizontalTextAlignment="Center" 
                                 VerticalOptions="Center"
                                 HorizontalOptions="Center"/>
-                    <BoxView x:Name="FilterTap" Grid.Column="1" Color="Black" Opacity=".01" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+                    <BoxView x:Name="FilterTap" Grid.Column="1" Color="Black" Opacity=".02" HorizontalOptions="Fill" VerticalOptions="Fill"/>
                 </Grid>
                 <Grid x:Name="EmptyInfo" IsVisible="false" Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Fill" Margin="0,0,0,70">
                     <Image Source="empty.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="80" WidthRequest="80" Opacity=".15"/>

@@ -41,7 +41,7 @@ namespace SecurityTravelApp.Views
             InitializeComponent();
             _panGesture.PanUpdated += OnPanGestureUpdated;
             CornerRadius cornerRadius = Utilities.getOnPlatformValue<CornerRadius>(this.Resources["ThumbCornerRadius"]);
-            _gestureListener = new BoxView { BackgroundColor = Color.White, Opacity = 0.005, CornerRadius = cornerRadius };
+            _gestureListener = new BoxView { BackgroundColor = Color.White, Opacity = .02, CornerRadius = cornerRadius };
             _gestureListener.GestureRecognizers.Add(_panGesture);
             AbsoluteLayout.SetLayoutFlags(_gestureListener, AbsoluteLayoutFlags.SizeProportional);
             AbsoluteLayout.SetLayoutBounds(_gestureListener, new Rectangle(0, 0, 1, 1));

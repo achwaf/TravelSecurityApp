@@ -32,8 +32,8 @@ namespace SecurityTravelApp.Views.Popups
             // the lang s already selected at app startup
             updateLangVisuals(I18n.SelectedLang());
 
-            // correct the behavior of backgroud tapping in android
-            if (Device.RuntimePlatform.Equals(Device.Android))
+            // correct the behavior of backgroud tapping in android and IOS
+            if (Device.RuntimePlatform.Equals(Device.Android)  || Device.RuntimePlatform.Equals(Device.iOS))
             {
                 BackgroundContainer.IsVisible = true;
                 var tapGestureRecognizerContainer = new TapGestureRecognizer();
