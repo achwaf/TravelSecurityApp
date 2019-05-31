@@ -12,7 +12,7 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(BorderlessEditor), typeof(BorderlessEditorRenderer))]
+[assembly: ExportRenderer(typeof(BorderlessEntry), typeof(BorderlessEntryRenderer))]
 namespace SecurityTravelApp.iOS
 {
     public class BorderlessEntryRenderer : EntryRenderer
@@ -22,8 +22,10 @@ namespace SecurityTravelApp.iOS
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-
-            Control.Layer.BorderWidth = 0;
+            if(Control != null)
+            {
+                Control.Layer.BorderWidth = 0;
+            }
         }
     }
 }

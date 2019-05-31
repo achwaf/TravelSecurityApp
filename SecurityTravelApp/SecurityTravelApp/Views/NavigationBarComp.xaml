@@ -16,7 +16,7 @@
             HeightRequest="60"
             Padding="0"
             CornerRadius="20"
-            IsClippedToBounds="false"
+            IsClippedToBounds="true"
             HasShadow="true"
             BackgroundColor="WhiteSmoke"
             OutlineColor="WhiteSmoke">

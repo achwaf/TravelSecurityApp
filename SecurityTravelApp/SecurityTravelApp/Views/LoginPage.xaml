@@ -84,7 +84,7 @@
                         <BoxView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Color="#334711" CornerRadius="22.5" VerticalOptions="Fill" HorizontalOptions="Fill" />
                         <BoxView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Color="White" CornerRadius="22" VerticalOptions="Fill" HorizontalOptions="Fill" Margin="1" />
                         <Label Grid.Column="0" Grid.Row="0"
-                           Text="{x:Static viewUtils:LineAwesomeIcons.User}" FontAttributes="Bold"
+                           Text="{x:Static viewUtils:LineAwesomeIcons.User}"
                            FontFamily="{StaticResource LineAwesome}" 
                                VerticalOptions="Center" VerticalTextAlignment="Center"
                                HorizontalOptions="End" HorizontalTextAlignment="Center"
@@ -92,14 +92,14 @@
                            FontSize="20"/>
                         <Grid x:Name="TogglePass" Grid.Column="0" Grid.Row="1">
                             <Label x:Name="ShowPass"
-                               Text="{x:Static viewUtils:LineAwesomeIcons.Eye}" IsVisible="False" FontAttributes="Bold"
+                               Text="{x:Static viewUtils:LineAwesomeIcons.Eye}" IsVisible="False"
                                FontFamily="{StaticResource LineAwesome}" 
                                    VerticalOptions="Center" VerticalTextAlignment="Center"
                                    HorizontalOptions="End" HorizontalTextAlignment="Center"
                                TextColor="Gray"
                                FontSize="20"/>
                             <Label x:Name="HidePass"
-                               Text="{x:Static viewUtils:LineAwesomeIcons.EyeSlash}" FontAttributes="Bold"
+                               Text="{x:Static viewUtils:LineAwesomeIcons.EyeSlash}"
                                FontFamily="{StaticResource LineAwesome}" 
                                    VerticalOptions="Center" VerticalTextAlignment="Center"
                                    HorizontalOptions="End" HorizontalTextAlignment="Center"
