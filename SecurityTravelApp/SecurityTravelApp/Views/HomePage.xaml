@@ -173,15 +173,14 @@
 
                 </Grid>
                 <Grid Grid.Row="2">
-                    <Frame x:Name="HotlineButton" VerticalOptions="Center" HorizontalOptions="End" 
-                           Padding="0" Margin="30,0,30,0"
-                           CornerRadius="35"
-                           HeightRequest="70">
-                        <Grid BackgroundColor="#6C91C2" ColumnSpacing="0">
+                        <Grid x:Name="HotlineButton" VerticalOptions="Center" HorizontalOptions="End" 
+                           Padding="0" Margin="30,0,30,0" HeightRequest="70" ColumnSpacing="0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="70"/>
                             </Grid.ColumnDefinitions>
+                            <BoxView Color="#6C91C2" Grid.Column="0" Grid.ColumnSpan="2"
+                                     VerticalOptions="Fill" HorizontalOptions="Fill" CornerRadius="35" Margin="0"/>
                             <BoxView Color="White" Grid.Column="0" Grid.ColumnSpan="2"
                                      VerticalOptions="Fill" HorizontalOptions="Fill" CornerRadius="35" Margin="2"/>
                             <BoxView Color="#6C91C2" Grid.Column="0" Grid.ColumnSpan="2"
@@ -200,7 +199,6 @@
                                 VerticalTextAlignment="Center"
                                 HorizontalTextAlignment="Center" />
                         </Grid>
-                    </Frame>
                     <Frame VerticalOptions="Center" HorizontalOptions="Start" Padding="0" Margin="-40,0,0,0" CornerRadius="25"
                            HasShadow="True" OutlineColor="WhiteSmoke" BackgroundColor="WhiteSmoke"
                            WidthRequest="100" HeightRequest="50">

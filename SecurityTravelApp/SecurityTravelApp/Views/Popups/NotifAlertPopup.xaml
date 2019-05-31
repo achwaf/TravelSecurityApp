@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
@@ -33,9 +33,9 @@
                 <Image Grid.Column="1" Source="bitmap2.png" VerticalOptions="Center" HorizontalOptions="End" WidthRequest="{StaticResource SirenWidth}"/>
                 <Image x:Name="Siren2Light" Grid.Column="1" Source="bitmap2Light.png" VerticalOptions="Center" HorizontalOptions="End" WidthRequest="{StaticResource SirenWidth}"/>
             </Grid>
-            <Frame Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="#24455B"
+            <Frame Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="#24455B" IsClippedToBounds="true"
                Padding="5" Margin="30,0,30,0" CornerRadius="10">
-                <Frame VerticalOptions="Center" HorizontalOptions="Center" CornerRadius="5" Padding="0" Margin="0">
+                <Frame VerticalOptions="Center" HorizontalOptions="Center" CornerRadius="5" Padding="0" Margin="0" IsClippedToBounds="true">
                     <Grid  ColumnSpacing="0" RowSpacing="0">
                         <Grid.RowDefinitions >
                             <RowDefinition Height="Auto"/>

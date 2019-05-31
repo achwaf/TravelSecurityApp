@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
@@ -93,7 +93,7 @@
                 </Grid>
             </Grid>
             <Frame x:Name="Thumb" IsVisible="True" AbsoluteLayout.LayoutFlags="YProportional" AbsoluteLayout.LayoutBounds="{StaticResource AbsoluteLayoutRightSide}" 
-                   HasShadow="False" CornerRadius="30" Padding="0" Margin="5">
+                   HasShadow="False" CornerRadius="30" Padding="0" Margin="5" IsClippedToBounds="true">
                 <Grid >
                     <BoxView Color="#bf0000" HorizontalOptions="Start" WidthRequest="30" />
                     <!--<BoxView Color="#d30101"  HorizontalOptions="End"  WidthRequest="30" />-->

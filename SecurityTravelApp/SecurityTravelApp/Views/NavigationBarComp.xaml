@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:comp="clr-namespace:SecurityTravelApp.Views"
@@ -16,6 +16,7 @@
             HeightRequest="60"
             Padding="0"
             CornerRadius="20"
+            IsClippedToBounds="false"
             HasShadow="true"
             BackgroundColor="WhiteSmoke"
             OutlineColor="WhiteSmoke">

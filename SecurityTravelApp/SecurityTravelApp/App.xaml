@@ -22,7 +22,7 @@
                 <OnPlatform.Platforms>
                     <On Platform="Android" Value="line-awesome.ttf#LineAwesome" />
                     <On Platform="UWP" Value="/Assets/line-awesome.ttf#LineAwesome" />
-                    <On Platform="iOS" Value="line-awesome" />
+                    <On Platform="iOS" Value="LineAwesome" />
                 </OnPlatform.Platforms>
             </OnPlatform>
 

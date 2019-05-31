@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
@@ -16,7 +16,7 @@
     </ContentView.Resources>
     <ContentView.Content>
         <StackLayout x:Name="Container">
-            <Frame Padding="0" Margin="0" CornerRadius="10" HeightRequest="{StaticResource AlertHeight}">
+            <Frame Padding="0" Margin="0" CornerRadius="10" HeightRequest="{StaticResource AlertHeight}" IsClippedToBounds="true">
                 <Grid ColumnSpacing="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="{StaticResource DecorationWidth}"/>
