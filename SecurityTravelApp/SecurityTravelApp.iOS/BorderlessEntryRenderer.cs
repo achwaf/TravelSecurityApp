@@ -24,7 +24,8 @@ namespace SecurityTravelApp.iOS
             base.OnElementPropertyChanged(sender, e);
             if(Control != null)
             {
-                Control.Layer.BorderWidth = 0;
+                Control.Layer.BorderWidth = 0; 
+                Control.BorderStyle = UITextBorderStyle.None;
             }
         }
     }
