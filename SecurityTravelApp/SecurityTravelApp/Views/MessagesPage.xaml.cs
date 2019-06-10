@@ -467,6 +467,16 @@ namespace SecurityTravelApp.Views
             populateMessages(activeListMessages);
         }
 
+        private void initVisuals()
+        {
+            SearchEntry.Text = String.Empty;
+            SearchEntry.IsVisible = false;
+            SearchBg.IsVisible = false;
+            SearchTap.IsEnabled = true;
+            MsgTXT.Opacity = 1;
+            AddIcon.Text = LineAwesomeIcons.Plus;
+        }
+
         public void update(NavigationParams pParam)
         {
             // update navigation bar
@@ -474,6 +484,7 @@ namespace SecurityTravelApp.Views
             // update data
             if (!pParam.NavigationBarOnly)
             {
+                initVisuals();
                 // probably update only sent status of messages
                 // maybe update directly in the list , or compare between database retrieved one and the current one
                 // or at final thought, better populate from scratch since suppression was added
