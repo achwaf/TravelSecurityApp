@@ -256,6 +256,7 @@ namespace SecurityTravelApp.Services
             await checkForPermission(Permission.Location);
             await checkForPermission(Permission.Microphone);
             await checkForPermission(Permission.Storage);
+            await checkForPermission(Permission.Sms);
             return false;
         }
 

@@ -18,7 +18,7 @@ namespace SecurityTravelApp.iOS
 
         AVAudioRecorder _recorder;
         AVAudioPlayer _player;
-        private static String Storage;
+        private static String Storage = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         private static String AudioFolder = "TravelSecurity";
         private String audioPath;
 

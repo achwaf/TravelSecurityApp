@@ -26,7 +26,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>x86_64</MtouchArch>
-    <MtouchLink>None</MtouchLink>
+    <MtouchLink>SdkOnly</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
@@ -76,6 +76,9 @@
     </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <BundleResource Include="Resources\line-awesome.ttf" />
+    <Compile Include="AudioRecorder_IOS.cs" />
+    <Compile Include="LocalNotifHelper_IOS.cs" />
+    <Compile Include="PhoneCall_IOS.cs" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\1024.png">
@@ -268,6 +271,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\..\..\..\Library\Frameworks\Xamarin.Android.framework\Versions\9.2.3-0\lib\xamarin.android\xbuild-frameworks\MonoAndroid\v8.1\Mono.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Plugin.Permissions">
@@ -287,7 +293,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\SecurityTravelApp\SecurityTravelApp.csproj">
-      <Project>{134A9960-1162-4065-8668-6BF2D5F34F80}</Project>
+      <Project>{21464057-5454-4C4D-999D-807B5883EEEB}</Project>
       <Name>SecurityTravelApp</Name>
     </ProjectReference>
   </ItemGroup>

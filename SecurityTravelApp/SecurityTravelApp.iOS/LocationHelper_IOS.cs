@@ -62,12 +62,12 @@ namespace SecurityTravelApp.iOS
 
         public void disableBackgroundLocationUpdates()
         {
-            throw new NotImplementedException();
+
         }
 
         public void disableLocationUpdates()
         {
-            throw new NotImplementedException();
+
         }
 
         public Geoposition getLastKnownGPSLocation()
@@ -82,7 +82,7 @@ namespace SecurityTravelApp.iOS
 
         public void reactivateLocationUpdates(int IntervalTime)
         {
-            throw new NotImplementedException();
+
         }
 
         public static Geoposition toGeoposition(CLLocation pLocation)
