@@ -78,6 +78,7 @@ namespace SecurityTravelApp.Utils
             dictFR.Add(AppTextID.GPS_TAP_INDICATION, "Tapez l'épingle pour envoyer la position.");
             dictFR.Add(AppTextID.HOME, "Accueil");
             dictFR.Add(AppTextID.DOCS, "Docs");
+            dictFR.Add(AppTextID.TEST, "#TEST");
             dictFR.Add(AppTextID.WARNINGS, "Alertes");
             dictFR.Add(AppTextID.TRACKING_ONGOING, "Suivi en cours...");
             dictFR.Add(AppTextID.TRACKING_STOPPED, "Suivi arrêté");
@@ -119,6 +120,7 @@ namespace SecurityTravelApp.Utils
             dictEN.Add(AppTextID.GPS_TAP_INDICATION, "Tap the map marker to send location");
             dictEN.Add(AppTextID.HOME, "Home");
             dictEN.Add(AppTextID.DOCS, "Docs");
+            dictEN.Add(AppTextID.TEST, "#TEST");
             dictEN.Add(AppTextID.WARNINGS, "Warnings");
             dictEN.Add(AppTextID.TRACKING_ONGOING, "Tracking ongoing...");
             dictEN.Add(AppTextID.TRACKING_STOPPED, "Tracking stopped");
@@ -160,6 +162,7 @@ namespace SecurityTravelApp.Utils
         GPS_TAP_INDICATION,
         HOME,
         DOCS,
+        TEST,
         WARNINGS,
         TRACKING_ONGOING,
         TRACKING_STOPPED,

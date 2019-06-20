@@ -44,6 +44,7 @@ namespace SecurityTravelApp.Views.ViewsUtils
         public static readonly string LeftCircle = "\uf11a";
         public static readonly string Microphone = "\uf28c";
         public static readonly string Recycle = "\uf2d2";
+        public static readonly string Bug = "\uf153";
 
     }
 

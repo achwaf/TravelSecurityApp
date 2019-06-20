@@ -187,7 +187,8 @@ namespace SecurityTravelApp.Services
                 case NavigationItemTarget.Messages: return typeof(MessagesPage);
                 case NavigationItemTarget.Warnings: return typeof(AlertsPage);
                 case NavigationItemTarget.Login: return typeof(LoginPage);
-                case NavigationItemTarget.Docs: return typeof(PopupTestPage);
+                case NavigationItemTarget.Docs: return typeof(DocsPage);
+                case NavigationItemTarget.Test: return typeof(PopupTestPage);
                 default: return typeof(PopupTestPage);
             }
         }
@@ -224,7 +225,6 @@ namespace SecurityTravelApp.Services
             if (targetPage == null)
             {
                 targetPage = (Page)Activator.CreateInstance(TypeOfNavigationTarget(pType), pSrvFactory, pParamAfterNav);// if the page is I18nable , update the text
-
             }
             else
             {
@@ -295,6 +295,7 @@ namespace SecurityTravelApp.Services
             navigationItems.Add(createNavigationItem(4, AppTextID.MESSAGES, NavigationItemTarget.Messages, LineAwesomeIcons.Messages, false));
             navigationItems.Add(createNavigationItem(3, AppTextID.WARNINGS, NavigationItemTarget.Warnings, LineAwesomeIcons.Warnings, false, NavigationItemNotifType.Numerical, NavigationItemState.Current));
             navigationItems.Add(createNavigationItem(5, AppTextID.DOCS, NavigationItemTarget.Docs, LineAwesomeIcons.Docs, false, NavigationItemNotifType.Numerical, NavigationItemState.Shaded));
+            navigationItems.Add(createNavigationItem(5, AppTextID.TEST, NavigationItemTarget.Test, LineAwesomeIcons.Bug, false, NavigationItemNotifType.Dot, NavigationItemState.Shaded));
         }
 
 

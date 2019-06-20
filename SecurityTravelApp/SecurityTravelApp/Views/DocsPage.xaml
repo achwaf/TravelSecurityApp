@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:comp="clr-namespace:SecurityTravelApp.Views"
+             xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true"
+             x:Class="SecurityTravelApp.Views.DocsPage">
+    
+    <ContentPage.Resources>
+        <OnPlatform x:Key="BarCornerRadius" x:TypeArguments="CornerRadius" Default="20" />
+        <OnPlatform x:Key="EntryOuterColor" x:TypeArguments="Color" Default="#374446" />
+
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="ThePage">
+            <Grid AbsoluteLayout.LayoutFlags="All"
+                AbsoluteLayout.LayoutBounds=".5,.5,1,1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <!--<RowDefinition Height="70"/>-->
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" HorizontalOptions="Fill" Margin="10,10,10,0" ColumnSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="AlertTXT" HorizontalOptions="StartAndExpand"
+                           VerticalOptions="Center"
+                           HorizontalTextAlignment="Start"
+                           VerticalTextAlignment="Center" FontSize="30" TextColor="DimGray"/>
+                    <Label x:Name="FilterIcon" Grid.Column="1" Text="{x:Static viewUtils:LineAwesomeIcons.Filter}"
+                                FontFamily="{StaticResource LineAwesome}"
+                                FontSize="25"
+                                Margin="0,2,0,0"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"/>
+                    <BoxView x:Name="FilterTap" Grid.Column="1" Color="Black" Opacity=".02" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+                </Grid>                                 
+                <Grid x:Name="EmptyInfo" IsVisible="false" Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Fill" Margin="0,0,0,70">
+                    <Image Source="empty.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="80" WidthRequest="80" Opacity=".15"/>
+                    <Label x:Name="EmptyTXT" FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" Opacity=".15"/>
+                </Grid>
+                <Grid x:Name="EmptyFilterInfo" IsVisible="false" Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Fill" Margin="0,0,0,70">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="empty.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="80" WidthRequest="80" Opacity=".15"/>
+                    <Label x:Name="EmptyTXT2" FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" Opacity=".15"/>
+                    <Label x:Name="FilterEmptyTXT" Grid.Row="1" FontSize="13" TextColor="Red" VerticalOptions="Center" HorizontalOptions="Center" Opacity=".15"/>
+                </Grid>
+                <ScrollView  Grid.Row="1" Margin="{StaticResource UpFrontViewMargin}">
+                    <StackLayout x:Name="AlertsContainer" Orientation="Vertical" HorizontalOptions="Fill" Spacing="10"
+                                 Margin="0,10">
+                    </StackLayout>
+                </ScrollView>
+            </Grid>
+            <!--Dim Mask-->
+            <BoxView x:Name="DimMask" IsVisible="false" Opacity="{StaticResource DimMaskOpacity}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" Color="Black"/>
+            <Grid x:Name="StackLayoutUpFront"  VerticalOptions="End" AbsoluteLayout.LayoutFlags="YProportional , SizeProportional"
+                    AbsoluteLayout.LayoutBounds="0,1,1,1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <BoxView  Grid.Row="1" Color="White" Opacity="{StaticResource BehindNavBarMaskOpacity}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                <comp:NavigationBarComp x:Name="NavigationBar" Grid.Row="1" VerticalOptions="End" HorizontalOptions="Fill" 
+                    Margin="{StaticResource UpFrontViewMargin}" />
+            </Grid>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

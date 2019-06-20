@@ -111,7 +111,8 @@ namespace SecurityTravelApp.Views.ViewsUtils
         Home,
         Messages,
         Warnings,
-        Docs
+        Docs,
+        Test
     }
 
     public enum NavigationItemNotifType

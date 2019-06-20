@@ -9,10 +9,13 @@ namespace SecurityTravelApp.Services.LocalDataServiceUtils.entities
     {
         [SQLite.PrimaryKey]
         public Guid ID { get; set; }
+        public String Region { get; set; }
         public String Title { get; set; }
+        public String Description { get; set; }
         public String Text { get; set; }
         public DateTime DateReceived { get; set; }
         public Boolean IsSeen { get; set; }
         public DateTime DateSeen { get; set; }
+        public DocumentType Type { get; set; }
     }
 }

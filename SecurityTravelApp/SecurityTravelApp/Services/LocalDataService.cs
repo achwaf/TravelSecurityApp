@@ -40,40 +40,6 @@ namespace SecurityTravelApp.Services
             await saveListAlert(getAlerts());
         }
 
-        static public void setUserLoggedInFlag(Boolean pValue)
-        {
-            Preferences.Set(UserLoggedInFlag, pValue);
-        }
-
-        static public Boolean getUserLoggedInFlag()
-        {
-            return Preferences.Get(UserLoggedInFlag, false);
-        }
-
-
-        static public void setUserTrackingFlag(Boolean pValue)
-        {
-            Preferences.Set(UserTrackingFlag, pValue);
-        }
-
-
-        static public Boolean getUserTrackingFlag()
-        {
-            return Preferences.Get(UserTrackingFlag, false);
-        }
-
-
-        static public void setLanguagePreference(AppLanguage pValue)
-        {
-            Preferences.Set(PreferredLang, pValue.ToString());
-        }
-
-
-        static public AppLanguage getLanguagePreference()
-        {
-            String value = Preferences.Get(PreferredLang, AppLanguage.FR.ToString());
-            return (AppLanguage)Enum.Parse(typeof(AppLanguage), value);
-        }
 
 
         private void checkDBExists(String pPath)
@@ -119,6 +85,68 @@ namespace SecurityTravelApp.Services
             var result = await database.UpdateAsync(pObject);
             return true;
         }
+
+        public async Task<Boolean> deleteDataOlderThan(DateTime pLimitDate)
+        {
+            int nbMsgDeleted, nbAlertDeleted, nbLocaDeleted, nbAudioDeleted, nbDocumentDeleted;
+            try
+            {
+                nbMsgDeleted = await database.Table<MessageDB>().DeleteAsync(x => x.DateSent < pLimitDate);
+                nbAlertDeleted = await database.Table<AlertDB>().DeleteAsync(x => x.DateReceived < pLimitDate);
+                nbLocaDeleted = await database.Table<LocationDB>().DeleteAsync(x => x.DateSent < pLimitDate);
+                nbAudioDeleted = await database.Table<AudioRecordDB>().DeleteAsync(x => x.DateSent < pLimitDate);
+                nbDocumentDeleted = await database.Table<DocDB>().DeleteAsync(x => x.DateReceived < pLimitDate);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        #region flags
+
+        static public void setUserLoggedInFlag(Boolean pValue)
+        {
+            Preferences.Set(UserLoggedInFlag, pValue);
+        }
+
+        static public Boolean getUserLoggedInFlag()
+        {
+            return Preferences.Get(UserLoggedInFlag, false);
+        }
+
+
+        static public void setUserTrackingFlag(Boolean pValue)
+        {
+            Preferences.Set(UserTrackingFlag, pValue);
+        }
+
+
+        static public Boolean getUserTrackingFlag()
+        {
+            return Preferences.Get(UserTrackingFlag, false);
+        }
+
+
+        static public void setLanguagePreference(AppLanguage pValue)
+        {
+            Preferences.Set(PreferredLang, pValue.ToString());
+        }
+
+
+        static public AppLanguage getLanguagePreference()
+        {
+            String value = Preferences.Get(PreferredLang, AppLanguage.FR.ToString());
+            return (AppLanguage)Enum.Parse(typeof(AppLanguage), value);
+        }
+
+        #endregion flags
+
+
+        #region location
 
         public async Task<Boolean> savePosition(Geoposition pGeoposition)
         {
@@ -218,6 +246,92 @@ namespace SecurityTravelApp.Services
             return result;
         }
 
+        #endregion location
+
+
+        #region Document
+
+        public async Task<Boolean> saveDocument(Document pDoc)
+        {
+            DocDB docDB = new DocDB()
+            {
+                ID = pDoc.ID,
+                Region = pDoc.region,
+                Title = pDoc.title,
+                Description = pDoc.description,
+                Text = pDoc.text,
+                DateReceived = pDoc.dateReceived,
+                IsSeen = pDoc.isSeen,
+                DateSeen = pDoc.dateSeen
+            };
+
+            await database.InsertAsync(docDB);
+            return true;
+        }
+
+        public async Task<DocDB> getDocDB(Document pDoc)
+        {
+            var doc = await database.Table<DocDB>().FirstAsync(x => x.ID == pDoc.ID);
+            return doc;
+        }
+
+
+        public async Task<Boolean> saveListDoc(List<Document> pListe)
+        {
+            var vListDocDB = new List<DocDB>();
+
+            foreach (var doc in pListe)
+            {
+                DocDB docDB = new DocDB();
+                // set values
+                docDB.ID = doc.ID;
+                docDB.Text = doc.text;
+                docDB.DateSeen = doc.dateSeen;
+                docDB.Description = doc.description;
+                docDB.DateReceived = doc.dateReceived;
+                docDB.Region = doc.region;
+                docDB.Type = doc.type;
+                docDB.Title = doc.title;
+                docDB.IsSeen = doc.isSeen;
+                vListDocDB.Add(docDB);
+            }
+            await database.InsertAllAsync(vListDocDB);
+            return true;
+
+        }
+
+
+        public async Task<List<Document>> getListDoc()
+        {
+            var vList = await database.Table<DocDB>().OrderByDescending<DateTime>(x => x.DateReceived).ToListAsync();
+            var vListDoc = new List<Document>();
+
+            if (vList != null && vList.Count > 0)
+            {
+                foreach (var docDB in vList)
+                {
+                    Document document = new Document();
+                    document.ID = docDB.ID;
+                    document.text = docDB.Text;
+                    document.dateSeen = docDB.DateSeen;
+                    document.dateReceived = docDB.DateReceived;
+                    document.region = docDB.Region;
+                    document.description = docDB.Description;
+                    document.type = docDB.Type;
+                    document.title = docDB.Title;
+                    document.isSeen = docDB.IsSeen;
+                    vListDoc.Add(document);
+                }
+            }
+            return vListDoc;
+        }
+
+
+        #endregion Document
+
+
+        #region AudioRecord
+
         public async Task<Boolean> saveAudioRecord(AudioRecord pAudioRecord)
         {
             AudioRecordDB location = new AudioRecordDB()
@@ -289,6 +403,11 @@ namespace SecurityTravelApp.Services
             return audioRecordDB;
         }
 
+        #endregion AudioRecord
+
+
+        #region Alert
+
         public async Task<Boolean> saveAlert(Alert pALert)
         {
             AlertDB alertDB = new AlertDB();
@@ -358,6 +477,12 @@ namespace SecurityTravelApp.Services
             }
             return vListAlert;
         }
+
+
+        #endregion Alert
+
+
+        #region Message
 
 
         public async Task<MessageDB> getMessageDB(Message pMessage)
@@ -444,6 +569,12 @@ namespace SecurityTravelApp.Services
         }
 
 
+        #endregion Message
+
+
+        #region Count operations
+
+
         public async Task<int> getListAlertCount()
         {
             var count = await database.Table<AlertDB>().CountAsync();
@@ -505,24 +636,9 @@ namespace SecurityTravelApp.Services
             return count;
         }
 
-        public async Task<Boolean> deleteDataOlderThan(DateTime pLimitDate)
-        {
-            int nbMsgDeleted, nbAlertDeleted, nbLocaDeleted, nbAudioDeleted;
-            try
-            {
-                nbMsgDeleted = await database.Table<MessageDB>().DeleteAsync(x => x.DateSent < pLimitDate);
-                nbAlertDeleted = await database.Table<AlertDB>().DeleteAsync(x => x.DateReceived < pLimitDate);
-                nbLocaDeleted = await database.Table<LocationDB>().DeleteAsync(x => x.DateSent < pLimitDate);
-                nbAudioDeleted = await database.Table<AudioRecordDB>().DeleteAsync(x => x.DateSent < pLimitDate);
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
+        #endregion Count operations
 
-            return true;
-        }
-
+        
 
         private List<Alert> getAlerts()
         {
