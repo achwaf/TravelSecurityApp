@@ -69,6 +69,7 @@ namespace SecurityTravelApp.Utils
             dictFR.Add(AppTextID.FREE_SPACE, "Suppr. anciennes données");
             dictFR.Add(AppTextID.NEW, "Nouveau");
             dictFR.Add(AppTextID.ALERTS, "Alertes");
+            dictFR.Add(AppTextID.DOCUMENTS, "Documents");
             dictFR.Add(AppTextID.EMPTY, "Vide");
             dictFR.Add(AppTextID.FILTER_EMPTY, "Les données sont filtrées, vérifiez le filtre.");
             dictFR.Add(AppTextID.WAITING_FOR_TRANSFER, "En attente d'envoi");
@@ -111,6 +112,7 @@ namespace SecurityTravelApp.Utils
             dictEN.Add(AppTextID.FREE_SPACE, "Clear old data");
             dictEN.Add(AppTextID.NEW, "New");
             dictEN.Add(AppTextID.ALERTS, "Alerts");
+            dictEN.Add(AppTextID.DOCUMENTS, "Documents");
             dictEN.Add(AppTextID.EMPTY, "Empty");
             dictEN.Add(AppTextID.FILTER_EMPTY, "Data are filtered. Check the Filter.");
             dictEN.Add(AppTextID.WAITING_FOR_TRANSFER, "Waiting for transfer");
@@ -152,6 +154,7 @@ namespace SecurityTravelApp.Utils
         RECORDED_AUDIO,
         FREE_SPACE,
         ALERTS,
+        DOCUMENTS,
         NEW,
         EMPTY,
         FILTER_EMPTY,

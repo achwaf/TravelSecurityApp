@@ -147,6 +147,7 @@ namespace SecurityTravelApp.Views
             AlertsContainer.Children.Clear();
 
             // get data from server
+            // web services not yet implemented
 
             // get data locally
             listAlerts = await localDataSrv.getListAlert();

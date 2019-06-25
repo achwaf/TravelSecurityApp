@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:comp="clr-namespace:SecurityTravelApp.Views"
              xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
+             xmlns:skiaforms="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              x:Class="SecurityTravelApp.Views.HomePage"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
@@ -19,10 +20,11 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout >
-            <Grid BackgroundColor="White" AbsoluteLayout.LayoutFlags="All"
+            <comp:BGComp AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1"  Opacity=".2" />
+            <Grid BackgroundColor="Transparent" AbsoluteLayout.LayoutFlags="All"
                 AbsoluteLayout.LayoutBounds=".5,.5,1,1"
                 Margin="0"
-                ColumnSpacing="0" RowSpacing="10">
+                ColumnSpacing="0" RowSpacing="20" >
                 <Grid.RowDefinitions>
                     <!--Header-->
                     <RowDefinition Height="Auto"/>
@@ -33,9 +35,9 @@
                     <!--SOS-->
                     <RowDefinition Height="Auto"/>
                     <!--Spacer for Navigation bar-->
-                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="100"/>
                 </Grid.RowDefinitions>
-                <Grid Margin="10,5,10,0" RowSpacing="0">
+                <Grid RowSpacing="0" Padding="10,10,10,10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="Auto"/>
@@ -53,10 +55,11 @@
                                FontAttributes="Bold" FontSize="25"/>
                     </StackLayout>
                 </Grid>
-                <Grid Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="#F3F7F7" MinimumHeightRequest="300">
-                    <Image Source="WorldMap.png" Opacity=".25"
+                <Grid Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill" MinimumHeightRequest="300">
+                    <Image Source="WorldMap.png" Opacity=".7"
                            VerticalOptions="Fill"
                            HorizontalOptions="Fill" Aspect="AspectFit"/>
+                    <skiaforms:SKCanvasView x:Name="canvasBackground" PaintSurface="OnCanvasViewPaintSurface" />
                     <Grid x:Name="NetworkLink" Margin="46.5,85,100,39"
                           VerticalOptions="Fill" HorizontalOptions="Fill" 
                           ColumnSpacing="0" RowSpacing="0">
@@ -91,7 +94,7 @@
                                 VerticalTextAlignment="Start"
                                 HorizontalTextAlignment="End" />
                     </Grid>
-                    <StackLayout x:Name="PositionInfo" Margin="46.5,65,100,39" BackgroundColor="#40FFFFFF"
+                    <StackLayout x:Name="PositionInfo" Margin="46.5,65,100,39" 
                           VerticalOptions="Center" HorizontalOptions="Center" 
                           Spacing="0">
                         <Label x:Name="LastCheckinLabel" FontSize="12" FontAttributes="Bold" Margin="0,0,0,5"
@@ -223,6 +226,8 @@
                     <comp:TapSliderComp x:Name="SosSlider" Margin="30,0,30,0" VerticalOptions="Fill" HorizontalOptions="Fill"/>
                 </Grid>
             </Grid>
+
+            <comp:TopBottomMaskComp AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" />
             <!--Dim Mask-->
             <BoxView x:Name="DimMask" IsVisible="false" Opacity="{StaticResource DimMaskOpacity}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" Color="Black"/>
             <Grid x:Name="StackLayoutUpFront"  VerticalOptions="End" AbsoluteLayout.LayoutFlags="YProportional , SizeProportional"
@@ -236,6 +241,7 @@
                     Margin="{StaticResource UpFrontViewMargin}"/>
 
             </Grid>
+
         </AbsoluteLayout>
 
     </ContentPage.Content>

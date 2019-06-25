@@ -25,12 +25,16 @@ namespace SecurityTravelApp.Services
         {
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), databaseName);
 
+            // for test purposes, the database file is deleted and created from scratch
+            // since webservices are not yet implemented, this is a straight forward way to test
             if (File.Exists(path))
             {
                 File.Delete(path);
             }
+
             checkDBExists(path);
 
+            // after the database is recreated, we fill it with test data
             fillDatabase();
         }
 
@@ -38,6 +42,7 @@ namespace SecurityTravelApp.Services
         {
             await saveListMessage(getMessages());
             await saveListAlert(getAlerts());
+            await saveListDocs(getDocs());
         }
 
 
@@ -259,7 +264,8 @@ namespace SecurityTravelApp.Services
                 Region = pDoc.region,
                 Title = pDoc.title,
                 Description = pDoc.description,
-                Text = pDoc.text,
+                Data = pDoc.data,
+                FileExtension = pDoc.fileExtension,
                 DateReceived = pDoc.dateReceived,
                 IsSeen = pDoc.isSeen,
                 DateSeen = pDoc.dateSeen
@@ -276,7 +282,7 @@ namespace SecurityTravelApp.Services
         }
 
 
-        public async Task<Boolean> saveListDoc(List<Document> pListe)
+        public async Task<Boolean> saveListDocs(List<Document> pListe)
         {
             var vListDocDB = new List<DocDB>();
 
@@ -285,13 +291,14 @@ namespace SecurityTravelApp.Services
                 DocDB docDB = new DocDB();
                 // set values
                 docDB.ID = doc.ID;
-                docDB.Text = doc.text;
+                docDB.Data = doc.data;
                 docDB.DateSeen = doc.dateSeen;
                 docDB.Description = doc.description;
                 docDB.DateReceived = doc.dateReceived;
                 docDB.Region = doc.region;
                 docDB.Type = doc.type;
                 docDB.Title = doc.title;
+                docDB.FileExtension = doc.fileExtension;
                 docDB.IsSeen = doc.isSeen;
                 vListDocDB.Add(docDB);
             }
@@ -312,13 +319,14 @@ namespace SecurityTravelApp.Services
                 {
                     Document document = new Document();
                     document.ID = docDB.ID;
-                    document.text = docDB.Text;
+                    document.data = docDB.Data;
                     document.dateSeen = docDB.DateSeen;
                     document.dateReceived = docDB.DateReceived;
                     document.region = docDB.Region;
                     document.description = docDB.Description;
                     document.type = docDB.Type;
                     document.title = docDB.Title;
+                    document.fileExtension = docDB.FileExtension;
                     document.isSeen = docDB.IsSeen;
                     vListDoc.Add(document);
                 }
@@ -638,7 +646,7 @@ namespace SecurityTravelApp.Services
 
         #endregion Count operations
 
-        
+
 
         private List<Alert> getAlerts()
         {
@@ -655,6 +663,25 @@ namespace SecurityTravelApp.Services
             listeAlertes.Add(new Alert(AlertType.Normal, "World", "Title for Alert", "Text displaying emergency over the utter importance of the information to be given", "2018/04/19", "2019/01/02 14:07:44"));
 
             return listeAlertes;
+        }
+
+        private List<Document> getDocs()
+        {
+            List<Document> listeDocs = new List<Document>();
+
+            listeDocs.Add(new Document(DocumentType.Text, "Africa South", "The Title of the document", "A little description of the document", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", ".extension", "2019/08/03", ""));
+            listeDocs.Add(new Document(DocumentType.Text, "Africa West", "Another Title of the document", "This time a little longer description of the document", "<URL_path>", ".extension", "2019/06/30", ""));
+            listeDocs.Add(new Document(DocumentType.Link, "Mozambique", "Title", "This time a little longer description of the document", "<URL_path>", ".extension", "2019/05/12", ""));
+            listeDocs.Add(new Document(DocumentType.PDF, "Gana", "The evolution of time", "Tic toc tic toc tic toc tic toc toc tic toc tic toc tic toc tic toc tic toc tic toc", "<URL_path>", ".extension", "2019/04/06", ""));
+            listeDocs.Add(new Document(DocumentType.Word, "Togo", "The expantion of space", "                                                         ", "<URL_path>", ".extension", "2019/04/04", ""));
+            listeDocs.Add(new Document(DocumentType.Excel, "Egypt", "Statistics", "This file is <insert very ambiguous text here>", "<URL_path>", ".extension", "2019/03/26", ""));
+            listeDocs.Add(new Document(DocumentType.PowerPoint, "Tunisia", "non complete", "Version 0.7.0", "<URL_path>", ".extension", "2019/02/08", ""));
+            listeDocs.Add(new Document(DocumentType.Image, "Instaland", "", "An instant description of the instant document", "<URL_path>", ".extension", "2019/01/16", ""));
+            listeDocs.Add(new Document(DocumentType.Video, "Youtubia", "Cats cats and cats", "Meow Meaw and Meiw", "<URL_path>", ".extension", "2018/12/27", ""));
+            listeDocs.Add(new Document(DocumentType.Audio, "Area 51", "Alien Encounter", "pchhh pttpt kchh ziiit", "<URL_path>", ".extension", "2018/10/05", ""));
+            listeDocs.Add(new Document(DocumentType.Other, "", "Downloadable file", "This executable file does not contain any virus, trust me", "<URL_path>", ".extension", "2018/08/15", ""));
+
+            return listeDocs;
         }
 
 

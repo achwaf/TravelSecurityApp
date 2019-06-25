@@ -6,6 +6,8 @@ using SecurityTravelApp.Utils;
 using SecurityTravelApp.ViewModels;
 using SecurityTravelApp.Views.Popups;
 using SecurityTravelApp.Views.ViewsUtils;
+using SkiaSharp;
+using SkiaSharp.Views.Forms;
 using System;
 using Xamarin.Essentials;
 
@@ -328,6 +330,35 @@ namespace SecurityTravelApp.Views
             //}
             return true;
         }
+
+        private void OnCanvasViewPaintSurface(object sender, SkiaSharp.Views.Forms.SKPaintSurfaceEventArgs args)
+        {
+            SKImageInfo info = args.Info;
+            SKSurface surface = args.Surface;
+            SKCanvas canvas = surface.Canvas;
+
+            canvas.Clear();
+
+            using (SKPaint paint = new SKPaint())
+            {
+                // Create a rectangke the size of the container
+                SKRect rect = new SKRect(0, 0, info.Width, info.Height);
+
+                float middleX = (rect.Right + rect.Left) / 2;
+                float middleY = (rect.Top + rect.Bottom) / 2;
+                // Create linear gradient from upper-left to lower-right
+                paint.Shader = SKShader.CreateRadialGradient(
+                                    new SKPoint(middleX, middleY),
+                                    info.Width,
+                                    new SKColor[] { Color.FromHex("#22FFFFFF").ToSKColor(), Color.FromHex("#11000000").ToSKColor() },
+                                    new float[] { 0, 1 },
+                                    SKShaderTileMode.Repeat);
+
+                // Draw the gradient on the rectangle
+                canvas.DrawRect(rect, paint);
+            }
+        }
+        
 
     }
 }

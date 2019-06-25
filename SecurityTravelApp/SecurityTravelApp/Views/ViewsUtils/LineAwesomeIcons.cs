@@ -45,6 +45,16 @@ namespace SecurityTravelApp.Views.ViewsUtils
         public static readonly string Microphone = "\uf28c";
         public static readonly string Recycle = "\uf2d2";
         public static readonly string Bug = "\uf153";
+        public static readonly string FilePicture = "\uf1e8";
+        public static readonly string FilePDF = "\uf1e7";
+        public static readonly string FileAudio = "\uf1eb";
+        public static readonly string FileVideo = "\uf1e5";
+        public static readonly string FileWord = "\uf1ef";
+        public static readonly string FilePowerPoint = "\uf1ea";
+        public static readonly string FileExcel = "\uf1e3";
+        public static readonly string FileText = "\uf1ed";
+        public static readonly string FileOther = "\uf1f0";
+        public static readonly string Link = "\uf268";
 
     }
 

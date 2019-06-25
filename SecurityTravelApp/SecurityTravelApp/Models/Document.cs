@@ -10,10 +10,11 @@ namespace SecurityTravelApp.Models
         public String title;
         public String region;
         public String description;
-        public String text;
+        public String data;
         public DateTime dateReceived;
         public Boolean isSeen;
         public DateTime dateSeen;
+        public String fileExtension;
         public DocumentType type;
 
         public Document()
@@ -21,13 +22,14 @@ namespace SecurityTravelApp.Models
             ID = Guid.NewGuid();
         }
 
-        public Document(DocumentType pType, String pRegion, String pTitle, String pDescription, String pText, String pRecieved, String pSeen) : this()
+        public Document(DocumentType pType, String pRegion, String pTitle, String pDescription, String pData, String pExt, String pRecieved, String pSeen) : this()
         {
             title = pTitle;
             type = pType;
-            text = pText;
+            data = pData;
             description = pDescription;
             region = pRegion;
+            fileExtension = pExt;
             dateReceived = DateTime.Parse(pRecieved);
             if (!String.IsNullOrEmpty(pSeen))
             {
@@ -45,6 +47,13 @@ namespace SecurityTravelApp.Models
     {
         Text,
         Link,
-        Downloadable
+        PDF,
+        Word,
+        Excel,
+        Image,
+        PowerPoint,
+        Audio,
+        Video,
+        Other
     }
 }

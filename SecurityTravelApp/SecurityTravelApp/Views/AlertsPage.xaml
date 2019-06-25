@@ -14,6 +14,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout x:Name="ThePage">
+            <comp:BGComp AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" Opacity=".2"  />
             <Grid AbsoluteLayout.LayoutFlags="All"
                 AbsoluteLayout.LayoutBounds=".5,.5,1,1">
                 <Grid.RowDefinitions>
@@ -59,6 +60,7 @@
                     </StackLayout>
                 </ScrollView>
             </Grid>
+            <comp:TopBottomMaskComp AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" />
             <!--Dim Mask-->
             <BoxView x:Name="DimMask" IsVisible="false" Opacity="{StaticResource DimMaskOpacity}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" Color="Black"/>
             <Grid x:Name="StackLayoutUpFront"  VerticalOptions="End" AbsoluteLayout.LayoutFlags="YProportional , SizeProportional"

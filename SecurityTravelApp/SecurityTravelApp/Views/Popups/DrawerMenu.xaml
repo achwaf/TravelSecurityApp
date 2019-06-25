@@ -2,6 +2,7 @@
 <Pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SecurityTravelApp.Views.Popups.DrawerMenu"
+             xmlns:comp="clr-namespace:SecurityTravelApp.Views"
              xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
              xmlns:Pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
              IsAnimationEnabled="False"
@@ -31,6 +32,7 @@
                 Color="Black" Opacity=".02"
                 AbsoluteLayout.LayoutFlags = "All"
                 AbsoluteLayout.LayoutBounds = "0,0,1,1"/>
+
             <Grid x:Name="SideMenu"
                 BackgroundColor="White"
                 AbsoluteLayout.LayoutFlags = "HeightProportional,YProportional"
@@ -41,7 +43,9 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Image x:Name="Logo2" Grid.Row="0"
+
+                <comp:BGComp Grid.RowSpan="3" HorizontalOptions="Fill" VerticalOptions="Fill" BGImage="BG2.png" Opacity=".5"/>
+                <Image x:Name="Logo2" Grid.Row="0" Opacity=".5" Margin="10"
                        Source="WelcomeLogo2.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="200"/>
                 <StackLayout x:Name="layout" Grid.Row="1" Spacing="5"
                     HorizontalOptions="FillAndExpand"
