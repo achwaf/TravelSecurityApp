@@ -2,6 +2,8 @@
 using SecurityTravelApp.DependencyServices;
 using SecurityTravelApp.Services;
 using SecurityTravelApp.Utils;
+using SkiaSharp;
+using SkiaSharp.Views.Forms;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,6 +22,7 @@ namespace SecurityTravelApp.Views
     {
         private const double _fadeEffect = 0.5;
         private const int _animLength = 140;
+        private const int SOSTextShift = -15;
         private Animation back_animation_tumb;
         private Animation back_animation_delaybar;
         private Stopwatch stopwatch = new Stopwatch();
@@ -33,8 +36,6 @@ namespace SecurityTravelApp.Views
         private Timer timer;
         private AppManagementService appMngSrv;
         private CallService callSrv;
-
-        public event EventHandler SlideCompleted;
 
         public TapSliderComp()
         {
@@ -58,18 +59,46 @@ namespace SecurityTravelApp.Views
             callSrv = (CallService)pSrvFactory.getService(ServiceType.Call);
         }
 
+        private void SOSGradientPaintSurface(object sender, SKPaintSurfaceEventArgs args)
+        {
+            SKImageInfo info = args.Info;
+            SKSurface surface = args.Surface;
+            SKCanvas canvas = surface.Canvas;
+
+            canvas.Clear();
+
+            using (SKPaint paint = new SKPaint())
+            {
+                // Create a rectangke the size of the container
+                SKRect rect = new SKRect(0, 0, info.Width, info.Height);
+
+                float middleX = (rect.Right + rect.Left) / 2;
+                float middleY = (rect.Top + rect.Bottom) / 2;
+                // Create linear gradient from upper-left to lower-right
+                paint.Shader = SKShader.CreateLinearGradient(
+                                    new SKPoint(rect.Left, middleY),
+                                    new SKPoint(rect.Right, middleY),
+                                    new SKColor[] { Color.FromHex("#9B0303").ToSKColor(), Color.FromHex("#DB0606").ToSKColor() },
+                                    new float[] { 0, 1 },
+                                    SKShaderTileMode.Clamp);
+
+                // Draw the gradient on the rectangle
+                canvas.DrawRect(rect, paint);
+            }
+        }
+
 
         async void OnPanGestureUpdated(object sender, PanUpdatedEventArgs e)
         {
+
+            double slideLength = Width - Thumb.Width - Thumb.Margin.Right - Thumb.Margin.Left;
 
             switch (e.StatusType)
             {
                 case GestureStatus.Started:
                     actionLaunched = false;
-                    CallIcon.IsVisible = true;
                     SliderBorder.FadeTo(1, _animLength);
                     CallIcon.FadeTo(1, _animLength);
-                    CallIconDisabled.FadeTo(0, _animLength / 2);
                     secondsToWait = secondsToWaitConst;
                     TimerLabel.Text = secondsToWait.ToString();
                     MessageLaunch.Text = I18n.GetText(AppTextID.APPEL_DANS);
@@ -78,10 +107,14 @@ namespace SecurityTravelApp.Views
                 case GestureStatus.Running:
                     // Translate and ensure we don't pan beyond the wrapped user interface element bounds.
                     var x = Math.Max(0, e.TotalX);
-                    if (x > (Width - Thumb.Width - Thumb.Margin.Right - Thumb.Margin.Left))
-                        x = (Width - Thumb.Width - Thumb.Margin.Right - Thumb.Margin.Left);
+                    if (x > slideLength)
+                        x = slideLength;
+
+                    // ratio of length slided on max max slideLength
+                    var v = x / slideLength;
 
                     Thumb.TranslationX = x;
+                    SOSText.TranslationX = v * SOSTextShift;
                     DelayBar.WidthRequest = x + Thumb.Width;
 
                     // if the thumb has reached the target launch the timer to count duration
@@ -150,15 +183,10 @@ namespace SecurityTravelApp.Views
                     back_animation_delaybar.Commit(Thumb, "DelayBarBack", 16, _animLength);
                     back_animation_tumb.Commit(Thumb, "ThumbBack", 16, _animLength);
 
-
                     var taskAnimationSliderBorder = SliderBorder.FadeTo(.3, _animLength / 2);
-                    var taskAnimationCallIcon = CallIcon.FadeTo(0, _animLength / 2);
-                    var taskAnimationCallIconDisabled = CallIconDisabled.FadeTo(1, _animLength / 2);
-                    await Task.WhenAll(taskAnimationSliderBorder, taskAnimationCallIcon, taskAnimationCallIconDisabled);
-                    CallIcon.IsVisible = false;
-
-                    if (posX >= (Width - Thumb.Width - 10/* keep some margin for error*/))
-                        SlideCompleted?.Invoke(this, EventArgs.Empty);
+                    var taskAnimationCallIcon = CallIcon.FadeTo(.4, _animLength / 2);
+                    var taskAnimationShiftSOSTextBack = SOSText.TranslateTo(0, 0, _animLength);
+                    await Task.WhenAll(taskAnimationSliderBorder, taskAnimationCallIcon, taskAnimationShiftSOSTextBack);
                     break;
             }
         }
@@ -201,11 +229,7 @@ namespace SecurityTravelApp.Views
                 if (!actionLaunched)
                 {
                     actionLaunched = true;
-                    if (await appMngSrv.checkForPermission(Permission.Phone))
-                    {
-                        callSrv.callNumber("+212600000000");
-                        MessagingCenter.Send<TapSliderComp>(this, "SOS");
-                    }
+                    MessagingCenter.Send<TapSliderComp>(this, "SOS");
                     timer.Stop();
                 }
             }

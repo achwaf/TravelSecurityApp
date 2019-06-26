@@ -1,4 +1,5 @@
 ﻿using Plugin.Geolocator;
+using Plugin.Permissions.Abstractions;
 using Rg.Plugins.Popup.Services;
 using SecurityTravelApp.Models;
 using SecurityTravelApp.Services;
@@ -141,7 +142,7 @@ namespace SecurityTravelApp.Views
             SideButton.GestureRecognizers.Add(tapGestureRecognizerSideButton);
 
             // setting the handler to hotline Buton
-            tapGestureRecognizerHotline.Tapped += (s, e) =>
+            tapGestureRecognizerHotline.Tapped += async (s, e) =>
             {
                 callSrv.callNumber("+212611111111");
             };
@@ -208,20 +209,20 @@ namespace SecurityTravelApp.Views
             }
         }
 
-        public void performSOSProcedure()
+        public async void performSOSProcedure()
         {
             if (locationSrv.isGpsEnabled())
             {
                 // start getting location SOS
-                //locationSrv.getUserGeopositionSOS();
+                locationSrv.getUserGeopositionSOS();
                 // start audio recording
-                //var audioFile = audioSrv.recordAudio();
-                //if (audioFile != null)
-                //{
-                //    // add reference to file in database, later the audio will be sent
+                var audioFile = audioSrv.recordAudio();
+                if (audioFile != null)
+                {
+                    // add reference to file in database, later the audio will be sent
 
 
-                //}
+                }
                 // aaaaaaaand then make a call, yeah something s not right is this order but welp
                 callSrv.callNumber("+212600000000");
             }
@@ -310,7 +311,7 @@ namespace SecurityTravelApp.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await appMngSrv.checkForAllRequiredPermissions();
+            await PermissionChecker.checkForImmediatePermissions();
 
             if (LocalDataService.getUserTrackingFlag())
             {
@@ -363,6 +364,34 @@ namespace SecurityTravelApp.Views
         {
             // update last chekin from database
             ShowLastCheckIn();
+        }
+
+        private void HotLineGradientPaintSurface(object sender, SKPaintSurfaceEventArgs args)
+        {
+            SKImageInfo info = args.Info;
+            SKSurface surface = args.Surface;
+            SKCanvas canvas = surface.Canvas;
+
+            canvas.Clear();
+
+            using (SKPaint paint = new SKPaint())
+            {
+                // Create a rectangke the size of the container
+                SKRect rect = new SKRect(0, 0, info.Width, info.Height);
+
+                float middleX = (rect.Right + rect.Left) / 2;
+                float middleY = (rect.Top + rect.Bottom) / 2;
+                // Create linear gradient from upper-left to lower-right
+                paint.Shader = SKShader.CreateLinearGradient(
+                                    new SKPoint(rect.Left, middleY),
+                                    new SKPoint(rect.Right, middleY),
+                                    new SKColor[] { Color.FromHex("#5678A6").ToSKColor(), Color.FromHex("#3A5270").ToSKColor() },
+                                    new float[] { 0, 1 },
+                                    SKShaderTileMode.Clamp);
+
+                // Draw the gradient on the rectangle
+                canvas.DrawRect(rect, paint);
+            }
         }
     }
 }

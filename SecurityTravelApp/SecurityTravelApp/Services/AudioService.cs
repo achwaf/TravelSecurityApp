@@ -1,4 +1,5 @@
 ﻿using SecurityTravelApp.DependencyServices;
+using SecurityTravelApp.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,34 +21,38 @@ namespace SecurityTravelApp.Services
 
         }
 
-       
+
 
         public void config()
         {
 
         }
 
-        public String recordAudio()
+        public async Task<String> recordAudio()
         {
             String audioPath = null;
-            if (!isRecording)
+            if (await PermissionChecker.checkForPermission(Plugin.Permissions.Abstractions.Permission.Microphone)
+                && await PermissionChecker.checkForPermission(Plugin.Permissions.Abstractions.Permission.Storage))
             {
-                isRecording = true;
-                audioPath = recorder.StartRecording();
+                if (!isRecording)
+                {
+                    isRecording = true;
+                    audioPath = recorder.StartRecording();
 
-                if (audioPath != null)
-                {
-                    // stop the recording after a few seconds
-                    Device.StartTimer(TimeSpan.FromSeconds(60), () =>
+                    if (audioPath != null)
                     {
-                        recorder.StopRecording();
-                        return true;
-                    });
-                    isRecording = false;
-                }
-                else
-                {
-                    isRecording = false;
+                        // stop the recording after a few seconds
+                        Device.StartTimer(TimeSpan.FromSeconds(60), () =>
+                        {
+                            recorder.StopRecording();
+                            return true;
+                        });
+                        isRecording = false;
+                    }
+                    else
+                    {
+                        isRecording = false;
+                    }
                 }
             }
 

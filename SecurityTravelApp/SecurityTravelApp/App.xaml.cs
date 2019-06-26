@@ -27,6 +27,13 @@ namespace SecurityTravelApp
 
             // instantiating services that should be configured
             appMngSrv = (AppManagementService)serviceFactory.getService(ServiceType.AppManagement);
+
+            // permissions
+            //await appMngSrv.checkForAllRequiredPermissions();
+
+            // others services
+
+
             var localDataSrv = (LocalDataService)serviceFactory.getService(ServiceType.LocalData);
             var serverDataSrv = (ServerDataService)serviceFactory.getService(ServiceType.ServerData);
 
@@ -34,7 +41,7 @@ namespace SecurityTravelApp
             appMngSrv.config(this, localDataSrv, serverDataSrv);
 
             // Test data
-            await localDataSrv.InitWithTestData();
+            //await localDataSrv.InitWithTestData();
 
             // Selecting App language
             I18n.SelectLang(LocalDataService.getLanguagePreference());

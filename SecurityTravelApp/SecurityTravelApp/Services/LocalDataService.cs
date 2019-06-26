@@ -560,7 +560,7 @@ namespace SecurityTravelApp.Services
                     messageDB.ID = message.ID;
                     vListMsgDB.Add(messageDB);
                 }
-                await database.InsertAllAsync(vListMsgDB);
+                var nmb = await database.InsertAllAsync(vListMsgDB);
             }
             return true;
         }

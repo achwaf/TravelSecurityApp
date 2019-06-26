@@ -2,13 +2,11 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:skiaforms="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
-             x:Class="SecurityTravelApp.Views.TopBottomMaskComp">
+             x:Class="SecurityTravelApp.Views.BottomMaskComp">
     <ContentView.Content>
         <AbsoluteLayout>
             <skiaforms:SKCanvasView x:Name="BottomMask" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional" AbsoluteLayout.LayoutBounds=".5,1,1,50" 
-                                    PaintSurface="BottomMaskPaintSurface"/>
-            <!--<skiaforms:SKCanvasView x:Name="TopMask" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional" AbsoluteLayout.LayoutBounds=".5,0,1,50" 
-                                    PaintSurface="TopMaskPaintSurface"/>-->
+                                    PaintSurface="BottomMaskPaintSurface" />
         </AbsoluteLayout>
 
     </ContentView.Content>

@@ -61,7 +61,7 @@
                     </StackLayout>
                 </ScrollView>
             </Grid>
-            <comp:TopBottomMaskComp AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" />
+            <comp:BottomMaskComp AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional" AbsoluteLayout.LayoutBounds=".5,1,1,50" />
             <!--Dim Mask-->
             <BoxView x:Name="DimMask" IsVisible="false" Opacity="{StaticResource DimMaskOpacity}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" Color="Black"/>
             <Grid x:Name="StackLayoutUpFront"  VerticalOptions="End" AbsoluteLayout.LayoutFlags="YProportional , SizeProportional"

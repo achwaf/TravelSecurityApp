@@ -155,7 +155,7 @@
                             <Label x:Name="GpsWaitingIcon" IsVisible="False"
                                 Text="{x:Static viewUtils:LineAwesomeIcons.Refresh}"
                                 FontFamily="{StaticResource LineAwesome}"
-                                TextColor="LightGray"
+                                TextColor="WhiteSmoke"
                                 FontSize="25"
                                 Margin="0,0,0,50"
                                 VerticalTextAlignment="Center"
@@ -177,32 +177,33 @@
 
                 </Grid>
                 <Grid Grid.Row="2">
-                        <Grid x:Name="HotlineButton" VerticalOptions="Center" HorizontalOptions="End" 
-                           Padding="0" Margin="30,0,30,0" HeightRequest="70" ColumnSpacing="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="70"/>
-                            </Grid.ColumnDefinitions>
-                            <BoxView Color="#6C91C2" Grid.Column="0" Grid.ColumnSpan="2"
-                                     VerticalOptions="Fill" HorizontalOptions="Fill" CornerRadius="35" Margin="0"/>
-                            <BoxView Color="White" Grid.Column="0" Grid.ColumnSpan="2"
-                                     VerticalOptions="Fill" HorizontalOptions="Fill" CornerRadius="35" Margin="2"/>
-                            <BoxView Color="#6C91C2" Grid.Column="0" Grid.ColumnSpan="2"
-                                     VerticalOptions="Fill" HorizontalOptions="Fill" CornerRadius="25" Margin="10"/>
-                            <Label Text="Hotline" Grid.Column="0"
+                    <Grid x:Name="HotlineButton" VerticalOptions="Center" HorizontalOptions="End" 
+                           Padding="0" Margin="30,0,30,0" HeightRequest="60" ColumnSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="70"/>
+                        </Grid.ColumnDefinitions>
+                        <BoxView Color="#6C91C2" Grid.Column="0" Grid.ColumnSpan="2"
+                                     VerticalOptions="Fill" HorizontalOptions="Fill" CornerRadius="30" Margin="0"/>
+                        <BoxView Color="White" Grid.Column="0" Grid.ColumnSpan="2"
+                                     VerticalOptions="Fill" HorizontalOptions="Fill" CornerRadius="28" Margin="2"/>
+                        <Frame Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="Fill" HorizontalOptions="Fill" HasShadow="False" CornerRadius="25" Padding="0" Margin="5" IsClippedToBounds="true">
+                            <skiaforms:SKCanvasView x:Name="HotLineGradient" PaintSurface="HotLineGradientPaintSurface" HorizontalOptions="Fill"/>
+                        </Frame>
+                        <Label Text="Hotline" Grid.Column="0"
                                 TextColor="White"
                                 FontSize="20"
                                 Margin="30,0,-10,0"
-                                HorizontalTextAlignment="Center"
+                                HorizontalTextAlignment="Start"
                                 VerticalTextAlignment="Center"/>
-                            <Label x:Name="CallIcon" Grid.Column="1"
+                        <Label x:Name="CallIcon" Grid.Column="1"
                                 Text="{x:Static viewUtils:LineAwesomeIcons.Phone}"
                                 FontFamily="{StaticResource LineAwesome}"
                                 TextColor="White"
                                 FontSize="35"
                                 VerticalTextAlignment="Center"
                                 HorizontalTextAlignment="Center" />
-                        </Grid>
+                    </Grid>
                     <Frame VerticalOptions="Center" HorizontalOptions="Start" Padding="0" Margin="-40,0,0,0" CornerRadius="25"
                            HasShadow="True" OutlineColor="WhiteSmoke" BackgroundColor="WhiteSmoke"
                            WidthRequest="100" HeightRequest="50">
@@ -228,7 +229,7 @@
                 </Grid>
             </Grid>
 
-            <comp:TopBottomMaskComp AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" />
+            <comp:BottomMaskComp AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional" AbsoluteLayout.LayoutBounds=".5,1,1,50" />
             <!--Dim Mask-->
             <BoxView x:Name="DimMask" IsVisible="false" Opacity="{StaticResource DimMaskOpacity}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,.5,1,1" Color="Black"/>
             <Grid x:Name="StackLayoutUpFront"  VerticalOptions="End" AbsoluteLayout.LayoutFlags="YProportional , SizeProportional"

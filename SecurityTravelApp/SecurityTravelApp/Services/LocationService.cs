@@ -1,6 +1,7 @@
 ﻿using Plugin.Geolocator;
 using SecurityTravelApp.DependencyServices;
 using SecurityTravelApp.Models;
+using SecurityTravelApp.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -44,9 +45,9 @@ namespace SecurityTravelApp.Services
             return userIsBeingTracked;
         }
 
-        public void getUserGeoposition()
+        public async void getUserGeoposition()
         {
-
+            if (!await PermissionChecker.checkForPermission(Plugin.Permissions.Abstractions.Permission.Location)) return;
             Debug.WriteLine("GPS requests Launched");
             if (!userIsBeingLocated)
             {
@@ -70,8 +71,9 @@ namespace SecurityTravelApp.Services
             }
         }
 
-        public void trackUserGeopositionInBackground()
+        public async void trackUserGeopositionInBackground()
         {
+            if (!await PermissionChecker.checkForPermission(Plugin.Permissions.Abstractions.Permission.Location)) return;
             // this method is supposed to be called only when the application goes to background
             if (!userIsBeingTracked)
             {
@@ -86,8 +88,9 @@ namespace SecurityTravelApp.Services
             }
         }
 
-        public void trackUserGeopositionInForeGround()
+        public async void trackUserGeopositionInForeGround()
         {
+            if (!await PermissionChecker.checkForPermission(Plugin.Permissions.Abstractions.Permission.Location)) return;
             if (!userIsBeingTracked)
             {
                 userIsBeingLocated = true;

@@ -1,4 +1,6 @@
-﻿using SecurityTravelApp.DependencyServices;
+﻿using Plugin.Permissions.Abstractions;
+using SecurityTravelApp.DependencyServices;
+using SecurityTravelApp.Utils;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,18 +27,26 @@ namespace SecurityTravelApp.Services
 
         }
 
-        public void callNumber(String pNumber)
+        public async void callNumber(String pNumber)
         {
-            phoneCaller.makePhoneCall(pNumber);
+            if (await PermissionChecker.checkForPermission(Permission.Phone))
+            {
+                phoneCaller.makePhoneCall(pNumber);
+            }
         }
 
         public async Task<Boolean> sendSMSAsync(String pSMS)
         {
             try
             {
-                var message = new SmsMessage(pSMS, new[] { "+212600000000" });
-                await Sms.ComposeAsync(message);
-                return true;
+                if (await PermissionChecker.checkForPermission(Permission.Sms))
+                {
+                    var message = new SmsMessage(pSMS, new[] { "+212600000000" });
+                    await Sms.ComposeAsync(message);
+                    return true;
+                }
+                else return false;
+
             }
             catch (FeatureNotSupportedException ex)
             {

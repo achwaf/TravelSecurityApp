@@ -25,9 +25,11 @@ namespace SecurityTravelApp.Views
         LocationService locationSrv;
         LocalNotifService localNotifSrv;
         CallService callSrv;
+        ServiceFactory srvFactory;
 
         public PopupTestPage(ServiceFactory pSrvFactory, NavigationParams pParam)
         {
+            srvFactory = pSrvFactory;
             InitializeComponent();
             appMngSrv = (AppManagementService)pSrvFactory.getService(ServiceType.AppManagement);
             localDataSrv = (LocalDataService)pSrvFactory.getService(ServiceType.LocalData);
@@ -36,14 +38,7 @@ namespace SecurityTravelApp.Views
             callSrv = (CallService)pSrvFactory.getService(ServiceType.Call);
             localNotifSrv = (LocalNotifService)pSrvFactory.getService(ServiceType.LocalNotif);
 
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            testRoundnessIOS.GestureRecognizers.Add(tapGestureRecognizer);
-
-            tapGestureRecognizer.Tapped += async (s, e) =>
-            {
-                System.Diagnostics.Debug.WriteLine("IOS TEST");
-                await testRoundnessIOS.FadeTo(.1, 100);
-            };
+            
 
 
         }
@@ -99,6 +94,11 @@ namespace SecurityTravelApp.Views
         private void Button6_Clicked(object sender, EventArgs e)
         {
             PopupNavigation.Instance.PushAsync(new NotifAlertPopup());
+        }
+
+        private void Button_Clicked_1(object sender, EventArgs e)
+        {
+            appMngSrv.navigateTo(NavigationItemTarget.Home, srvFactory);
         }
     }
 }
