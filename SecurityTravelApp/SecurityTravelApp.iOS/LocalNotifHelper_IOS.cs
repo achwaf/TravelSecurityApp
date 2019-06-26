@@ -10,7 +10,6 @@ using SecurityTravelApp.Models;
 using UIKit;
 using Xamarin.Forms;
 using UserNotifications;
-using Java.Util;
 
 [assembly: Dependency(typeof(LocalNotifHelper_IOS))]
 namespace SecurityTravelApp.iOS

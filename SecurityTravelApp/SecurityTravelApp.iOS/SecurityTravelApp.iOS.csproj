@@ -177,9 +177,6 @@
     <ImageAsset Include="Assets.xcassets\FR.imageset\FR.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\Headquarter.imageset\Headquarter.png">
-      <Visible>false</Visible>
-    </ImageAsset>
     <ImageAsset Include="Assets.xcassets\AppNotifIcon.imageset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
@@ -229,9 +226,6 @@
       <Visible>false</Visible>
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\flightTravel.imageset\Contents.json">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\Headquarter.imageset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\Info.imageset\Contents.json">

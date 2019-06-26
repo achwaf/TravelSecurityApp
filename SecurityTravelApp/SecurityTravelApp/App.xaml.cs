@@ -17,6 +17,12 @@ namespace SecurityTravelApp
         public App()
         {
             InitializeComponent();
+            bootStart();
+
+        }
+
+        private async void bootStart()
+        {
             serviceFactory = new ServiceFactory();
 
             // instantiating services that should be configured
@@ -26,6 +32,9 @@ namespace SecurityTravelApp
 
             // setting services dependencies and configs
             appMngSrv.config(this, localDataSrv, serverDataSrv);
+
+            // Test data
+            await localDataSrv.InitWithTestData();
 
             // Selecting App language
             I18n.SelectLang(LocalDataService.getLanguagePreference());
@@ -38,7 +47,6 @@ namespace SecurityTravelApp
             {
                 appMngSrv.navigateTo(NavigationItemTarget.Login, serviceFactory);
             }
-
         }
 
         protected override void OnStart()

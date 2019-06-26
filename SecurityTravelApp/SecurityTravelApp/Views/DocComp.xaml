@@ -19,8 +19,10 @@
                 <Grid x:Name="Header" ColumnSpacing="0" HeightRequest="{StaticResource CardHeight}" >
                     <BoxView x:Name="IconBackground" VerticalOptions="Fill" HorizontalOptions="Fill"/>
                     <skiaforms:SKCanvasView x:Name="canvasBackground" PaintSurface="OnCanvasViewPaintSurface" />
-                    <Image Source="ImageHolder.png" HorizontalOptions="Fill" VerticalOptions="Fill"
+                    <Image x:Name="placeHodler" Source="ImageHolder.png"  HorizontalOptions="Fill" VerticalOptions="Fill" Opacity=".4"
                                Aspect="AspectFit"/>
+                    <Image x:Name="AttachedPicture"  HorizontalOptions="Fill" VerticalOptions="Fill" IsVisible="False"
+                               Aspect="AspectFill"/>
                     <StackLayout x:Name="InfoDates"  VerticalOptions="End" HorizontalOptions="Start" Spacing="0" Margin="5" TranslationY="100" Padding="10,0">
 
                         <StackLayout x:Name="SeenInfo" Orientation="Horizontal" IsVisible="true"  Spacing="3"  Opacity=".7">

@@ -21,6 +21,18 @@ namespace SecurityTravelApp.Models
         public Geoposition() { ID = Guid.NewGuid(); }
 
 
+        public Geoposition(Boolean pRandimize = false) : this()
+        {
+            if (!pRandimize) return;
+            Random rnd = new Random(DateTime.Now.Millisecond);
+            Altitude = rnd.NextDouble() * 100;
+            Longitude = rnd.NextDouble() * 10;
+            Latitude = rnd.NextDouble() * 10;
+            Date = DateTime.Now.AddHours(rnd.NextDouble() * -100);
+        }
+
+
+
         public String ShortDate
         {
             get { return Date.ToShortDateString(); }

@@ -6,7 +6,7 @@
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
              ios:Page.UseSafeArea="true"
              x:Class="SecurityTravelApp.Views.DocsPage">
-    
+
     <ContentPage.Resources>
         <OnPlatform x:Key="BarCornerRadius" x:TypeArguments="CornerRadius" Default="20" />
         <OnPlatform x:Key="EntryOuterColor" x:TypeArguments="Color" Default="#374446" />
@@ -32,7 +32,7 @@
                            VerticalOptions="Center"
                            HorizontalTextAlignment="Start"
                            VerticalTextAlignment="Center" FontSize="30" TextColor="DimGray"/>
-                    <Label x:Name="FilterIcon" Grid.Column="1" Text="{x:Static viewUtils:LineAwesomeIcons.Filter}"
+                    <Label x:Name="FilterIcon" Grid.Column="1" Text="{x:Static viewUtils:LineAwesomeIcons.Filter}" IsVisible="False"
                                 FontFamily="{StaticResource LineAwesome}"
                                 FontSize="25"
                                 Margin="0,2,0,0"
@@ -40,8 +40,8 @@
                                 HorizontalTextAlignment="Center" 
                                 VerticalOptions="Center"
                                 HorizontalOptions="Center"/>
-                    <BoxView x:Name="FilterTap" Grid.Column="1" Color="Black" Opacity=".02" HorizontalOptions="Fill" VerticalOptions="Fill"/>
-                </Grid>                                 
+                    <BoxView x:Name="FilterTap" Grid.Column="1" Color="Black" Opacity=".02" HorizontalOptions="Fill" VerticalOptions="Fill" IsVisible="False"/>
+                </Grid>
                 <Grid x:Name="EmptyInfo" IsVisible="false" Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Fill" Margin="0,0,0,70">
                     <Image Source="empty.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="80" WidthRequest="80" Opacity=".15"/>
                     <Label x:Name="EmptyTXT" FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center" Opacity=".15"/>

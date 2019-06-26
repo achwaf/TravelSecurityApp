@@ -11,7 +11,7 @@
         </ResourceDictionary>
     </ContentView.Resources>
     <ContentView.Content>
-        <Grid RowSpacing="0" ColumnSpacing="10" Padding="5" BackgroundColor="#99FFFFFF">
+        <Grid RowSpacing="0" ColumnSpacing="10" Padding="5" BackgroundColor="#AAFFFFFF">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="*" />

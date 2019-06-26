@@ -178,6 +178,11 @@ namespace SecurityTravelApp.Views
             NavigationBar.updateTXT();
         }
 
+        public async void ShowLastCheckIn()
+        {
+            viewModel.geoposition = await localDataSrv.getLastPosition();
+        }
+
         public void sendPosition()
         {
 
@@ -263,11 +268,6 @@ namespace SecurityTravelApp.Views
             await LastCheckinLabel.FadeTo(0, 80);
             LastCheckinLabel.FadeTo(LastCheckinValueOpacity, 80);
 
-            // update data base
-
-
-
-
         }
 
         public void continueTrackingForeGround()
@@ -350,7 +350,7 @@ namespace SecurityTravelApp.Views
                 paint.Shader = SKShader.CreateRadialGradient(
                                     new SKPoint(middleX, middleY),
                                     info.Width,
-                                    new SKColor[] { Color.FromHex("#22FFFFFF").ToSKColor(), Color.FromHex("#11000000").ToSKColor() },
+                                    new SKColor[] { Color.FromHex("#2AFFFFFF").ToSKColor(), Color.FromHex("#1A000000").ToSKColor() },
                                     new float[] { 0, 1 },
                                     SKShaderTileMode.Repeat);
 
@@ -358,7 +358,11 @@ namespace SecurityTravelApp.Views
                 canvas.DrawRect(rect, paint);
             }
         }
-        
 
+        private void ContentPage_Appearing(object sender, EventArgs e)
+        {
+            // update last chekin from database
+            ShowLastCheckIn();
+        }
     }
 }

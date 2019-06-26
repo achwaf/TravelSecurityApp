@@ -34,15 +34,24 @@ namespace SecurityTravelApp.Services
 
             checkDBExists(path);
 
-            // after the database is recreated, we fill it with test data
-            fillDatabase();
+
         }
 
-        private async void fillDatabase()
+        public async Task<Boolean> InitWithTestData()
+        {
+            // after the database is recreated, we fill it with test data
+            await fillDatabase();
+            return true;
+        }
+
+        private async Task<Boolean> fillDatabase()
         {
             await saveListMessage(getMessages());
             await saveListAlert(getAlerts());
             await saveListDocs(getDocs());
+            await saveListPositions(getLocations());
+
+            return true;
         }
 
 
@@ -171,10 +180,30 @@ namespace SecurityTravelApp.Services
             return true;
         }
 
+        public async Task<Boolean> saveListPositions(List<Geoposition> pList)
+        {
+            foreach (var position in pList)
+            {
+                LocationDB location = new LocationDB()
+                {
+                    Accuracy = position.Accuracy,
+                    Altitude = position.Altitude,
+                    Longitude = position.Longitude,
+                    Latitude = position.Latitude,
+                    Provider = position.Provider,
+                    DateCheckin = position.Date,
+                    ID = position.ID,
+                    IsSOS = position.IsSOS
+                };
+                var number = await database.InsertAsync(location);
+            }
+
+            return true;
+        }
 
         public async Task<List<Geoposition>> getListLocation()
         {
-            var vList = await database.Table<LocationDB>().ToListAsync();
+            var vList = await database.Table<LocationDB>().OrderByDescending<DateTime>(x => x.DateCheckin).ToListAsync();
             var vListGeoposition = new List<Geoposition>();
 
             if (vList != null && vList.Count > 0)
@@ -233,7 +262,8 @@ namespace SecurityTravelApp.Services
         public async Task<Geoposition> getLastPosition()
         {
             Geoposition result = null;
-            var location = await database.Table<LocationDB>().OrderByDescending<DateTime>(x => x.DateCheckin).FirstAsync();
+            var vTable = database.Table<LocationDB>().OrderByDescending<DateTime>(x => x.DateCheckin);
+            LocationDB location = await vTable.FirstOrDefaultAsync();
 
             if (location != null)
             {
@@ -694,6 +724,19 @@ namespace SecurityTravelApp.Services
             listeMessages.Add(new Message("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", true, "2019/02/27 14:31:04"));
 
             return listeMessages;
+        }
+
+
+        private List<Geoposition> getLocations()
+        {
+            List<Geoposition> listeLocations = new List<Geoposition>();
+            listeLocations.Add(new Geoposition(true));
+            listeLocations.Add(new Geoposition(true));
+            listeLocations.Add(new Geoposition(true));
+            listeLocations.Add(new Geoposition(true));
+            listeLocations.Add(new Geoposition(true));
+
+            return listeLocations;
         }
 
         public List<Message> getTestMessages()

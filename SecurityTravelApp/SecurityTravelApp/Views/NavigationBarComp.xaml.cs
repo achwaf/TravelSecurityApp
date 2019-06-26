@@ -1,6 +1,8 @@
 ﻿using SecurityTravelApp.Services;
 using SecurityTravelApp.ViewModels;
 using SecurityTravelApp.Views.ViewsUtils;
+using SkiaSharp;
+using SkiaSharp.Views.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,6 +95,36 @@ namespace SecurityTravelApp.Views
                 navItem.updateTXT();
             }
         }
+
+        private void OnCanvasViewPaintSurface(object sender, SkiaSharp.Views.Forms.SKPaintSurfaceEventArgs args)
+        {
+            SKImageInfo info = args.Info;
+            SKSurface surface = args.Surface;
+            SKCanvas canvas = surface.Canvas;
+
+            canvas.Clear();
+
+            using (SKPaint paint = new SKPaint())
+            {
+                // Create a rectangke the size of the container
+                SKRect rect = new SKRect(0, 0, info.Width, info.Height);
+
+                float middleX = (rect.Right + rect.Left) / 2;
+                float endY = (rect.Bottom + rect.Top) / 2;
+                // Create linear gradient from upper-left to lower-right
+                paint.Shader = SKShader.CreateLinearGradient(
+                                    new SKPoint(middleX, rect.Bottom),
+                                    new SKPoint(middleX, endY),
+                                    new SKColor[] { Color.FromHex("#66777777").ToSKColor(), Color.FromHex("#00FFFFFF").ToSKColor() },
+                                    new float[] { 0, 1 },
+                                    SKShaderTileMode.Clamp);
+
+                // Draw the gradient on the rectangle
+                canvas.DrawRect(rect, paint);
+            }
+        }
+
+
     }
 
 }

@@ -8,6 +8,7 @@
              x:Class="SecurityTravelApp.Views.HomePage"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
              ios:Page.UseSafeArea="true"
+             Appearing="ContentPage_Appearing"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="white">
     <ContentPage.Resources>
@@ -132,17 +133,17 @@
                         <BoxView Color="#B9FF16" Opacity=".6" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds=".5,.5,75,75"
                            CornerRadius="90"
                            Margin="0,2,0,0"/>
-                        <BoxView Color="#fafcfc" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds=".5,.5,75,75"
+                        <BoxView Color="#f8f8f8" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds=".5,.5,75,75"
                            CornerRadius="90"
                            Margin="0,0,0,2"/>
-                        <Image Source="Headquarter.png" Opacity=".8" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds=".5,.5,45,45"/>
+                        <Image Source="OCPOffice.png" Opacity=".8" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds=".5,.5,70,70"/>
                     </AbsoluteLayout>
                     <Grid Margin="10" VerticalOptions="End" HorizontalOptions="End">
                         <BoxView Color="#B9FF16" Opacity=".6" WidthRequest="60" HeightRequest="60"
                                  VerticalOptions="End" HorizontalOptions="Center"
                                  CornerRadius="90"
                                  Margin="0,0,0,0"/>
-                        <BoxView Color="#fafcfc" WidthRequest="60" HeightRequest="60"
+                        <BoxView Color="#f8f8f8" WidthRequest="60" HeightRequest="60"
                                  VerticalOptions="End" HorizontalOptions="Center"
                            CornerRadius="90"
                            Margin="2"/>

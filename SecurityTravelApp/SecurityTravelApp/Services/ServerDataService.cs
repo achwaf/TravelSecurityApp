@@ -16,6 +16,7 @@ namespace SecurityTravelApp.Services
         {
         }
 
+        // written for test purposes
         public async Task<Boolean> sendDataToServer()
         {
             await Task.Delay(1000);

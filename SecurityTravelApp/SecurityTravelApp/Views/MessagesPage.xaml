@@ -170,8 +170,7 @@
                 </Grid>
                 <BoxView  Grid.Row="1" Color="White" Opacity="{StaticResource BehindNavBarMaskOpacity}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
                 <comp:NavigationBarComp x:Name="NavigationBar" Grid.Row="1" VerticalOptions="End" HorizontalOptions="Fill" 
-                    Margin="{StaticResource UpFrontViewMargin}"
-                                        />
+                    Margin="{StaticResource UpFrontViewMargin}" />
 
             </Grid>
         </AbsoluteLayout>

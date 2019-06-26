@@ -53,6 +53,7 @@ namespace SecurityTravelApp.iOS
             if (CLLocationManager.LocationServicesEnabled)
             {
                 //set the desired frequency
+                // values here were set for testing
                 locationManager.DistanceFilter = CLLocationDistance.FilterNone;
                 locationManager.DesiredAccuracy = CLLocation.AccurracyBestForNavigation;
                 locationManager.AllowDeferredLocationUpdatesUntil(999999, IntervalTime / 1000);
