@@ -115,7 +115,7 @@ namespace SecurityTravelApp.Views
                 paint.Shader = SKShader.CreateLinearGradient(
                                     new SKPoint(middleX, rect.Bottom),
                                     new SKPoint(middleX, endY),
-                                    new SKColor[] { Color.FromHex("#66777777").ToSKColor(), Color.FromHex("#00FFFFFF").ToSKColor() },
+                                    new SKColor[] { Color.FromHex("#77999999").ToSKColor(), Color.FromHex("#00FFFFFF").ToSKColor() },
                                     new float[] { 0, 1 },
                                     SKShaderTileMode.Clamp);
 

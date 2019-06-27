@@ -169,6 +169,9 @@ namespace SecurityTravelApp.Views
             // text
             updateTXT();
 
+            // 
+            PermissionChecker.checkForImmediatePermissions();
+
         }
 
         public void updateTXT()
@@ -181,7 +184,14 @@ namespace SecurityTravelApp.Views
 
         public async void ShowLastCheckIn()
         {
-            viewModel.geoposition = await localDataSrv.getLastPosition();
+            try
+            {
+                viewModel.geoposition = await localDataSrv.getLastPosition();
+            }
+            catch (Exception e)
+            {
+                var msg = e.Message;
+            }
         }
 
         public void sendPosition()
@@ -209,7 +219,7 @@ namespace SecurityTravelApp.Views
             }
         }
 
-        public async void performSOSProcedure()
+        public void performSOSProcedure()
         {
             if (locationSrv.isGpsEnabled())
             {
@@ -228,7 +238,16 @@ namespace SecurityTravelApp.Views
             }
             else
             {
-                DisplayAlert("Alert", I18n.GetText(AppTextID.ALERT_GPS_DISABLED), "OK");
+                // normally sos shouldn t be interrupted
+                // the app has to ensure all required permission are set
+                // this else code should be removed
+                // and the app shouldn't start if required permissions are not all given
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    // UI interaction goes here
+                    DisplayAlert("Alert", I18n.GetText(AppTextID.ALERT_GPS_DISABLED), "OK");
+                });
+                
             }
         }
 
@@ -311,7 +330,7 @@ namespace SecurityTravelApp.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await PermissionChecker.checkForImmediatePermissions();
+            ShowLastCheckIn();
 
             if (LocalDataService.getUserTrackingFlag())
             {
@@ -359,12 +378,7 @@ namespace SecurityTravelApp.Views
                 canvas.DrawRect(rect, paint);
             }
         }
-
-        private void ContentPage_Appearing(object sender, EventArgs e)
-        {
-            // update last chekin from database
-            ShowLastCheckIn();
-        }
+        
 
         private void HotLineGradientPaintSurface(object sender, SKPaintSurfaceEventArgs args)
         {

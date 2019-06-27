@@ -23,28 +23,21 @@ namespace SecurityTravelApp
 
         private async void bootStart()
         {
+
+            // Selecting App language
+            I18n.SelectLang(LocalDataService.getLanguagePreference());
+
+            //services
             serviceFactory = new ServiceFactory();
 
             // instantiating services that should be configured
             appMngSrv = (AppManagementService)serviceFactory.getService(ServiceType.AppManagement);
-
-            // permissions
-            //await appMngSrv.checkForAllRequiredPermissions();
-
-            // others services
-
-
             var localDataSrv = (LocalDataService)serviceFactory.getService(ServiceType.LocalData);
             var serverDataSrv = (ServerDataService)serviceFactory.getService(ServiceType.ServerData);
 
             // setting services dependencies and configs
             appMngSrv.config(this, localDataSrv, serverDataSrv);
 
-            // Test data
-            //await localDataSrv.InitWithTestData();
-
-            // Selecting App language
-            I18n.SelectLang(LocalDataService.getLanguagePreference());
 
             if (LocalDataService.getUserLoggedInFlag())
             {

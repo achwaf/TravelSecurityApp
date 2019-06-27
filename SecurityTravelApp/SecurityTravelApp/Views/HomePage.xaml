@@ -8,7 +8,6 @@
              x:Class="SecurityTravelApp.Views.HomePage"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
              ios:Page.UseSafeArea="true"
-             Appearing="ContentPage_Appearing"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="white">
     <ContentPage.Resources>

@@ -17,27 +17,18 @@ namespace SecurityTravelApp.Services
 
         private SQLiteAsyncConnection database;
         private const String databaseName = "DB.sqlite";
+        String DBPath;
         private const String UserTrackingFlag = "UserTrackingFlag";
         private const String PreferredLang = "PreferredLang";
         private const String UserLoggedInFlag = "UserLoggedInFlag";
 
         public LocalDataService() : base(TYPE)
         {
-            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), databaseName);
-
-            // for test purposes, the database file is deleted and created from scratch
-            // since webservices are not yet implemented, this is a straight forward way to test
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-            }
-
-            checkDBExists(path);
-
-
+            DBPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), databaseName);
+            checkDBExists();
         }
 
-        public async Task<Boolean> InitWithTestData()
+        private async Task<Boolean> InitWithTestData()
         {
             // after the database is recreated, we fill it with test data
             await fillDatabase();
@@ -56,23 +47,51 @@ namespace SecurityTravelApp.Services
 
 
 
-        private void checkDBExists(String pPath)
+        public async Task<Boolean> checkDBExists()
         {
-            if (File.Exists(pPath))
+            if (!await PermissionChecker.checkForPermission(Plugin.Permissions.Abstractions.Permission.Storage)) return false;
+
+
+            // for test purposes, the database file is deleted and created from scratch
+            // since webservices are not yet implemented, this is a straight forward way to test
+            if (File.Exists(DBPath))
             {
-                // connect to database
-                database = new SQLiteAsyncConnection(pPath);
+                File.Delete(DBPath);
+            }
+
+
+            if (File.Exists(DBPath))
+            {
+                try
+                {
+                    // connect to database
+                    database = new SQLiteAsyncConnection(DBPath);
+                }
+                catch (Exception e)
+                {
+                    var msg = e.Message;
+                    return false;
+                }
             }
             else
             {
+                CreateTablesResult creationResult;
                 // create new database
-                database = new SQLiteAsyncConnection(pPath);
-                database.CreateTableAsync<MessageDB>();
-                database.CreateTableAsync<AlertDB>();
-                database.CreateTableAsync<LocationDB>();
-                database.CreateTableAsync<AudioRecordDB>();
-                database.CreateTableAsync<DocDB>();
+                database = new SQLiteAsyncConnection(DBPath);
+                try
+                {
+                    creationResult = await database.CreateTablesAsync(CreateFlags.None, typeof(MessageDB), typeof(AlertDB), typeof(LocationDB), typeof(AudioRecordDB), typeof(DocDB));
+                    // fill with data test
+                    await InitWithTestData();
+                }
+                catch (Exception e)
+                {
+                    var msg = e.Message;
+                    return false;
+                }
+
             }
+            return true;
         }
 
         public async Task<Boolean> resetDatabase()
@@ -560,7 +579,15 @@ namespace SecurityTravelApp.Services
                     messageDB.ID = message.ID;
                     vListMsgDB.Add(messageDB);
                 }
-                var nmb = await database.InsertAllAsync(vListMsgDB);
+                try
+                {
+                    var nmb = await database.InsertAllAsync(vListMsgDB);
+
+                }
+                catch (Exception e)
+                {
+                    var msg = e.Message;
+                }
             }
             return true;
         }
