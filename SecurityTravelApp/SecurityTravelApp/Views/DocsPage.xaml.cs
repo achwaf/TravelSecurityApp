@@ -136,5 +136,16 @@ namespace SecurityTravelApp.Views
                 populate();
             }
         }
+
+        // Invoked when a hardware back button is pressed
+        protected override bool OnBackButtonPressed()
+        {
+            // Return true if you don't want the default process (return back)
+            //if (PopupNavigation.Instance.PopupStack.Count > 0)
+            //{
+            //    PopupNavigation.Instance.PopAsync();
+            //}
+            return true;
+        }
     }
 }

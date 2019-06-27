@@ -1,6 +1,8 @@
 ﻿using SecurityTravelApp.Services;
 using SecurityTravelApp.Utils;
 using SecurityTravelApp.Views.ViewsUtils;
+using SkiaSharp;
+using SkiaSharp.Views.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,5 +103,6 @@ namespace SecurityTravelApp.Views
         {
             labelItem.Text = Item.text;
         }
+        
     }
 }

@@ -76,7 +76,7 @@ namespace SecurityTravelApp.Utils
             dictFR.Add(AppTextID.WAITING_FOR_TRANSFER_SMS, "En attente d'envoi via SMS");
             dictFR.Add(AppTextID.MESSAGES, "Messages");
             dictFR.Add(AppTextID.LAST_CHECKIN, "Dernier Checkin ");
-            dictFR.Add(AppTextID.GPS_TAP_INDICATION, "Tapez l'épingle pour envoyer la position.");
+            dictFR.Add(AppTextID.GPS_TAP_INDICATION, "Tapez l'épingle pour envoyer la position");
             dictFR.Add(AppTextID.HOME, "Accueil");
             dictFR.Add(AppTextID.DOCS, "Docs");
             dictFR.Add(AppTextID.TEST, "#TEST");

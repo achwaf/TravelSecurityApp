@@ -144,12 +144,6 @@
     <ImageAsset Include="Assets.xcassets\AppNotifIcon.imageset\AppNotifIcon2.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\BG1.imageset\BG1.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\BG2.imageset\BG2.png">
-      <Visible>false</Visible>
-    </ImageAsset>
     <ImageAsset Include="Assets.xcassets\bitmap.imageset\bitmap.png">
       <Visible>false</Visible>
     </ImageAsset>
@@ -190,12 +184,6 @@
       <Visible>false</Visible>
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\ic_launcher.imageset\ic_launcher2.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\BG1.imageset\Contents.json">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\BG2.imageset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\ImageHolder.imageset\Contents.json">

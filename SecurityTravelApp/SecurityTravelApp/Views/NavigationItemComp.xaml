@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skiaforms="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
              xmlns:local="clr-namespace:SecurityTravelApp.Views.ValueConverters"
              x:Class="SecurityTravelApp.Views.NavigationItemComp">
@@ -24,11 +25,10 @@
             <AbsoluteLayout Grid.Column="0">
                 <BoxView x:Name="HighlightMask"
                          AbsoluteLayout.LayoutFlags="PositionProportional"
-                         AbsoluteLayout.LayoutBounds=".5,.5,150,150"
+                         AbsoluteLayout.LayoutBounds=".5,.5,110,110"
                          IsVisible="false"
-                         Color="LightBlue"
-                         Opacity=".4"
-                         CornerRadius="75"/>
+                         Color="#225393DB"
+                         CornerRadius="55"/>
             </AbsoluteLayout>
             <Grid ColumnSpacing="0" RowSpacing="0"     HorizontalOptions="Center"
                             VerticalOptions="Center">

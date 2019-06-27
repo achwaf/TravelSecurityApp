@@ -91,6 +91,7 @@
                         TextColor="White"
                         Opacity="1"
                         FontSize="35"
+                        Margin="0,0,10,0"
                         VerticalTextAlignment="Center"
                         HorizontalTextAlignment="Center"
                         AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="{StaticResource AbsoluteLayoutLeftSide}"

@@ -122,11 +122,6 @@
                         </StackLayout>
 
                     </StackLayout>
-                    <Label x:Name="GPSIndication" TextColor="OrangeRed" 
-                           Opacity=".2" FontSize="10"
-                           VerticalOptions="End"
-                           HorizontalOptions="Start"
-                           Margin="5"/>
                     <AbsoluteLayout Margin="10"
                            VerticalOptions="Start"
                            HorizontalOptions="Start">
@@ -139,15 +134,24 @@
                         <Image Source="OCPOffice.png" Opacity=".8" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds=".5,.5,70,70"/>
                     </AbsoluteLayout>
                     <Grid Margin="10" VerticalOptions="End" HorizontalOptions="End">
-                        <BoxView Color="#B9FF16" Opacity=".6" WidthRequest="60" HeightRequest="60"
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label x:Name="GPSIndication" TextColor="White" 
+                           Opacity=".8" FontSize="13"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           WidthRequest="120"/>
+                        <BoxView Grid.Row="1" Color="#B9FF16" Opacity=".6" WidthRequest="60" HeightRequest="60"
                                  VerticalOptions="End" HorizontalOptions="Center"
                                  CornerRadius="90"
                                  Margin="0,0,0,0"/>
-                        <BoxView Color="#f8f8f8" WidthRequest="60" HeightRequest="60"
+                        <BoxView Grid.Row="1" Color="#f8f8f8" WidthRequest="60" HeightRequest="60"
                                  VerticalOptions="End" HorizontalOptions="Center"
                            CornerRadius="90"
                            Margin="2"/>
-                        <Grid x:Name="MapMarker" VerticalOptions="End" HorizontalOptions="End">
+                        <Grid Grid.Row="1" x:Name="MapMarker" VerticalOptions="End" HorizontalOptions="End">
                             <ffimageloadingsvg:SvgCachedImage Source="resource://SecurityTravelApp.Assets.MapMarker.svg" 
                                                           VerticalOptions="Fill" HorizontalOptions="Fill"
                                                           WidthRequest="120" HeightRequest="120"
@@ -155,7 +159,7 @@
                             <Label x:Name="GpsWaitingIcon" IsVisible="False"
                                 Text="{x:Static viewUtils:LineAwesomeIcons.Refresh}"
                                 FontFamily="{StaticResource LineAwesome}"
-                                TextColor="WhiteSmoke"
+                                TextColor="White"
                                 FontSize="25"
                                 Margin="0,0,0,50"
                                 VerticalTextAlignment="Center"

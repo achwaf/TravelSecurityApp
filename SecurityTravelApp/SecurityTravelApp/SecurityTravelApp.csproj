@@ -10,6 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\BG1.png" />
+    <None Remove="Assets\BG2.png" />
     <None Remove="Assets\BottomLeftCorner.svg" />
     <None Remove="Assets\CriticShadow.svg" />
     <None Remove="Assets\Headquarter.png" />
@@ -19,6 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Assets\BG1.png" />
+    <EmbeddedResource Include="Assets\BG2.png" />
     <EmbeddedResource Include="Assets\BottomLeftCorner.svg" />
     <EmbeddedResource Include="Assets\CriticShadow.svg" />
     <EmbeddedResource Include="Assets\InfoShadow.svg" />

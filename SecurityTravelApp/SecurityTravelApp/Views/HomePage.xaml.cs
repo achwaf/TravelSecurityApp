@@ -351,9 +351,9 @@ namespace SecurityTravelApp.Views
                 paint.Shader = SKShader.CreateRadialGradient(
                                     new SKPoint(middleX, middleY),
                                     info.Width,
-                                    new SKColor[] { Color.FromHex("#2AFFFFFF").ToSKColor(), Color.FromHex("#1A000000").ToSKColor() },
+                                    new SKColor[] { Color.FromHex("#3AFFFFFF").ToSKColor(), Color.FromHex("#BB000000").ToSKColor() },
                                     new float[] { 0, 1 },
-                                    SKShaderTileMode.Repeat);
+                                    SKShaderTileMode.Clamp);
 
                 // Draw the gradient on the rectangle
                 canvas.DrawRect(rect, paint);
