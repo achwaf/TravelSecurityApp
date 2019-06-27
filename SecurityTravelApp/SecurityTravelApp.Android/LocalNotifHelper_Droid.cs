@@ -64,12 +64,16 @@ namespace SecurityTravelApp.Droid
 
         void showMultiLineNotificationTracking(Boolean pIsUserStillTracked, Geoposition pLocation)
         {
+            
+            String CHANNEL_ID = "TS_01";// The id of the channel. 
             String title = pIsUserStillTracked ? TrackingOngoing : TrackingStopped;
             Context context = Android.App.Application.Context;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, "Travel Security" , NotificationImportance.High);
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                     .SetSmallIcon(Resource.Drawable.AppNotifIcon)
                     .SetContentTitle("Travel Security")
-                    .SetContentText(title);
+                    .SetContentText(title)
+                    .SetChannelId(CHANNEL_ID);
 
             if (pLocation != null)
             {
@@ -86,7 +90,8 @@ namespace SecurityTravelApp.Droid
             mBuilder.SetOngoing(pIsUserStillTracked);
             mBuilder.SetShowWhen(false);
             mBuilder.SetAutoCancel(false);
-            getNotificationManager(context).CancelAll();
+            //getNotificationManager(context).CancelAll();
+            getNotificationManager(context).CreateNotificationChannel(mChannel);
             getNotificationManager(context).Notify(NOTIF_ID_3, mBuilder.Build());
         }
 

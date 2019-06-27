@@ -149,14 +149,12 @@ namespace SecurityTravelApp.Services
                     }
                     else
                     {
-                        //test
-                        MessagingCenter.Send<LocationService, Geoposition>(this, "LOCATIONUPDATE", currentGeoposition);
                     }
                 }
                 else
                 {
                     // IMPORTANT
-                    // if the use is tracked , this bloc is overstepped and the loop goes on and on
+                    // if the user is tracked , this bloc is overstepped and the loop goes on and on
                     if (!userIsBeingTracked)
                     {
                         // stop linstening
@@ -174,7 +172,7 @@ namespace SecurityTravelApp.Services
                         currentGeoposition.IsSOS = true;
                         MessagingCenter.Send<LocationService, Geoposition>(this, "LOCATIONUPDATESOS", currentGeoposition);
                     }
-                    // in non SOS case, this last location is normally the only one sent
+                    // in non SOS case, this best location is normally the only one sent , which is the currentGeoposition
                     else
                     {
                         currentGeoposition.IsSOS = false;

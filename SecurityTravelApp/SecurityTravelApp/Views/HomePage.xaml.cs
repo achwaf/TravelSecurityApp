@@ -59,13 +59,18 @@ namespace SecurityTravelApp.Views
             {
                 gpsPositionAfterGet(pGeoposition);
                 localDataSrv.savePosition(pGeoposition);
-                // try send the location
+                //  send the location
+                // ServerDataService is not implmented yet, due to backend API not available
+                // if the transfer failed, flag the location as sendable and launch the sync task in AppManagementService
             });
 
             // subscribe to SOS location updates
             MessagingCenter.Subscribe<LocationService, Geoposition>(this, "LOCATIONUPDATESOS", (sender, pGeoposition) =>
             {
-                // just send the damn SOS location
+                // should the SOS location processing be the same as normal location
+                // point to see with business
+                gpsPositionAfterGet(pGeoposition);
+                localDataSrv.savePosition(pGeoposition);
             });
 
 
@@ -122,8 +127,9 @@ namespace SecurityTravelApp.Views
                 waitingForGpsPosition();
                 Utilities.bounceAnimate(MapMarker, BounceElevation);
 
-                // perform SOS procedure 
-                sendPosition();
+                // send position 
+                //sendPosition();
+                performSOSProcedure();
 
                 // hide the gps indication since the user knows how to send gps henceforth
                 if (GPSIndication.Opacity > 0)
@@ -221,34 +227,34 @@ namespace SecurityTravelApp.Views
 
         public void performSOSProcedure()
         {
-            if (locationSrv.isGpsEnabled())
+            // ensure that SOS actions are called on main thread, else it raises many exceptions
+            Device.BeginInvokeOnMainThread(() =>
             {
-                // start getting location SOS
-                locationSrv.getUserGeopositionSOS();
-                // start audio recording
-                var audioFile = audioSrv.recordAudio();
-                if (audioFile != null)
+                if (locationSrv.isGpsEnabled())
                 {
-                    // add reference to file in database, later the audio will be sent
+                    // start getting location SOS
+                    locationSrv.getUserGeopositionSOS();
+                    // start audio recording
+                    //var audioFile = audioSrv.recordAudio();
+                    //if (audioFile != null)
+                    //{
+                    //    // add reference to file in database, later the audio will be sent
 
 
+                    //}
+                    // and then make the SOS                call
+                    //callSrv.callNumber("+212600000000");
                 }
-                // and then make the SOS                call
-                callSrv.callNumber("+212600000000");
-            }
-            else
-            {
-                // normally sos shouldn t be interrupted
-                // the app has to ensure all required permission are set
-                // this else code should be removed
-                // and the app shouldn't start if required permissions are not all given
-                Device.BeginInvokeOnMainThread(() =>
+                else
                 {
-                    // UI interaction goes here
+                    // normally sos shouldn t be interrupted
+                    // the app has to ensure all required permission are set
+                    // this else code should be removed
+                    // and the app shouldn't start if required permissions are not all given
                     DisplayAlert("Alert", I18n.GetText(AppTextID.ALERT_GPS_DISABLED), "OK");
-                });
+                }
+            });
 
-            }
         }
 
         public void waitingForGpsPosition()
@@ -323,14 +329,13 @@ namespace SecurityTravelApp.Views
             // update data
             if (!pParam.NavigationBarOnly)
             {
-
+                ShowLastCheckIn();
             }
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            ShowLastCheckIn();
 
             if (LocalDataService.getUserTrackingFlag())
             {
