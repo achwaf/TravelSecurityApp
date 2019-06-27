@@ -233,7 +233,7 @@ namespace SecurityTravelApp.Views
 
 
                 }
-                // aaaaaaaand then make a call, yeah something s not right is this order but welp
+                // and then make the SOS                call
                 callSrv.callNumber("+212600000000");
             }
             else
@@ -247,7 +247,7 @@ namespace SecurityTravelApp.Views
                     // UI interaction goes here
                     DisplayAlert("Alert", I18n.GetText(AppTextID.ALERT_GPS_DISABLED), "OK");
                 });
-                
+
             }
         }
 
@@ -378,7 +378,7 @@ namespace SecurityTravelApp.Views
                 canvas.DrawRect(rect, paint);
             }
         }
-        
+
 
         private void HotLineGradientPaintSurface(object sender, SKPaintSurfaceEventArgs args)
         {
