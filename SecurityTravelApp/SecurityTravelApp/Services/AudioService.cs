@@ -30,6 +30,7 @@ namespace SecurityTravelApp.Services
 
         public async Task<String> recordAudio()
         {
+
             String audioPath = null;
             if (await PermissionChecker.checkForPermission(Plugin.Permissions.Abstractions.Permission.Microphone)
                 && await PermissionChecker.checkForPermission(Plugin.Permissions.Abstractions.Permission.Storage))
@@ -37,7 +38,7 @@ namespace SecurityTravelApp.Services
                 if (!isRecording)
                 {
                     isRecording = true;
-                    audioPath = recorder.StartRecording();
+                    audioPath = await recorder.StartRecording();
 
                     if (audioPath != null)
                     {

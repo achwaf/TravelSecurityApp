@@ -11,8 +11,8 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <StackLayout Grid.Row="0" Spacing="10" Margin="10" VerticalOptions="Center">
-                <Button Text="record and call" Clicked="Button_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
-                <Button Text="add audio and toggle sendable" Clicked="Button2_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
+                <!--<Button Text="record and call" Clicked="Button_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
+                <Button Text="add audio and toggle sendable" Clicked="Button2_Clicked" HorizontalOptions="Start" HeightRequest="50"/>-->
                 <Button Text="launch sync" Clicked="Button3_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
                 <Button Text="track user" Clicked="Button4_Clicked" HorizontalOptions="Start" HeightRequest="50"/>
                 <Button Text="stop tracking user" Clicked="Button5_Clicked" HorizontalOptions="Start" HeightRequest="50"/>

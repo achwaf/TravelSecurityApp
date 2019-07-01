@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using AVFoundation;
 using Foundation;
 using SecurityTravelApp.DependencyServices;
@@ -33,11 +34,6 @@ namespace SecurityTravelApp.iOS
             throw new NotImplementedException();
         }
 
-        public string StartRecording()
-        {
-            throw new NotImplementedException();
-        }
-
         public void StopRecording()
         {
             throw new NotImplementedException();
@@ -49,6 +45,11 @@ namespace SecurityTravelApp.iOS
             {
                 Directory.CreateDirectory(pPath);
             }
+        }
+
+        async Task<string> StartRecording()
+        {
+            throw new NotImplementedException();
         }
     }
 }

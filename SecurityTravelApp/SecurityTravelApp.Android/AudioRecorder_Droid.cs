@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Media;
@@ -31,7 +31,6 @@ namespace SecurityTravelApp.Droid
 
         public AudioRecorder_Droid()
         {
-            checkFolderExists(Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Storage).AbsolutePath, AudioFolder));
             _recorder = new MediaRecorder();
             _player = new MediaPlayer();
 
@@ -43,15 +42,17 @@ namespace SecurityTravelApp.Droid
 
         private void checkFolderExists(String pPath)
         {
+
             if (!Directory.Exists(pPath))
             {
                 Directory.CreateDirectory(pPath);
             }
         }
 
-        public String StartRecording()
+        public async Task<String> StartRecording()
         {
-
+            if (!await PermissionChecker.checkForPermission(Plugin.Permissions.Abstractions.Permission.Storage)) return null;
+            checkFolderExists(Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Storage).AbsolutePath, AudioFolder));
             // the recorder overrides the files if it exists, and create it if not
             try
             {
