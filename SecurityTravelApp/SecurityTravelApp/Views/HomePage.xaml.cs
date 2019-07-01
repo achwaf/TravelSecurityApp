@@ -40,6 +40,8 @@ namespace SecurityTravelApp.Views
             viewModel = new HomeViewModel();
             BindingContext = viewModel;
 
+
+
             SosSlider.initializeConfig(pSrvFactory);
             NavigationBar.initializeContent(pSrvFactory, pParam);
 
@@ -128,8 +130,7 @@ namespace SecurityTravelApp.Views
                 Utilities.bounceAnimate(MapMarker, BounceElevation);
 
                 // send position 
-                //sendPosition();
-                performSOSProcedure();
+                sendPosition();
 
                 // hide the gps indication since the user knows how to send gps henceforth
                 if (GPSIndication.Opacity > 0)
@@ -175,8 +176,6 @@ namespace SecurityTravelApp.Views
             // text
             updateTXT();
 
-            // 
-            PermissionChecker.checkForImmediatePermissions();
 
         }
 
@@ -200,29 +199,41 @@ namespace SecurityTravelApp.Views
             }
         }
 
-        public void sendPosition()
+        public async void sendPosition()
         {
 
-            if (locationSrv.isGpsEnabled())
+            // check permission
+            if (!await PermissionChecker.checkForPermission(Plugin.Permissions.Abstractions.Permission.Location))
             {
-                if (locationSrv.isUserBeingLocated())
-                {
-                    // do nothing, the current location is being retirived and will
-                    // be sent as soon as it is available
-                }
-                else
-                {
-                    // start getting location
-                    locationSrv.getUserGeoposition();
-                    // sending to server is done upon updates arrival through subscription to LOCATIONUPDATE }
-                }
-
+                cancelWaitingForGpsAnimation();
+                DisplayAlert("Alert", I18n.GetText(AppTextID.GPS_PERMISSION_KO), "OK");
             }
             else
             {
-                cancelWaitingForGpsAnimation();
-                DisplayAlert("Alert", I18n.GetText(AppTextID.ALERT_GPS_DISABLED), "OK");
+                // check gps status
+                if (locationSrv.isGpsEnabled())
+                {
+                    if (locationSrv.isUserBeingLocated())
+                    {
+                        // do nothing, the current location is being retirived and will
+                        // be sent as soon as it is available
+                    }
+                    else
+                    {
+                        // start getting location
+                        locationSrv.getUserGeoposition();
+                        // sending to server is done upon updates arrival through subscription to LOCATIONUPDATE }
+                    }
+
+                }
+                else
+                {
+                    cancelWaitingForGpsAnimation();
+                    DisplayAlert("Alert", I18n.GetText(AppTextID.ALERT_GPS_DISABLED), "OK");
+                }
             }
+
+
         }
 
         public void performSOSProcedure()
@@ -235,15 +246,14 @@ namespace SecurityTravelApp.Views
                     // start getting location SOS
                     locationSrv.getUserGeopositionSOS();
                     // start audio recording
-                    //var audioFile = audioSrv.recordAudio();
-                    //if (audioFile != null)
-                    //{
-                    //    // add reference to file in database, later the audio will be sent
+                    var audioFile = audioSrv.recordAudio();
+                    if (audioFile != null)
+                    {
+                        // add reference to file in database, later the audio will be sent
 
-
-                    //}
+                    }
                     // and then make the SOS                call
-                    //callSrv.callNumber("+212600000000");
+                    callSrv.callNumber("+212600000000");
                 }
                 else
                 {
@@ -336,6 +346,10 @@ namespace SecurityTravelApp.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+
+
+            // permissions
+            PermissionChecker.checkForImmediatePermissions();
 
             if (LocalDataService.getUserTrackingFlag())
             {

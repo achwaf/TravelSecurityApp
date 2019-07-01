@@ -36,6 +36,7 @@ namespace SecurityTravelApp.Views
         public DocsPage(ServiceFactory pSrvFactory, NavigationParams pParam)
         {
             InitializeComponent();
+            
 
             NavigationBar.initializeContent(pSrvFactory, pParam);
             localDataSrv = (LocalDataService)pSrvFactory.getService(ServiceType.LocalData);

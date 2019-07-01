@@ -32,6 +32,7 @@ namespace SecurityTravelApp.Views
         {
             InitializeComponent();
             NavigationBar.initializeContent(pSrvFactory, pParam);
+            
 
             localDataSrv = (LocalDataService)pSrvFactory.getService(ServiceType.LocalData);
 

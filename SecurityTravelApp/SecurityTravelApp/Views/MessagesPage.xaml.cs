@@ -236,8 +236,6 @@ namespace SecurityTravelApp.Views
 
             // fill with data
             populate();
-
-            // Text
             updateTXT();
 
             // subscribe to textUpdates from DefinedMessages

@@ -25,7 +25,6 @@ namespace SecurityTravelApp.Services
         public LocalDataService() : base(TYPE)
         {
             DBPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), databaseName);
-            checkDBExists();
         }
 
         private async Task<Boolean> InitWithTestData()
@@ -50,78 +49,108 @@ namespace SecurityTravelApp.Services
         public async Task<Boolean> checkDBExists()
         {
             if (!await PermissionChecker.checkForPermission(Plugin.Permissions.Abstractions.Permission.Storage)) return false;
-
-
-            // for test purposes, the database file is deleted and created from scratch
-            // since webservices are not yet implemented, this is a straight forward way to test
-            if (File.Exists(DBPath))
+            if (database == null)
             {
-                File.Delete(DBPath);
-            }
-
-
-            if (File.Exists(DBPath))
-            {
-                try
+                // for test purposes, the database file is deleted and created from scratch
+                // since webservices are not yet implemented, this is a straight forward way to test
+                if (File.Exists(DBPath))
                 {
-                    // connect to database
+                    File.Delete(DBPath);
+                }
+
+
+                if (File.Exists(DBPath))
+                {
+                    try
+                    {
+                        // connect to database
+                        database = new SQLiteAsyncConnection(DBPath);
+                    }
+                    catch (Exception e)
+                    {
+                        var msg = e.Message;
+                        return false;
+                    }
+                }
+                else
+                {
+                    CreateTablesResult creationResult;
+                    // create new database
                     database = new SQLiteAsyncConnection(DBPath);
-                }
-                catch (Exception e)
-                {
-                    var msg = e.Message;
-                    return false;
-                }
-            }
-            else
-            {
-                CreateTablesResult creationResult;
-                // create new database
-                database = new SQLiteAsyncConnection(DBPath);
-                try
-                {
-                    creationResult = await database.CreateTablesAsync(CreateFlags.None, typeof(MessageDB), typeof(AlertDB), typeof(LocationDB), typeof(AudioRecordDB), typeof(DocDB));
-                    // fill with data test
-                    await InitWithTestData();
-                }
-                catch (Exception e)
-                {
-                    var msg = e.Message;
-                    return false;
-                }
+                    try
+                    {
+                        creationResult = await database.CreateTablesAsync(CreateFlags.None, typeof(MessageDB), typeof(AlertDB), typeof(LocationDB), typeof(AudioRecordDB), typeof(DocDB));
+                        // fill with data test
+                        await InitWithTestData();
+                    }
+                    catch (Exception e)
+                    {
+                        var msg = e.Message;
+                        return false;
+                    }
 
+                }
             }
             return true;
         }
 
         public async Task<Boolean> resetDatabase()
         {
-            await database.DeleteAllAsync<MessageDB>();
-            await database.DeleteAllAsync<AlertDB>();
-            await database.DeleteAllAsync<LocationDB>();
-            await database.DeleteAllAsync<AudioRecordDB>();
-            await database.DeleteAllAsync<DocDB>();
+            if (await checkDBExists())
+            {
+                await database.DeleteAllAsync<MessageDB>();
+                await database.DeleteAllAsync<AlertDB>();
+                await database.DeleteAllAsync<LocationDB>();
+                await database.DeleteAllAsync<AudioRecordDB>();
+                await database.DeleteAllAsync<DocDB>();
 
-            return true;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
         public async Task<Boolean> toggleSendable(Sendable pObject, Boolean pIsSendable)
         {
-            pObject.IsSendable = pIsSendable;
-            await database.UpdateAsync(pObject);
+            if (await checkDBExists())
+            {
+                pObject.IsSendable = pIsSendable;
+                await database.UpdateAsync(pObject);
 
-            return true;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
         public async Task<Boolean> updateToDB(Object pObject)
         {
-            var result = await database.UpdateAsync(pObject);
-            return true;
+            if (await checkDBExists())
+            {
+                var result = await database.UpdateAsync(pObject);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public async Task<Boolean> deleteDataOlderThan(DateTime pLimitDate)
         {
             int nbMsgDeleted, nbAlertDeleted, nbLocaDeleted, nbAudioDeleted, nbDocumentDeleted;
+
+            if (!await checkDBExists())
+            {
+                return false;
+            }
+
             try
             {
                 nbMsgDeleted = await database.Table<MessageDB>().DeleteAsync(x => x.DateSent < pLimitDate);
@@ -183,6 +212,11 @@ namespace SecurityTravelApp.Services
 
         public async Task<Boolean> savePosition(Geoposition pGeoposition)
         {
+
+            if (!await checkDBExists())
+            {
+                return false;
+            }
             LocationDB location = new LocationDB()
             {
                 Accuracy = pGeoposition.Accuracy,
@@ -201,6 +235,11 @@ namespace SecurityTravelApp.Services
 
         public async Task<Boolean> saveListPositions(List<Geoposition> pList)
         {
+
+            if (!await checkDBExists())
+            {
+                return false;
+            }
             foreach (var position in pList)
             {
                 LocationDB location = new LocationDB()
@@ -222,9 +261,15 @@ namespace SecurityTravelApp.Services
 
         public async Task<List<Geoposition>> getListLocation()
         {
-            var vList = await database.Table<LocationDB>().OrderByDescending<DateTime>(x => x.DateCheckin).ToListAsync();
             var vListGeoposition = new List<Geoposition>();
 
+
+            if (!await checkDBExists())
+            {
+                return vListGeoposition;
+            }
+
+            var vList = await database.Table<LocationDB>().OrderByDescending<DateTime>(x => x.DateCheckin).ToListAsync();
             if (vList != null && vList.Count > 0)
             {
                 foreach (var locationDB in vList)
@@ -248,15 +293,28 @@ namespace SecurityTravelApp.Services
 
         public async Task<LocationDB> getLocationDB(Geoposition pPosition)
         {
-            var location = await database.Table<LocationDB>().FirstAsync(x => x.ID == pPosition.ID);
+            LocationDB location = null;
+            if (!await checkDBExists())
+            {
+                return location;
+            }
+
+            location = await database.Table<LocationDB>().FirstAsync(x => x.ID == pPosition.ID);
             return location;
         }
 
         public async Task<List<Geoposition>> getListLocationForSync()
         {
-            var vList = await database.Table<LocationDB>().Where(x => x.IsSendable && !x.IsSent).ToListAsync();
             var vListGeoposition = new List<Geoposition>();
 
+
+            if (!await checkDBExists())
+            {
+                return vListGeoposition;
+            }
+
+
+            var vList = await database.Table<LocationDB>().Where(x => x.IsSendable && !x.IsSent).ToListAsync();
             if (vList != null && vList.Count > 0)
             {
                 foreach (var locationDB in vList)
@@ -281,6 +339,12 @@ namespace SecurityTravelApp.Services
         public async Task<Geoposition> getLastPosition()
         {
             Geoposition result = null;
+
+            if (!await checkDBExists())
+            {
+                return result;
+            }
+
             var vTable = database.Table<LocationDB>().OrderByDescending<DateTime>(x => x.DateCheckin);
             LocationDB location = await vTable.FirstOrDefaultAsync();
 
@@ -307,6 +371,12 @@ namespace SecurityTravelApp.Services
 
         public async Task<Boolean> saveDocument(Document pDoc)
         {
+
+            if (!await checkDBExists())
+            {
+                return false;
+            }
+
             DocDB docDB = new DocDB()
             {
                 ID = pDoc.ID,
@@ -326,7 +396,14 @@ namespace SecurityTravelApp.Services
 
         public async Task<DocDB> getDocDB(Document pDoc)
         {
-            var doc = await database.Table<DocDB>().FirstAsync(x => x.ID == pDoc.ID);
+            DocDB doc = null;
+
+
+            if (!await checkDBExists())
+            {
+                return doc;
+            }
+            doc = await database.Table<DocDB>().FirstAsync(x => x.ID == pDoc.ID);
             return doc;
         }
 
@@ -334,6 +411,11 @@ namespace SecurityTravelApp.Services
         public async Task<Boolean> saveListDocs(List<Document> pListe)
         {
             var vListDocDB = new List<DocDB>();
+
+            if (!await checkDBExists())
+            {
+                return false;
+            }
 
             foreach (var doc in pListe)
             {
@@ -359,9 +441,15 @@ namespace SecurityTravelApp.Services
 
         public async Task<List<Document>> getListDoc()
         {
-            var vList = await database.Table<DocDB>().OrderByDescending<DateTime>(x => x.DateReceived).ToListAsync();
             var vListDoc = new List<Document>();
 
+
+            if (!await checkDBExists())
+            {
+                return vListDoc;
+            }
+
+            var vList = await database.Table<DocDB>().OrderByDescending<DateTime>(x => x.DateReceived).ToListAsync();
             if (vList != null && vList.Count > 0)
             {
                 foreach (var docDB in vList)
@@ -391,6 +479,13 @@ namespace SecurityTravelApp.Services
 
         public async Task<Boolean> saveAudioRecord(AudioRecord pAudioRecord)
         {
+
+
+            if (!await checkDBExists())
+            {
+                return false;
+            }
+
             AudioRecordDB location = new AudioRecordDB()
             {
                 ID = pAudioRecord.ID,
@@ -408,9 +503,15 @@ namespace SecurityTravelApp.Services
 
         public async Task<List<AudioRecord>> getListAudioRecord()
         {
-            var vList = await database.Table<AudioRecordDB>().ToListAsync();
             var vListAudioRecord = new List<AudioRecord>();
 
+
+            if (!await checkDBExists())
+            {
+                return vListAudioRecord;
+            }
+
+            var vList = await database.Table<AudioRecordDB>().ToListAsync();
             if (vList != null && vList.Count > 0)
             {
                 foreach (var audioDB in vList)
@@ -432,9 +533,15 @@ namespace SecurityTravelApp.Services
 
         public async Task<List<AudioRecord>> getListAudioRecordForSync()
         {
-            var vList = await database.Table<AudioRecordDB>().Where(x => x.IsSendable && !x.IsSent).ToListAsync();
             var vListAudioRecord = new List<AudioRecord>();
 
+
+            if (!await checkDBExists())
+            {
+                return vListAudioRecord;
+            }
+
+            var vList = await database.Table<AudioRecordDB>().Where(x => x.IsSendable && !x.IsSent).ToListAsync();
             if (vList != null && vList.Count > 0)
             {
                 foreach (var audioDB in vList)
@@ -456,7 +563,14 @@ namespace SecurityTravelApp.Services
 
         public async Task<AudioRecordDB> getAudioRecordDB(AudioRecord pAudioRecord)
         {
-            var audioRecordDB = await database.Table<AudioRecordDB>().FirstAsync(x => x.ID == pAudioRecord.ID);
+            AudioRecordDB audioRecordDB = null;
+
+
+            if (!await checkDBExists())
+            {
+                return audioRecordDB;
+            }
+            audioRecordDB = await database.Table<AudioRecordDB>().FirstAsync(x => x.ID == pAudioRecord.ID);
             return audioRecordDB;
         }
 
@@ -467,6 +581,11 @@ namespace SecurityTravelApp.Services
 
         public async Task<Boolean> saveAlert(Alert pALert)
         {
+
+            if (!await checkDBExists())
+            {
+                return false;
+            }
             AlertDB alertDB = new AlertDB();
             alertDB.ID = pALert.ID;
             alertDB.Text = pALert.text;
@@ -482,7 +601,14 @@ namespace SecurityTravelApp.Services
 
         public async Task<AlertDB> getAlertDB(Alert pAlert)
         {
-            var alert = await database.Table<AlertDB>().FirstAsync(x => x.ID == pAlert.ID);
+            AlertDB alert = null;
+
+
+            if (!await checkDBExists())
+            {
+                return alert;
+            }
+            alert = await database.Table<AlertDB>().FirstAsync(x => x.ID == pAlert.ID);
             return alert;
         }
 
@@ -490,6 +616,12 @@ namespace SecurityTravelApp.Services
         public async Task<Boolean> saveListAlert(List<Alert> pListe)
         {
             var vListAlertDB = new List<AlertDB>();
+
+
+            if (!await checkDBExists())
+            {
+                return false;
+            }
 
             foreach (var alert in pListe)
             {
@@ -513,9 +645,15 @@ namespace SecurityTravelApp.Services
 
         public async Task<List<Alert>> getListAlert()
         {
-            var vList = await database.Table<AlertDB>().OrderByDescending<DateTime>(x => x.DateReceived).ToListAsync();
             var vListAlert = new List<Alert>();
 
+
+            if (!await checkDBExists())
+            {
+                return vListAlert;
+            }
+
+            var vList = await database.Table<AlertDB>().OrderByDescending<DateTime>(x => x.DateReceived).ToListAsync();
             if (vList != null && vList.Count > 0)
             {
                 foreach (var alertDB in vList)
@@ -544,13 +682,24 @@ namespace SecurityTravelApp.Services
 
         public async Task<MessageDB> getMessageDB(Message pMessage)
         {
-            var message = await database.Table<MessageDB>().FirstAsync(x => x.ID == pMessage.ID);
+            MessageDB message = null;
+
+            if (!await checkDBExists())
+            {
+                return message;
+            }
+            message = await database.Table<MessageDB>().FirstAsync(x => x.ID == pMessage.ID);
             return message;
         }
 
 
         public async Task<Boolean> saveMessage(Message pMessage)
         {
+
+            if (!await checkDBExists())
+            {
+                return false;
+            }
             MessageDB message = new MessageDB()
             {
                 DateSent = pMessage.dateSent,
@@ -565,6 +714,11 @@ namespace SecurityTravelApp.Services
 
         public async Task<Boolean> saveListMessage(List<Message> pListe)
         {
+
+            if (!await checkDBExists())
+            {
+                return false;
+            }
             if (pListe != null && pListe.Count > 0)
             {
                 var vListMsgDB = new List<MessageDB>();
@@ -594,10 +748,16 @@ namespace SecurityTravelApp.Services
 
         public async Task<List<Message>> getListMessage()
         {
-            // order descend by Date sent it is time of message in milliseconds
-            var vList = await database.Table<MessageDB>().OrderByDescending<DateTime>(x => x.DateSent).ToListAsync();
             var vListMsg = new List<Message>();
 
+
+            if (!await checkDBExists())
+            {
+                return vListMsg;
+            }
+
+            // order descend by Date sent it is time of message in milliseconds
+            var vList = await database.Table<MessageDB>().OrderByDescending<DateTime>(x => x.DateSent).ToListAsync();
             if (vList != null && vList.Count > 0)
             {
                 foreach (var msg in vList)
@@ -615,9 +775,15 @@ namespace SecurityTravelApp.Services
 
         public async Task<List<Message>> getListMessageForSync()
         {
-            var vList = await database.Table<MessageDB>().Where(x => x.IsSendable && !x.IsSent).ToListAsync();
             var vListMsg = new List<Message>();
 
+
+            if (!await checkDBExists())
+            {
+                return vListMsg;
+            }
+
+            var vList = await database.Table<MessageDB>().Where(x => x.IsSendable && !x.IsSent).ToListAsync();
             if (vList != null && vList.Count > 0)
             {
                 foreach (var msg in vList)
@@ -642,30 +808,50 @@ namespace SecurityTravelApp.Services
 
         public async Task<int> getListAlertCount()
         {
+            if (!await checkDBExists())
+            {
+                return -1;
+            }
             var count = await database.Table<AlertDB>().CountAsync();
             return count;
         }
 
         public async Task<int> getListMsgCount()
         {
+            if (!await checkDBExists())
+            {
+                return -1;
+            }
             var count = await database.Table<MessageDB>().CountAsync();
             return count;
         }
 
         public async Task<int> getListLocationCount()
         {
+            if (!await checkDBExists())
+            {
+                return -1;
+            }
             var count = await database.Table<LocationDB>().CountAsync();
             return count;
         }
 
         public async Task<int> getListDocCount()
         {
+            if (!await checkDBExists())
+            {
+                return -1;
+            }
             var count = await database.Table<DocDB>().CountAsync();
             return count;
         }
 
         public async Task<int> getListAudioCount()
         {
+            if (!await checkDBExists())
+            {
+                return -1;
+            }
             var count = await database.Table<AudioRecordDB>().CountAsync();
             return count;
         }
@@ -673,30 +859,50 @@ namespace SecurityTravelApp.Services
 
         public async Task<int> getCountAlertOlderThan(DateTime pDate)
         {
+            if (!await checkDBExists())
+            {
+                return -1;
+            }
             var count = await database.Table<AlertDB>().CountAsync(x => x.DateReceived < pDate);
             return count;
         }
 
         public async Task<int> getCountMsgOlderThan(DateTime pDate)
         {
+            if (!await checkDBExists())
+            {
+                return -1;
+            }
             var count = await database.Table<MessageDB>().CountAsync(x => x.DateSent < pDate);
             return count;
         }
 
         public async Task<int> getCountLocationOlderThan(DateTime pDate)
         {
+            if (!await checkDBExists())
+            {
+                return -1;
+            }
             var count = await database.Table<LocationDB>().CountAsync();
             return count;
         }
 
         public async Task<int> getCountDocOlderThan(DateTime pDate)
         {
+            if (!await checkDBExists())
+            {
+                return -1;
+            }
             var count = await database.Table<DocDB>().CountAsync(x => x.DateReceived < pDate);
             return count;
         }
 
         public async Task<int> getCountAudioOlderThan(DateTime pDate)
         {
+            if (!await checkDBExists())
+            {
+                return -1;
+            }
             var count = await database.Table<AudioRecordDB>().CountAsync(x => x.DateSent < pDate);
             return count;
         }

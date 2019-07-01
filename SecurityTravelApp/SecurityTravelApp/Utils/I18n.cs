@@ -57,6 +57,7 @@ namespace SecurityTravelApp.Utils
             dictFR.Add(AppTextID.SOS_EN_COURS, "en cours...");
             dictFR.Add(AppTextID.APPEL_DANS, "appel dans");
             dictFR.Add(AppTextID.ALERT_GPS_DISABLED, "Le GPS n'est pas activé. Impossible de récupérer la position");
+            dictFR.Add(AppTextID.GPS_PERMISSION_KO, "Impossible de récupérer la position. Permission requise");
             dictFR.Add(AppTextID.WELCOME_GCC, "Bienvenue à GCC");
             dictFR.Add(AppTextID.PASSWORD, "Mot de passe");
             dictFR.Add(AppTextID.LOGIN, "Se connecter");
@@ -100,6 +101,7 @@ namespace SecurityTravelApp.Utils
             dictEN.Add(AppTextID.SOS_EN_COURS, "launching...");
             dictEN.Add(AppTextID.APPEL_DANS, "call in");
             dictEN.Add(AppTextID.ALERT_GPS_DISABLED, "Location cannot be requested. Please turn on GPS.");
+            dictEN.Add(AppTextID.GPS_PERMISSION_KO, "Location cannot be requested. Permission required.");
             dictEN.Add(AppTextID.WELCOME_GCC, "Welcome to GCC");
             dictEN.Add(AppTextID.PASSWORD, "Password");
             dictEN.Add(AppTextID.LOGIN, "Log in");
@@ -143,6 +145,7 @@ namespace SecurityTravelApp.Utils
         SOS_EN_COURS,
         APPEL_DANS,
         ALERT_GPS_DISABLED,
+        GPS_PERMISSION_KO,
         WELCOME_GCC,
         PASSWORD,
         LOGIN,
