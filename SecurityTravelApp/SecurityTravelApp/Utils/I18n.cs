@@ -87,6 +87,7 @@ namespace SecurityTravelApp.Utils
             dictFR.Add(AppTextID.AT, "à");
             dictFR.Add(AppTextID.DELETE, "Supprimer");
             dictFR.Add(AppTextID.AREYOUSURE, "Etes-vous sûr?");
+            dictFR.Add(AppTextID.DELETE_DATA_OLDER_THAN, "Supprimer les données anciennes de ");
             dictFR.Add(AppTextID._2WEEKS, "2 Semaines");
             dictFR.Add(AppTextID._1MONTH, "1 Mois");
             dictFR.Add(AppTextID._3MONTHS, "3 Mois");
@@ -131,6 +132,7 @@ namespace SecurityTravelApp.Utils
             dictEN.Add(AppTextID.AT, "at");
             dictEN.Add(AppTextID.DELETE, "Delete");
             dictEN.Add(AppTextID.AREYOUSURE, "Are you sure?");
+            dictEN.Add(AppTextID.DELETE_DATA_OLDER_THAN, "Delete Data older than ");
             dictEN.Add(AppTextID._2WEEKS, "2 Weeks");
             dictEN.Add(AppTextID._1MONTH, "1 Month");
             dictEN.Add(AppTextID._3MONTHS, "3 Months");
@@ -175,6 +177,7 @@ namespace SecurityTravelApp.Utils
         AT,
         DELETE,
         AREYOUSURE,
+        DELETE_DATA_OLDER_THAN,
         _2WEEKS,
         _1MONTH,
         _3MONTHS,
