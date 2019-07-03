@@ -46,6 +46,9 @@
     <Compile Update="Views\NavigationBarComp.xaml.cs">
       <DependentUpon>NavigationBarComp.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Popups\DrawerMenuPopup.xaml.cs">
+      <DependentUpon>DrawerMenuPopup.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -94,7 +97,7 @@
     <EmbeddedResource Update="Views\Popups\DeleteOldDataPopup.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Popups\DrawerMenu.xaml">
+    <EmbeddedResource Update="Views\Popups\DrawerMenuPopup.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Popups\FilterAlertPopup.xaml">

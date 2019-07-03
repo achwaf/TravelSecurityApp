@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SecurityTravelApp.Views.Popups.DrawerMenu"
+             x:Class="SecurityTravelApp.Views.Popups.DrawerMenuPopup"
              xmlns:comp="clr-namespace:SecurityTravelApp.Views"
              xmlns:viewUtils="clr-namespace:SecurityTravelApp.Views.ViewsUtils"
              xmlns:Pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"

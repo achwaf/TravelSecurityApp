@@ -77,14 +77,14 @@ namespace SecurityTravelApp.Views
 
 
             // subscribe to Clear data event
-            MessagingCenter.Subscribe<DrawerMenu>(this, "CLEAROLDDATA", (sender) =>
+            MessagingCenter.Subscribe<DrawerMenuPopup>(this, "CLEAROLDDATA", (sender) =>
             {
                 // display popup clear old data
                 PopupNavigation.Instance.PushAsync(new DeleteOldDataPopup(pSrvFactory));
             });
 
             // subscribe to Lougout event
-            MessagingCenter.Subscribe<DrawerMenu>(this, "USERLOGOUT", (sender) =>
+            MessagingCenter.Subscribe<DrawerMenuPopup>(this, "USERLOGOUT", (sender) =>
             {
                 // ensure pending actions will complete before loging out
 
@@ -94,7 +94,7 @@ namespace SecurityTravelApp.Views
             });
 
             // subscribe to Lang Select FR
-            MessagingCenter.Subscribe<DrawerMenu>(this, "FRLANGSELECT", (sender) =>
+            MessagingCenter.Subscribe<DrawerMenuPopup>(this, "FRLANGSELECT", (sender) =>
             {
                 I18n.SelectLang(AppLanguage.FR);
                 updateTXT();
@@ -104,7 +104,7 @@ namespace SecurityTravelApp.Views
             });
 
             // subscribe to Lang Select EN
-            MessagingCenter.Subscribe<DrawerMenu>(this, "ENLANGSELECT", (sender) =>
+            MessagingCenter.Subscribe<DrawerMenuPopup>(this, "ENLANGSELECT", (sender) =>
             {
                 I18n.SelectLang(AppLanguage.EN);
                 updateTXT();
@@ -159,7 +159,7 @@ namespace SecurityTravelApp.Views
             tapGestureRecognizerSideButton.Tapped += (s, e) =>
             {
                 SideButton.IsEnabled = false;
-                PopupNavigation.Instance.PushAsync(new DrawerMenu(), false);
+                PopupNavigation.Instance.PushAsync(new DrawerMenuPopup(), false);
                 SideButton.IsEnabled = true;
             };
 

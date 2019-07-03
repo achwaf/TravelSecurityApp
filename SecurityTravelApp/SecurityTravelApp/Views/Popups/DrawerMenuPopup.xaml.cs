@@ -14,7 +14,7 @@ using Xamarin.Forms.Xaml;
 namespace SecurityTravelApp.Views.Popups
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class DrawerMenu : Rg.Plugins.Popup.Pages.PopupPage, I18nable
+    public partial class DrawerMenuPopup : Rg.Plugins.Popup.Pages.PopupPage, I18nable
     {
 
 
@@ -22,7 +22,7 @@ namespace SecurityTravelApp.Views.Popups
         private Color ToggleOffColor;
         private Color ToggleOnColor;
 
-        public DrawerMenu()
+        public DrawerMenuPopup()
         {
             InitializeComponent();
 
@@ -57,7 +57,7 @@ namespace SecurityTravelApp.Views.Popups
             tapGestureRecognizerLogout.Tapped += async (s, e) =>
             {
                 await closeAppMenu();
-                MessagingCenter.Send<DrawerMenu>(this, "USERLOGOUT");
+                MessagingCenter.Send<DrawerMenuPopup>(this, "USERLOGOUT");
             };
             LogoutAction.GestureRecognizers.Add(tapGestureRecognizerLogout);
 
@@ -66,7 +66,7 @@ namespace SecurityTravelApp.Views.Popups
             tapGestureRecognizerClear.Tapped += async (s, e) =>
             {
                 await closeAppMenu();
-                MessagingCenter.Send<DrawerMenu>(this, "CLEAROLDDATA");
+                MessagingCenter.Send<DrawerMenuPopup>(this, "CLEAROLDDATA");
             };
             ClearAction.GestureRecognizers.Add(tapGestureRecognizerClear);
 
@@ -75,7 +75,7 @@ namespace SecurityTravelApp.Views.Popups
             tapGestureRecognizerSelectFR.Tapped += async (s, e) =>
             {
                 SelectedLang = AppLanguage.FR;
-                MessagingCenter.Send<DrawerMenu>(this, "FRLANGSELECT");
+                MessagingCenter.Send<DrawerMenuPopup>(this, "FRLANGSELECT");
                 updateLangVisuals(AppLanguage.FR);
                 updateTXT();
             };
@@ -86,7 +86,7 @@ namespace SecurityTravelApp.Views.Popups
             tapGestureRecognizerSelectEN.Tapped += async (s, e) =>
             {
                 SelectedLang = AppLanguage.EN;
-                MessagingCenter.Send<DrawerMenu>(this, "ENLANGSELECT");
+                MessagingCenter.Send<DrawerMenuPopup>(this, "ENLANGSELECT");
                 updateLangVisuals(AppLanguage.EN);
                 updateTXT();
             };
