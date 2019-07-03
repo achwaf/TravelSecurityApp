@@ -47,7 +47,7 @@ namespace SecurityTravelApp.iOS
             }
         }
 
-        async Task<string> StartRecording()
+        public async Task<string> StartRecording()
         {
             throw new NotImplementedException();
         }

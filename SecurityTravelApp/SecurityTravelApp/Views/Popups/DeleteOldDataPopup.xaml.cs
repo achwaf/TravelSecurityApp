@@ -165,7 +165,7 @@ namespace SecurityTravelApp.Views.Popups
         {
             ButtonAction.Text = I18n.GetText(AppTextID.DELETE);
             ConfirmTxt.Text = I18n.GetText(AppTextID.AREYOUSURE);
-            DeleteTexte.Text = I18n.GetText(AppTextID.DELETE_DATA_OLDER_THAN);
+            DeleteText.Text = I18n.GetText(AppTextID.DELETE_DATA_OLDER_THAN);
         }
     }
 
